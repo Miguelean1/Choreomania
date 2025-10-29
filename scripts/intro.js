@@ -6,9 +6,7 @@ But once a year, the music pauses. The mysterious Benefactor interrupts every br
 
 Sixteen are chosen. Four deadly trials await. Only one will earn the right to ascend.
 
-Now, the world watches. The Ceremony of Ascension begins. 
-
-Will you rise to the stars… or keep dancing for their pleasure?`;
+Now, the world watches. The Ceremony of Ascension begins. Will you rise to the stars… or keep dancing for their pleasure?`;
 
 const textBox = document.getElementById('textBox');
 const buttonContainer = document.getElementById('buttonContainer');
