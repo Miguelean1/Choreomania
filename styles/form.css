@@ -4,14 +4,28 @@
     box-sizing: border-box;
 }
 
+html,body {
+    height: 100%;
+    min-height: 100vh;
+}
+
+
 body {
-    font-family: 'Arial', sans-serif;
-    background-image: url('https://res.cloudinary.com/dc4u0bzgh/image/upload/v1761728493/SKY1_lnoz5o.png');
+    font-family: "Courier Prime", monospace;
+    font-weight: 700;
+    font-style: normal;
+    background-image: url("https://res.cloudinary.com/dc4u0bzgh/image/upload/v1761816495/View3_mek9gf.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center top;
     background-attachment: fixed;
-    background-color: #000000;
+    min-height: 100vh;
+    font-style: oblique;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
 }
 
 .navbar {
@@ -25,13 +39,6 @@ body {
     align-items: center;
     background: transparent;
     z-index: 1000;
-}
-
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 .controls {
