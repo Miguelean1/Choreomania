@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    background-image: url('https://res.cloudinary.com/dwldyiruu/image/upload/v1761816619/View_-_Plot_Twist_1_gfxcdb.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 50px;
+}
+
+.dialog-box {
+    background-color: white;
+    max-width: 800px;
+    width: 90%;
+    border: 2px solid black;
+    position: relative;
+}
+
