@@ -13,8 +13,8 @@ arrow.id = "arrow";
 
 document.addEventListener("DOMContentLoaded", function(){
 	dialogbox = document.getElementById("dialogbox");
-	var messageString = dialogbox.innerHTML;
-	messageStrings = messageString.split('|');
+    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
+    messageStrings = messageString.split('|');
 	dialogbox.innerHTML = "";
     messageId = 0;
 	currMessage = messageStrings[messageId];

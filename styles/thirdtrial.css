@@ -18,7 +18,9 @@ body {
     min-height: 100vh;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
