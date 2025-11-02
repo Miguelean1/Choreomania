@@ -36,6 +36,25 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 }, false);
 
+
+function returnHome() {
+    Swal.fire({
+        title: "Do you want to go to the homepage?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: `No`
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+            Swal.fire("Saved!", "", "success");
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
+}
+
+
 function titleStyle(){
 	dialogbox.classList.remove('normal-style');
 	dialogbox.classList.add('title-style');

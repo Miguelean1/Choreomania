@@ -17,10 +17,11 @@
 
     <nav class="navbar">
         <div class="controls">
-            <button class="btn" id="muteBtn" onclick="toggleMute()">
+            <div class="controls">
+            <button class="btn" id="muteBtn" onclick="muteMusic()">
                 <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
             </button>
-            <button class="btn" onclick="restartGame()">
+            <button class="btn" onclick="returnHome()">
                 <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
             </button>
         </div>
@@ -33,7 +34,7 @@
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../scripts/blackout.js"></script>
 </body>
 
