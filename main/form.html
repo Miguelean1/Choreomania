@@ -19,19 +19,33 @@
                 </button>
             </div>
         </nav>
-        <div class="terminal_content">
-            <div id="frame"></div>
+        
+        <div class="terminal-wrapper">
+            <div class="terminal-background">
+                <img src="https://res.cloudinary.com/dc4u0bzgh/image/upload/v1761840882/Group_186_zlvs0c.png" alt="Terminal">
+            </div>
         </div>
-        <div class="container">
+
+        <div class="terminal-content">
+            <div class="characters-grid" id="charactersGrid">
+                <div class="character-card">
+                    <button class="remove-btn"><i class="fa-solid fa-xmark" style="color:#000000"></i></button>
+                    <div class="character-image"></div>
+                    <div class="character-name">NAME</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container_form">
             <form id="form">
                 <div class="form-group">
-                    <input type="text" id="name" placeholder="Name..." required>
-                    <button type="submit" class="add">+</button>
+                    <input type="text" id="name" placeholder="NAME..." required>
+                    <button type="button" class="add" id="addBtn"><i class="fa-solid fa-plus" style="color:#000000"></i></button>
                     <button type="submit" class="begin">GO!</button>
-                </div>
+                </div>    
             </form>
         </div>
         
-        
+        <script src="/scripts/form.js"></script>
     </body>
 </html>
