@@ -52,7 +52,6 @@ function skipScene() {
 }
 
 
-
 function typeText() {
     if (index < fullText.length) {
         const char = fullText[index];
@@ -100,10 +99,11 @@ function nextScreen() {
 }
 
 
-// Funciones vacías para evitar errores cuando se pulsa en los botones
-function toggleMute() {
-    // TODO: implementar control de audio
-}
+function muteMusic() {
+            const icon = document.querySelector('#muteBtn i');
+            icon.classList.toggle('fa-volume-xmark');
+            icon.classList.toggle('fa-volume-high');
+        }
 
 function restartGame() {
     // TODO: implementar reinicio del juego

@@ -66,13 +66,11 @@ body {
 }
 
 .btn:hover {
-    transform: translateY(-3px) scale(1.02);
-    filter: brightness(0.98) saturate(1.05);
+    transform: scale(1.05);
 }
 
 .btn:active {
-    transform: translateY(0) scale(0.995);
-    filter: invert(1) hue-rotate(180deg);
+    transform: scale(0.995);
 }
 
 .main-layout {
@@ -175,8 +173,13 @@ body {
 
 
 @keyframes bounce {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-8px); }
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-8px);
+    }
 }
 
 

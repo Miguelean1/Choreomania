@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/ea3042a44d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../styles/intro2.css">
+    <title>Intro</title>
+</head>
+<body>
+
+    <div class="backgrounds">
+        <div class="background bg-0"></div>
+        <div class="background bg-1"></div>
+        <div class="background bg-2"></div>
+        <div class="background bg-3"></div>
+        <div class="background bg-4"></div>
+    </div>
+
+
+    <div class="letterbox-top"></div>
+    <div class="letterbox-bottom"></div>
+    
+
+    <nav class="navbar">
+        <div class="controls">
+            <button class="btn" id="muteBtn" onclick="muteMusic()">
+                <i class="fa-solid fa-volume-xmark"></i>
+            </button>
+            <button class="btn" onclick="returnHome()">
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+            </button>
+            <button class="btn" onclick="skipScene()">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </nav>
+
+    <div id="arrow"></div>
+    
+    <div class="text-container">
+        <div class="text-box" id="textBox"></div>
+    </div>
+    
+
+    <div class="button-container" id="buttonContainer">
+        <button class="continue-btn" onclick="nextScreen()">Begin Trials</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../scripts/intro2.js"></script>
+</body>
+</html>

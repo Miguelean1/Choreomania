@@ -7,6 +7,7 @@ var applytitlestyle = true;
 var loadingComplete = true;
 var skipNextPress = false;
 let isMessageSkipped = false;
+var lastMessage = false;
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
@@ -29,12 +30,24 @@ document.addEventListener("DOMContentLoaded", function(){
             }
             loadingComplete = true;
         } else if (!skipNextPress) {
-            nextMessage();
+
+            if (lastMessage) {
+                nextScreen();
+            } else {
+                nextMessage();
+            }
         } else {
             skipNextPress = false;
         }
     });
 }, false);
+
+
+function muteMusic() {
+            const icon = document.querySelector('#muteBtn i');
+            icon.classList.toggle('fa-volume-xmark');
+            icon.classList.toggle('fa-volume-high');
+        }
 
 
 function returnHome() {
@@ -74,6 +87,8 @@ function nextMessage() {
     if (messageId >= messageStrings.length) {
         messageId = 0;
     }
+
+    lastMessage = (messageId === messageStrings.length - 1);
     currMessage = messageStrings[messageId];
     messageId++;
 	
@@ -116,11 +131,27 @@ document.addEventListener('keydown', function(e) {
 document.addEventListener('keyup', function(e) {
     if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
         if (!isMessageSkipped) {
-            nextMessage();
+            if (lastMessage) {
+
+                nextScreen();
+            } else {
+                nextMessage();
+            }
         }
         isMessageSkipped = false;
     }
 });
+
+
+function nextScreen() {
+    document.body.style.transition = 'opacity 0.8s';
+    document.body.style.opacity = '0';
+
+    setTimeout(() => {
+        alert('Loading next screen...');
+        document.body.style.opacity = '1';
+    }, 800);
+}
 
 function clearTimeouts() {
     var highestTimeoutId = setTimeout(";");

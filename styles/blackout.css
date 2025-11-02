@@ -10,7 +10,7 @@
 body {
     margin: 0;
     padding: 0;
-background-color: rgb(3, 0, 20);
+    background-color: rgb(3, 0, 20);
     min-height: 100vh;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
@@ -55,13 +55,11 @@ background-color: rgb(3, 0, 20);
 }
 
 .btn:hover {
-    transform: translateY(-3px) scale(1.02);
-    filter: brightness(0.98) saturate(1.05);
+    transform: scale(1.05);
 }
 
 .btn:active {
-    transform: translateY(0) scale(0.995);
-    filter: invert(1) hue-rotate(180deg);
+    transform: scale(0.995);
 }
 
 #dialogbox {
@@ -100,8 +98,13 @@ background-color: rgb(3, 0, 20);
 
 
 @keyframes bounce {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-8px); }
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-8px);
+    }
 }
 
 

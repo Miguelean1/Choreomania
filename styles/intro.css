@@ -47,14 +47,6 @@
             background: transparent;
             z-index: 1000;
         }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
         .controls {
             display: flex;
             gap: 15px;
@@ -77,13 +69,11 @@
         }
 
         .btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            filter: brightness(0.98) saturate(1.05);
+            transform: scale(1.05);
         }
 
         .btn:active {
-            transform: translateY(0) scale(0.995);
-            filter: invert(1) hue-rotate(180deg);
+            transform:scale(0.995);
         }
 
         .icon {
@@ -128,7 +118,8 @@
             display: inline-block;
             width: 10px;
             height: 18px;
-            background: #2a2a2a;
+            background: #00ffff; 
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5); 
             margin-left: 2px;
             animation: blink 0.7s infinite;
         }

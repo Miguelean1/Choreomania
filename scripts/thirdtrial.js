@@ -36,6 +36,8 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 }, false);
 
+
+
 function returnHome() {
     Swal.fire({
         title: "Do you want to go to the homepage?",
@@ -52,6 +54,12 @@ function returnHome() {
         }
     });
 }
+
+function muteMusic() {
+            const icon = document.querySelector('#muteBtn i');
+            icon.classList.toggle('fa-volume-xmark');
+            icon.classList.toggle('fa-volume-high');
+        }
 
 
 function titleStyle(){
@@ -127,3 +135,4 @@ function clearTimeouts() {
         clearTimeout(i);
     }
 }
+
