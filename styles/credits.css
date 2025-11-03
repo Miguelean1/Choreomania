@@ -11,17 +11,43 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("https://res.cloudinary.com/dsy30p7gf/image/upload/v1762156760/View10_h7vfye.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center top;
-    background-attachment: fixed;
     min-height: 100vh;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: url("https://res.cloudinary.com/dsy30p7gf/image/upload/v1762156760/View10_h7vfye.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    transform-origin: center center;
+    will-change: transform;
+    transform: scale(1);
+    animation: bg-zoom 15s ease-in-out forwards;
+}
+
+@keyframes bg-zoom {
+    from { transform: scale(1); }
+    to   { transform: scale(1.5); }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+    body::before {
+        animation: none !important;
+        transition: none !important;
+    }
 }
 
 .navbar {
