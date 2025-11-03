@@ -6,6 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
+    background: black;
     overflow: hidden;
 }
 
@@ -51,4 +52,21 @@ body {
     max-height: 200px;
     overflow-y: auto;
     font-size: 16px;
+    cursor: pointer;
 }
+
+#arrow {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-size: 20px;
+    animation: bounce 1s ease-in-out infinite;
+    display: none;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+
