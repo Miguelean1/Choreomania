@@ -68,6 +68,7 @@ function returnHome() {
 }
 
 
+
 function nextScreen() {
     document.body.style.transition = 'opacity 0.8s';
     document.body.style.opacity = '0';
@@ -85,30 +86,70 @@ function clearTimeouts() {
     }
 }
 
-// --- Scroll-to-fixed final image logic ---
-document.addEventListener('DOMContentLoaded', function () {
-    const viewport = document.querySelector('.credits-viewport');
-    if (!viewport) return;
-    const track = viewport.querySelector('.credits-track');
-    if (!track) return;
+// --- Mostrar botón "PLAY AGAIN?" cuando el <marquee> termine ---
+(function() {
+    const btnContainer = document.querySelector('.button-container');
+    const playBtn = document.getElementById('playAgainBtn');
 
-    // If the author set a data-duration on the viewport (e.g. "20s"), use it.
-    const duration = viewport.dataset.duration || '20s';
-    track.style.setProperty('--credits-duration', duration);
+    if (!btnContainer || !playBtn) return;
 
-    // When the scrolling animation ends, clone the final image and fix it to the center.
-    track.addEventListener('animationend', function () {
-        // Try to find the image marked as the final one.
-        const finalImg = track.querySelector('img.credits-final');
-        if (finalImg) {
-            const clone = finalImg.cloneNode(true);
-            clone.classList.add('final-logo-fixed');
-            // Remove any layout-only classes that may interfere
-            clone.classList.remove('img-class');
-            document.body.appendChild(clone);
+    const marquee = document.querySelector('marquee');
 
-            // Hide the scrolling area to avoid overlap
-            viewport.style.visibility = 'hidden';
+    function showButton() {
+        btnContainer.classList.add('show');
+        btnContainer.setAttribute('aria-hidden', 'false');
+    }
+
+    if (marquee) {
+        // Elegimos el último elemento dentro del marquee para detectar cuando pasa fuera
+        const children = Array.from(marquee.children).filter(n => n.nodeType === 1);
+        const lastChild = children.length ? children[children.length - 1] : marquee;
+
+        let rafId = null;
+        const marqueeRect = () => marquee.getBoundingClientRect();
+
+        function checkMarqueeEnd() {
+            if (!lastChild) return;
+            const lastRect = lastChild.getBoundingClientRect();
+            const mRect = marqueeRect();
+
+            // Para marquee con direction="up": consideramos terminado cuando la parte inferior
+            // del último elemento pasa por encima de la parte superior del marquee.
+            if (lastRect.bottom <= mRect.top + 2) {
+                showButton();
+                if (rafId) cancelAnimationFrame(rafId);
+                return;
+            }
+            rafId = requestAnimationFrame(checkMarqueeEnd);
         }
-    }, { once: true });
-});
+
+        // Iniciar comprobación. También agregamos un fallback por si algo falla.
+        checkMarqueeEnd();
+        const fallback = setTimeout(() => {
+            showButton();
+            if (rafId) cancelAnimationFrame(rafId);
+        }, 30000); // 30s fallback
+
+    } else {
+        // Fallback: si no hay <marquee>, mostramos el botón al llegar al bottom (comportamiento antiguo)
+        function checkScrollToEnd() {
+            const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2);
+            if (scrolledToBottom) {
+                showButton();
+                window.removeEventListener('scroll', onScroll);
+            }
+        }
+        function onScroll() { checkScrollToEnd(); }
+        checkScrollToEnd();
+        window.addEventListener('scroll', onScroll, { passive: true });
+    }
+
+    // Acción del botón: recargar la página para "play again" (se puede cambiar a otra ruta)
+    playBtn.addEventListener('click', function() {
+        btnContainer.classList.remove('show');
+        setTimeout(function() {
+            window.location.reload();
+        }, 120);
+    });
+
+})();
