@@ -1,3 +1,37 @@
+let contestants = [];
+const MAX_PLAYERS = 15;
+
+const nameInput = document.getElementById("name");
+const addBtn = document.getElementById("addBtn");
+const charactersGrid = document.getElementById("charactersGrid");
+const form = document.getElementById("form");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function restartGame() {
     Swal.fire({
