@@ -67,30 +67,26 @@ body {
     transform: scale(0.995);
 }
 
-
 @media (max-width: 768px) {
     .characters-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-
 marquee {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 600px;
+    max-width: 1000px;
     min-width: 300px;
-    height: 250px;
+    height: 100%;
     margin: 0 auto 300px auto;
     padding: 0 20px;
-    background-color: #000;
-    color: #0f0;
-    border: 1px solid #000;
+    color: rgb(255, 255, 255);
     border-radius: 20px;
-    outline: 10px outset #aaa;
     text-align: center;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
 }
 
 li {
@@ -104,8 +100,25 @@ li {
     text-align: left;
 }
 
-.img-class {
-    max-width:350px; 
+.img-us {
+    max-width:100%; 
     display:block; 
     margin:0 auto;
+}
+
+.img-logo {
+    max-width:200px; 
+    display:block; 
+    margin:0 auto;
+}
+
+
+.img {
+    display: flex;
+    justify-content: center;
+}
+
+.img-container {
+    display: flex;
+    justify-content: center;
 }
