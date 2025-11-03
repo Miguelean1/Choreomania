@@ -1,0 +1,111 @@
+@font-face {
+    font-family: "Pokemon GB";
+    src: url("https://cdnjs.cloudflare.com/ajax/libs/Press-Start-2P/1.0.0/PressStart2P.woff2") format("woff2");
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Pokemon GB", monospace, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("https://res.cloudinary.com/dsy30p7gf/image/upload/v1762156760/View10_h7vfye.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center top;
+    background-attachment: fixed;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    background: transparent;
+    z-index: 1000;
+}
+
+
+.controls {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 5px 5px;
+    border: 4px solid rgb(0, 0, 0);
+    box-shadow: 2px 2px 2px 2px bl;
+    background: rgb(255, 255, 255);
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease, filter 0.15s ease;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.995);
+}
+
+
+@media (max-width: 768px) {
+    .characters-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+marquee {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 600px;
+    min-width: 300px;
+    height: 250px;
+    margin: 0 auto 300px auto;
+    padding: 0 20px;
+    background-color: #000;
+    color: #0f0;
+    border: 1px solid #000;
+    border-radius: 20px;
+    outline: 10px outset #aaa;
+    text-align: center;
+}
+
+li {
+    list-style: none;
+}
+
+.li {
+    margin-left: 110px;
+    list-style: circle;
+    line-height: 15px;
+    text-align: left;
+}
+
+.img-class {
+    max-width:350px; 
+    display:block; 
+    margin:0 auto;
+}
