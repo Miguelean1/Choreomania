@@ -22,6 +22,18 @@ body {
     object-fit: cover;
 }
 
+.control-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+}
+
+.buttons-image {
+    width: 80px;
+    height: auto;
+}
+
 .dialog-box {
     position: absolute;
     top: 10%;
@@ -37,21 +49,23 @@ body {
 
 .character-name {
     position: absolute;
-    top: -45px;
+    top: -42px;
     left: -30px;
     background: white;
     border: 5px solid black;
     padding: 10px 20px;
-    font-weight: bold;
+    font-weight: normal;
     font-size: 16px;
+    font-family: "Aoboshi One", serif;
 }
 
 .dialog-text {
     padding: 25px;
-    line-height: 1.6;
+    line-height: 23px;
     max-height: 200px;
     overflow-y: auto;
     font-size: 16px;
+    font-family: "Anybody", sans-serif;
     cursor: pointer;
 }
 
@@ -68,5 +82,3 @@ body {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
 }
-
-
