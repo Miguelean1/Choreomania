@@ -1,4 +1,8 @@
-const fullText = "Congratulations, contestant. You've done what few could, proved that humanity still endures. Your rhythm, your will, your spirit… all unmatched. But the terms have changed. Survival isn't a reward, it's a duty. New Esperanza needs workers, not dreamers. Your new destination: Labor Complex Nine, orbiting Saturn's rings. There, you'll build the future your dance once promised. Rejoice, champion. You've earned your place among the stars. The contract is already signed… just not the one you expected.";
+const fullText = 
+`Congratulations, contestant. You've done what few could, proved that humanity still endures. Your rhythm, your will, your spirit… all unmatched.
+But the terms have changed. Survival isn’t a reward, it’s a duty. New Esperanza needs workers, not dreamers.
+Your new destination: Labor Complex Nine, orbiting Saturn’s rings. There, you'll build the future your dance once promised.
+Rejoice, champion. You’ve earned your place among the stars. The contract is already signed… just not the one you expected.`;
 
 let currentText = "";
 let currentIndex = 0;
@@ -10,9 +14,9 @@ function typeText() {
     
     if (currentIndex < fullText.length) {
         currentText += fullText[currentIndex];
-        dialogElement.textContent = currentText;
+        dialogElement.innerHTML = currentText.replace(/\n/g, "<br>");
         currentIndex++;
-        setTimeout(typeText, 50);
+        setTimeout(typeText, 26); 
     } else {
         isTyping = false;
         arrow.style.display = 'block';
@@ -20,13 +24,13 @@ function typeText() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(typeText, 1000);
+    setTimeout(typeText, 600); 
 });
 
 document.getElementById('dialog-text').addEventListener('click', function() {
     if (isTyping) {
         currentText = fullText;
-        document.getElementById('dialog-text').textContent = currentText;
+        document.getElementById('dialog-text').innerHTML = currentText.replace(/\n/g, "<br>");
         currentIndex = fullText.length;
         isTyping = false;
         document.getElementById('arrow').style.display = 'block';
