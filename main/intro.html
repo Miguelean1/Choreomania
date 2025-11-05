@@ -1,42 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/intro.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-        rel="stylesheet">
     <script src="https://kit.fontawesome.com/ea3042a44d.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../styles/intro.css">
     <title>Intro</title>
 </head>
-
 <body>
+
+    <div class="backgrounds">
+        <div class="background bg-0"></div>
+        <div class="background bg-1"></div>
+        <div class="background bg-2"></div>
+        <div class="background bg-3"></div>
+        <div class="background bg-4"></div>
+    </div>
+
+
+    <div class="letterbox-top"></div>
+    <div class="letterbox-bottom"></div>
+    
+
     <nav class="navbar">
         <div class="controls">
             <button class="btn" id="muteBtn" onclick="muteMusic()">
-                <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
+                <i class="fa-solid fa-volume-xmark"></i>
             </button>
             <button class="btn" onclick="returnHome()">
-                <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
+                <i class="fa-solid fa-arrow-rotate-left"></i>
             </button>
             <button class="btn" onclick="skipScene()">
-                <span class="icon"><i class="fa-solid fa-arrow-right" style="color: #000000;"></i></span>
+                <i class="fa-solid fa-arrow-right"></i>
             </button>
         </div>
     </nav>
+
+    <div id="arrow"></div>
     
-    <div class="container">
+    <div class="text-container">
         <div class="text-box" id="textBox"></div>
-        <div class="button-container" id="buttonContainer">
-            <button class="continue-btn" onclick="nextScreen()">Begin Trials</button>
-        </div>
+    </div>
+    
+
+    <div class="button-container" id="buttonContainer">
+        <button class="continue-btn" onclick="nextScreen()">Begin Trials</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="../scripts/intro.js"></script>
 </body>
-
 </html>
