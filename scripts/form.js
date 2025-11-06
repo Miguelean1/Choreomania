@@ -157,12 +157,6 @@ beginBtn.addEventListener('click', (e) => {
 
 addBtn.addEventListener('click', addCharacter);
 
-nameInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        e.preventDefault(); 
-        addCharacter();
-    }
-});
 
 beginBtn.addEventListener('click', (e) => {
     
