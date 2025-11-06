@@ -12,13 +12,13 @@ const CLOUDINARY_IMAGE_URLS = [
     'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human7_wnbwzt.png',
     'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human8_cpb8ny.png',
     'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human9_zhmccs.png',
-    'https://res.cloudinary.com/tu-nombre-de-cloud/image/upload/v1/imagen-10.png',
-    'https://res.cloudinary.com/tu-nombre-de-cloud/image/upload/v1/imagen-11.png',
-    'https://res.cloudinary.com/tu-nombre-de-cloud/image/upload/v1/imagen-12.png',
-    'https://res.cloudinary.com/tu-nombre-de-cloud/image/upload/v1/imagen-13.png',
-    'https://res.cloudinary.com/tu-nombre-de-cloud/image/upload/v1/imagen-14.png',
-    'https://res.cloudinary.com/tu-nombre-de-cloud/image/upload/v1/imagen-15.png',
-    'https://res.cloudinary.com/tu-nombre-de-cloud/image/upload/v1/imagen-16.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human12_vmwigz.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human10_kxw3mj.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human11_fpndst.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human14_yawyal.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449704/human13_vxfblm.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human16_l27dtq.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human15_eyc0jx.png',
 ];
 
 function generateUniqueId() {
