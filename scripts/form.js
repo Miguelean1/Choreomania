@@ -6,6 +6,8 @@ const addBtn = document.getElementById('addBtn');
 const beginBtn = document.querySelector('.begin'); 
 const gridContainer = document.getElementById('charactersGrid'); 
 const counterSpan = document.getElementById('counter'); 
+const muteBtn = document.getElementById('muteBtn'); 
+const restartBtn = document.querySelector('.controls button:nth-child(2)');
 
 const MAX_CHARACTERS = 16;
 
@@ -83,30 +85,31 @@ function updateUI() {
     }
 }
 
-window.restartGame = function() { 
+function returnHome() {
     Swal.fire({
-        title: "Would you like to save your progress and go to the home page?",
-        text: "If you exit without saving, you will lose your progress.",
-        icon: "warning",
+        title: "Do you want to go to the homepage?",
+        showDenyButton: true,
         showCancelButton: true,
-        
-        confirmButtonText: "Yes, save and exit", 
-        cancelButtonText: "No, I'll stay and play.", 
-        
+        confirmButtonText: "Yes",
+        denyButtonText: "No"
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire("Saved progress!", "You will be redirected.", "success")
-                .then(() => {
-                    // window.location.href = '/'; 
-                });
-        }
-        else {
-            Swal.fire("Back to the game", "", "info");
+            Swal.fire({
+                title: "Returning to the homepage",
+                timer: 1000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            }).then(() => {
+                window.location.href = 'welcome.html';
+            });
         }
     });
 }
 
-window.toggleMute = function() { 
+function muteMusic() {
     const icon = document.querySelector('#muteBtn i');
     icon.classList.toggle('fa-volume-xmark');
     icon.classList.toggle('fa-volume-high');
@@ -151,6 +154,28 @@ beginBtn.addEventListener('click', (e) => {
         });
     }
 });
+
+addBtn.addEventListener('click', addCharacter);
+
+nameInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault(); 
+        addCharacter();
+    }
+});
+
+beginBtn.addEventListener('click', (e) => {
+    
+});
+
+
+if (muteBtn) {
+    muteBtn.addEventListener('click', muteMusic); 
+}
+
+if (restartBtn) {
+    restartBtn.addEventListener('click', returnHome); 
+}
 
 init();
 
