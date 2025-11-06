@@ -3,19 +3,20 @@ body {
   padding: 0;
   font-family: Arial, sans-serif;
   background: #000;
-  overflow: hidden;
+  overflow: auto;
+  min-height: 100vh;
 }
 
 .raffle-container {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .bg-raffle {
   position: absolute;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   left: 0;
   top: 0;
   object-fit: cover;
@@ -28,7 +29,7 @@ body {
   top: 48px;
   transform: translateX(-50%);
   z-index: 10;
-  width: 620px;
+  width: 520px;
   height: auto;
   overflow: visible;
 }
@@ -56,7 +57,7 @@ body {
 
 .raffle-dialog {
   position: absolute;
-  top: 232px;
+  top: 260px;
   left: 50%;
   transform: translateX(-50%);
   width: 620px;
