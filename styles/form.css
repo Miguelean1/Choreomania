@@ -170,7 +170,7 @@ marquee {
 }
 
 .character-image img {
-    width: 70%;
+    width: 90%;
     height: auto;
     object-fit: contain;
 }
