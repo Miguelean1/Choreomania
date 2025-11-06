@@ -38,12 +38,6 @@ body {
     z-index: 1000;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
-    color: white;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
 
 .controls {
     display: flex;
@@ -108,7 +102,7 @@ body {
     color: black;
     padding: 6px 16px;
     border: 3px solid black;
-    border-radius: 0;
+    border-radius: 15px;
     font-family: "Pokemon GB", monospace, sans-serif;
     font-size: 20px;
     letter-spacing: 0.5px;
@@ -120,13 +114,14 @@ body {
 .image-container {
     width: 100%;
     height: 180px;
-    border-radius: 15px;
+    border-radius: 30px;
     overflow: hidden;
     border: 4px solid black;
     background: #f0f0f0;
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    z-index: 1;
     
 }
 
@@ -142,21 +137,22 @@ body {
 }
 .stageRocket {
     position: fixed;
-    bottom: 0%;
-    left: 52%;
+    bottom: 5%;
+    left: 58%;
     width: 100%;
     max-width: 500px;
     display: flex;
     justify-content: center;
-    z-index: 1;
+    z-index: 3;
     transform: translateX(-50%);
 }
 
 .stageRocket img {
    
-    height: auto;
     object-fit: contain;
-    
+    height: auto;
+    width: 1000px;
+     left: 62%;
     
 }
 #dialogbox {
@@ -211,50 +207,7 @@ body {
 }
 
 
-.characters-section {
-    width: 100%;
-    max-width: 600px;
-}
 
-.characters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 10px;
-}
-
-.character-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    transition: transform 0.2s;
-}
-
-
-.character-image {
-    width: 120px;
-    height: 160px;
-    border: 4px solid black;
-    border-radius: 15px;
-    overflow: hidden;
-    background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-color-dark) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-
-.character-name {
-    background: white;
-    border: 3px solid black;
-    border-radius: 20px;
-    padding: 6px 20px;
-    font-family: "Pokemon GB", monospace;
-    font-size: 16px;
-    letter-spacing: 0.5px;
-    font-weight: bold;
-}
 
 
 @media (max-width: 768px) {
@@ -269,4 +222,34 @@ body {
     position: absolute;
     bottom: 0;
     z-index: 3;
+}
+.playersOnStage {
+    display: flex;              
+    flex-direction: row;        
+    justify-content: center;   
+    align-items: flex-end;      
+    gap: 20px;                  
+    position: fixed;            
+    bottom: 15%;                
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3; 
+}
+.playersOnStage img {
+    width: 120px;    
+    height: 200px;
+    object-fit: cover;
+    
+    
+}
+
+.player1 img{
+    height: 90%;
+    width: 90%;
+    
+}
+.player2 img {
+     transform: translateY(24px); 
+    bottom: 0;
+    
 }
