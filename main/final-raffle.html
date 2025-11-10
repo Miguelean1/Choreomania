@@ -1,22 +1,52 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Final Raffle</title>
-  <link rel="stylesheet" href="../styles/final-raffle.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>CHOREOMANIA</title>
+    <link rel="stylesheet" href="../styles/final-raffle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ea3042a44d.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-  <div class="raffle-container">
-    <img class="bg-raffle" src="https://res.cloudinary.com/dwldyiruu/image/upload/v1762161799/View_-_Final_raffle_iwbiyv.png" alt="">
-    <div class="benefactor-block">
-      <div class="benefactor-header">THE BENEFACTOR</div>
-      <img class="benefactor-img" src="https://res.cloudinary.com/dwldyiruu/image/upload/v1762162119/Rectangle_1490_gugg0l.png" alt="">
+
+    <nav class="navbar">
+        <div class="controls">
+            <button class="btn" id="muteBtn" onclick="muteMusic()">
+                <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
+            </button>
+            <button class="btn" onclick="returnHome()">
+                <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="main-layout">
+        <div class="top-section">
+            <div class="card-container">
+                <div class="image-wrapper">
+                    <div class="name-tag">THE BENEFACTOR</div>
+                    <div class="image-container">
+                        <img src="https://res.cloudinary.com/dwldyiruu/image/upload/v1762773594/Rectangle_1491_h3jumc.png" alt="Benefactor avatar">
+                    </div>
+                </div>
+                <div id="dialogbox" class="normal-style">Ah… look at you. The final two. Out of billions, only you remain,  the last flickers of humanity's defiance. |You've danced, you've endured, and the world has watched every trembling step…
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="raffle-dialog">
-      <span id="dialog-text"></span>
-      <span id="arrow">▼</span>
+
+    <!-- Personajes en el escenario -->
+    <div class="characters-stage">
+        <img src="https://res.cloudinary.com/dwldyiruu/image/upload/v1762769866/Group_90_r1puec.png" alt="Characters" class="characters-img">
     </div>
-  </div>
-  <script src="../scripts/final-raffle.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../scripts/final-raffle.js"></script>
 </body>
+
 </html>
