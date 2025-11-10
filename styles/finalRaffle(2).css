@@ -82,6 +82,9 @@ body {
     max-width: 900px;
     display: flex;
     justify-content: center;
+     padding-top: 0;
+  padding-bottom: 25%;
+
 }
 
 .card-container {
@@ -135,26 +138,7 @@ body {
     
 
 }
-.stageRocket {
-    position: fixed;
-    bottom: 5%;
-    left: 58%;
-    width: 100%;
-    max-width: 500px;
-    display: flex;
-    justify-content: center;
-    z-index: 3;
-    transform: translateX(-50%);
-}
 
-.stageRocket img {
-   
-    object-fit: contain;
-    height: auto;
-    width: 1000px;
-     left: 62%;
-    
-}
 #dialogbox {
     cursor: pointer;
     font-size: 12px;
