@@ -27,6 +27,7 @@ body {
 }
 
 
+
 .navbar {
     position: fixed;
     top: 0;
@@ -176,6 +177,76 @@ body {
 }
 
 
+
+.raffle-container {
+  position: relative;
+  width: 100vw;
+  min-height: 100vh;
+}
+.bg-raffle {
+  position: absolute;
+  width: 100vw;
+  min-height: 100vh;
+  left: 0;
+  top: 0;
+  object-fit: cover;
+  z-index: 1;
+}
+.benefactor-block {
+  position: absolute;
+  left: 50%;
+  top: 80px;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 520px;
+  height: auto;
+  overflow: visible;
+}
+.benefactor-header {
+  position: absolute;
+  top: -45px;
+  left: -30px;
+  font-family: "Courier Prime", monospace;
+  font-size: 23px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  padding: 10px 20px;
+  background: white;
+  border: 4px solid black;
+  border-radius: 8px;
+  z-index: 11;
+}
+.benefactor-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.raffle-dialog {
+  position: absolute;
+  top: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 620px;
+  height: 44px;
+  background: #fff;
+  border-radius: 8px;
+  border: 3px solid #222;
+  display: flex;
+  align-items: center;
+  font-family: "Courier Prime", monospace;
+  font-size: 16px;
+  font-weight: 400;
+  padding-left: 18px;
+  color: #202020;
+  z-index: 20;
+}
+#dialog-text {
+  font-family: "Courier Prime", monospace;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0px;
+}
+
 #arrow {
     width: 0;
     height: 0;
@@ -186,6 +257,7 @@ body {
     right: 12px;
     animation: bounce 0.5s ease-in-out infinite alternate;
 }
+
 
 
 @keyframes bounce {
@@ -225,3 +297,14 @@ body {
         bottom: 28%;
     }
 }
+
+.raffle-dialog:hover #arrow,
+.raffle-dialog.finished #arrow {
+  opacity: 1;
+  animation: bounce 0.8s infinite;
+}
+@keyframes bounce {
+  0%,100% { transform: translateY(0);}
+  50% { transform: translateY(-7px);}
+}
+

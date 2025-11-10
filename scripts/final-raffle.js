@@ -16,6 +16,7 @@ function clearAllTimeouts() {
     activeTimeouts = [];
 }
 
+
 function returnHome() {
     Swal.fire({
         title: "Do you want to go to the homepage?",
@@ -147,3 +148,8 @@ document.addEventListener('keyup', function(e) {
         }
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(typeDialog, 400);
+});
+
