@@ -1,38 +1,145 @@
-const fullText = 
-`Congratulations, contestant. You've done what few could, proved that humanity still endures. Your rhythm, your will, your spirit… all unmatched.
-But the terms have changed. Survival isn’t a reward, it’s a duty. New Esperanza needs workers, not dreamers.
-Your new destination: Labor Complex Nine, orbiting Saturn’s rings. There, you'll build the future your dance once promised.
-Rejoice, champion. You’ve earned your place among the stars. The contract is already signed… just not the one you expected.`;
+const timer = 30;
+var messageStrings;
+var dialogbox;
+var currMessage;
+var messageId;
+var applytitlestyle = false;
+var loadingComplete = true;
+var activeTimeouts = [];
 
-let currentText = "";
-let currentIndex = 0;
-let isTyping = true;
+var arrow = document.createElement("div");
+arrow.id = "arrow";
 
-function typeText() {
-    const dialogElement = document.getElementById('dialog-text');
-    const arrow = document.getElementById('arrow');
-    
-    if (currentIndex < fullText.length) {
-        currentText += fullText[currentIndex];
-        dialogElement.innerHTML = currentText.replace(/\n/g, "<br>");
-        currentIndex++;
-        setTimeout(typeText, 26); 
-    } else {
-        isTyping = false;
-        arrow.style.display = 'block';
-    }
+function clearAllTimeouts() {
+    activeTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    activeTimeouts = [];
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(typeText, 600); 
+function returnHome() {
+    Swal.fire({
+        title: "Do you want to go to the homepage?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: "No"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire("Saved!", "", "success");
+        } else if (result.isDenied) {
+            Swal.fire("Changes are not saved", "", "info");
+        }
+    });
+}
+
+function muteMusic() {
+    const icon = document.querySelector('#muteBtn i');
+    icon.classList.toggle('fa-volume-xmark');
+    icon.classList.toggle('fa-volume-high');
+}
+
+function titleStyle() {
+    dialogbox.classList.remove('normal-style');
+    dialogbox.classList.add('title-style');
+}
+
+function normalStyle() {
+    dialogbox.classList.remove('title-style');
+    dialogbox.classList.add('normal-style');
+}
+
+function loadMessage(dialog) {
+    loadingComplete = false;
+    dialogbox.innerHTML = "";
+    
+    let i = 0;
+    function animateChar() {
+        if (i < dialog.length) {
+            dialogbox.innerHTML += dialog.charAt(i);
+            i++;
+            let timeoutId = setTimeout(animateChar, timer);
+            activeTimeouts.push(timeoutId);
+        } else {
+            dialogbox.innerHTML += "<br>";
+            if (!dialogbox.contains(arrow)) {
+                dialogbox.appendChild(arrow);
+            }
+            loadingComplete = true;
+            activeTimeouts = [];
+        }
+    }
+    animateChar();
+}
+
+function nextMessage() {
+    if (!loadingComplete) {
+        return;
+    }
+    
+    if (messageId >= messageStrings.length) {
+        messageId = 0;
+    }
+    
+    currMessage = messageStrings[messageId];
+    messageId++;
+    
+    if (applytitlestyle) {
+        if (messageId == 1 || messageId == messageStrings.length) {
+            titleStyle();
+        } else {
+            normalStyle();
+        }
+    }
+    
+    loadMessage(currMessage);
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    dialogbox = document.getElementById("dialogbox");
+    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
+    messageStrings = messageString.split('|');
+    
+    messageId = 0;
+    currMessage = messageStrings[messageId];
+    messageId++;
+    
+    dialogbox.innerHTML = "";
+    loadMessage(currMessage);
+    
+    dialogbox.addEventListener("click", function() {
+        if (!loadingComplete) {
+            clearAllTimeouts();
+            dialogbox.innerHTML = currMessage + "<br>";
+            if (!dialogbox.contains(arrow)) {
+                dialogbox.appendChild(arrow);
+            }
+            loadingComplete = true;
+        } else {
+            nextMessage();
+        }
+    });
 });
 
-document.getElementById('dialog-text').addEventListener('click', function() {
-    if (isTyping) {
-        currentText = fullText;
-        document.getElementById('dialog-text').innerHTML = currentText.replace(/\n/g, "<br>");
-        currentIndex = fullText.length;
-        isTyping = false;
-        document.getElementById('arrow').style.display = 'block';
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        
+        if (!loadingComplete) {
+            clearAllTimeouts();
+            dialogbox.innerHTML = currMessage + "<br>";
+            if (!dialogbox.contains(arrow)) {
+                dialogbox.appendChild(arrow);
+            }
+            loadingComplete = true;
+        }
+    }
+});
+
+document.addEventListener('keyup', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        
+        if (loadingComplete) {
+            nextMessage();
+        }
     }
 });
