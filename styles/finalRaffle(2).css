@@ -10,7 +10,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("https://res.cloudinary.com/dhhxrrgut/image/upload/v1762163731/View7_lpynpr.jpg");
+    background-image: url("https://res.cloudinary.com/dhhxrrgut/image/upload/v1762769649/View7_7_a4becr.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center top;
@@ -216,40 +216,3 @@ body {
     }
 }
 
-.people-crowd {
-    width: 90%;
-    height: 20%;
-    position: absolute;
-    bottom: 0;
-    z-index: 3;
-}
-.playersOnStage {
-    display: flex;              
-    flex-direction: row;        
-    justify-content: center;   
-    align-items: flex-end;      
-    gap: 20px;                  
-    position: fixed;            
-    bottom: 15%;                
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 3; 
-}
-.playersOnStage img {
-    width: 120px;    
-    height: 200px;
-    object-fit: cover;
-    
-    
-}
-
-.player1 img{
-    height: 90%;
-    width: 90%;
-    
-}
-.player2 img {
-     transform: translateY(24px); 
-    
-    
-}
