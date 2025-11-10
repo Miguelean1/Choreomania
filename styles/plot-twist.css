@@ -13,7 +13,7 @@ body {
     background-image: url("https://res.cloudinary.com/dwldyiruu/image/upload/v1762777079/View9_p38vpv.png");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center top;
+    background-position: center 50%;
     background-attachment: fixed;
     min-height: 100vh;
     font-family: "Pokemon GB", sans-serif;
@@ -21,7 +21,7 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    padding-top: 100px;
+    padding-top: 90px;
 }
 
 .navbar {
