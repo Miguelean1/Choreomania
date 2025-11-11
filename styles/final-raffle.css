@@ -296,9 +296,9 @@ body {
 .raffle-dialog:hover #arrow,
 .raffle-dialog.finished #arrow {
   opacity: 1;
-  animation: bounce 0.8s infinite;
+  animation: bounceHover 0.8s infinite;
 }
-@keyframes bounce {
+@keyframes bounceHover {
   0%,100% { transform: translateY(0);}
   50% { transform: translateY(-7px);}
 }
