@@ -1,7 +1,6 @@
 const STORAGE_KEY = 'myRegistrationGameState';
 const MAX_CONTESTANTS = 16;
 
-//reemplaza estas URLs de ejemplo con 16 URLs de cloudinary.
 const CLOUDINARY_IMAGE_URLS = [
     'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human1_cb8b7k.png',
     'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human2_xymp1q.png',
@@ -35,6 +34,7 @@ function generateRandomColor() {
 
 export const gameState = {
     contestants: [],
+    usedImageIndices: [],
     
     load() {
         try {
@@ -42,10 +42,7 @@ export const gameState = {
             if (data) {
                 const loadedState = JSON.parse(data);
                 this.contestants = loadedState.contestants || [];
-                
-                this.contestants.forEach((contestant, index) => {
-                    contestant.imagePath = this.getNextImagePath(index);
-                });
+                this.usedImageIndices = loadedState.usedImageIndices || [];
             }
         } catch (e) {
             console.error("Error loading status from localStorage", e);
@@ -54,10 +51,11 @@ export const gameState = {
 
     save() {
         try {
-            // Guardamos solo los datos esenciales: id, name, color.
-            // La propiedad imagePath se recalcula en load(), haciendo el guardado más ligero.
             const stateToSave = {
-                contestants: this.contestants.map(({ id, name, color }) => ({ id, name, color })),
+                contestants: this.contestants.map(({ id, name, color, imagePath }) => 
+                    ({ id, name, color, imagePath })
+                ),
+                usedImageIndices: this.usedImageIndices,
             };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
         } catch (e) {
@@ -66,31 +64,44 @@ export const gameState = {
     },
 
     addContestant(name) {
-        const currentIndex = this.contestants.length;
-        
-        if (currentIndex >= MAX_CONTESTANTS) {
+        if (this.contestants.length >= MAX_CONTESTANTS) {
             return null; 
         }
+        
+        const imagePath = this.getNextAvailableImage();
         
         const newContestant = {
             id: generateUniqueId(),
             name: name.trim().toUpperCase(),
             color: generateRandomColor(),
-            // ASIGNAR imagePath AL CREAR:
-            imagePath: this.getNextImagePath(currentIndex), // <-- USAR getNextImagePath aquí
+            imagePath: imagePath,
         };
 
         this.contestants.push(newContestant);
         return newContestant;
     },
 
-    getNextImagePath(index) {
-        const urlIndex = index % MAX_CONTESTANTS;
-        
-        return CLOUDINARY_IMAGE_URLS[urlIndex];
-    },    
+    getNextAvailableImage() {
+        for (let i = 0; i < CLOUDINARY_IMAGE_URLS.length; i++) {
+            if (!this.usedImageIndices.includes(i)) {
+                this.usedImageIndices.push(i);
+                return CLOUDINARY_IMAGE_URLS[i];
+            }
+        }
+        const index = this.contestants.length % CLOUDINARY_IMAGE_URLS.length;
+        return CLOUDINARY_IMAGE_URLS[index];
+    },
 
     removeContestant(id) {
+        const contestant = this.contestants.find(c => c.id.toString() === id.toString());
+        
+        if (contestant) {
+            const imageIndex = CLOUDINARY_IMAGE_URLS.indexOf(contestant.imagePath);
+            if (imageIndex !== -1) {
+                this.usedImageIndices = this.usedImageIndices.filter(idx => idx !== imageIndex);
+            }
+        }
+        
         const initialLength = this.contestants.length;
         this.contestants = this.contestants.filter(c => c.id.toString() !== id.toString());
 
@@ -99,4 +110,3 @@ export const gameState = {
 };
 
 gameState.load();
-
