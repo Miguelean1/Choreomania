@@ -1,0 +1,144 @@
+/* reveal.css - Estilos específicos del reveal final */
+
+.reveal-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.rocket-icon {
+  color: #FFD700;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease, float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.congratulations-title {
+  font-size: 4rem;
+  font-weight: bold;
+  color: #FFD700;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+  margin-bottom: 3rem;
+  animation: fadeIn 0.5s ease 0.3s both;
+}
+
+.winner-display {
+  margin-bottom: 3rem;
+  animation: fadeIn 0.5s ease 0.6s both;
+}
+
+.winner-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  font-weight: bold;
+  margin: 0 auto 1.5rem;
+  border: 8px solid #FFD700;
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
+  animation: pulse 2s ease infinite;
+}
+
+.winner-name {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+.reveal-text {
+  max-width: 800px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 2rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease 1.5s both, glitch 0.3s ease 1.5s;
+}
+
+.reveal-text p {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  opacity: 0;
+  animation: fadeIn 0.5s ease both;
+}
+
+.reveal-text p:nth-child(1) { animation-delay: 2s; }
+.reveal-text p:nth-child(2) { animation-delay: 2.5s; }
+.reveal-text p:nth-child(3) { animation-delay: 3s; }
+.reveal-text p:nth-child(4) { animation-delay: 3.5s; }
+.reveal-text p:nth-child(5) { animation-delay: 4s; }
+
+.glitch-text {
+  color: #EF4444;
+  font-weight: bold;
+  font-size: 1.5rem !important;
+}
+
+.subtle-text {
+  color: #9CA3AF;
+  font-style: italic;
+}
+
+.signature {
+  color: #6B7280;
+  font-size: 1rem !important;
+  margin-top: 1.5rem !important;
+}
+
+.next-ceremony {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #FFD700;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease 4.5s both, pulse 2s ease 5s infinite;
+}
+
+#restart-btn {
+  background: #4B5563;
+  animation: fadeIn 0.5s ease 5s both;
+}
+
+#restart-btn:hover {
+  background: #374151;
+}
+
+@media (max-width: 768px) {
+  .congratulations-title {
+    font-size: 2.5rem;
+  }
+  
+  .winner-avatar {
+    width: 150px;
+    height: 150px;
+    font-size: 4rem;
+  }
+  
+  .winner-name {
+    font-size: 2rem;
+  }
+  
+  .reveal-text p {
+    font-size: 1.1rem;
+  }
+  
+  .next-ceremony {
+    font-size: 1.5rem;
+  }
+}

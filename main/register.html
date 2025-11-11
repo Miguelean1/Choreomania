@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registration - CHOREOMANIA</title>
+  <link rel="stylesheet" href="../estilos/styles.css">
+  <link rel="stylesheet" href="../estilos/register.css">
+</head>
+<body class="bg-register">
+  <div class="container">
+    <div class="header">
+      <h1 class="page-title">CONTESTANT REGISTRATION</h1>
+      <div class="counter-container">
+        <svg class="icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+          <circle cx="9" cy="7" r="4"></circle>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+        </svg>
+        <span id="counter" class="counter">0/16 REGISTERED</span>
+      </div>
+    </div>
+
+    <div class="input-section">
+      <input 
+        type="text" 
+        id="name-input" 
+        placeholder="Enter contestant name..." 
+        maxlength="20"
+        autocomplete="off"
+      >
+      <button id="add-btn" class="btn-add">ADD</button>
+    </div>
+
+    <div id="cards-container" class="contestants-grid contestants-grid-4"></div>
+
+    <div class="action-section">
+      <button id="start-ceremony-btn" class="btn-primary" disabled>
+        <svg class="icon-inline" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+        START CEREMONY
+      </button>
+    </div>
+  </div>
+
+  <script type="module" src="../scripts/register.js"></script>
+</body>
+</html>

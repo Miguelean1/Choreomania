@@ -1,3 +1,4 @@
+const STORAGE_KEY = 'myRegistrationGameState';
 const timer = 30;
 var messageStrings;
 var dialogbox;
@@ -7,23 +8,95 @@ var applytitlestyle = true;
 var loadingComplete = true;
 var skipNextPress = false;
 let isMessageSkipped = false;
+const playerData = JSON.parse(localStorage.getItem('contestants'))
+
+const CLOUDINARY_IMAGE_URLS = [
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human1_cb8b7k.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human2_xymp1q.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human3_snt7pj.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human4_sw23h1.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human5_u2tkyw.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human6_qqj6c0.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human7_wnbwzt.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human8_cpb8ny.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human9_zhmccs.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human12_vmwigz.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human10_kxw3mj.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human11_fpndst.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human14_yawyal.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449704/human13_vxfblm.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human16_l27dtq.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human15_eyc0jx.png',
+];
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
+var readyToStartRaffle = false;
+var isRaffleStarted = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const grid = document.getElementById("charactersGrid");
+
+    let storedData;
+
+    try {
+        storedData = JSON.parse(localStorage.getItem(STORAGE_KEY)); // usa la misma key que STORAGE_KEY
+    } catch (error) {
+        console.error("Error leyendo localStorage:", error);
+        storedData = null;
+    }
+
+    // Asegurarse de que existe y tiene contestants
+    const players = storedData?.contestants ?? [];
+
+    if (players.length === 0) {
+        grid.innerHTML = "<p>No hay jugadores guardados.</p>";
+        return;
+    }
+
+    players.forEach((player, index) => {
+        const card = document.createElement("div");
+        card.classList.add("character-card");
+
+        card.innerHTML = `
+      <div class="character-image"
+           style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};"
+           id="playerBox${index + 1}">
+        <img src="${player.imagePath || 'https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png'}"
+             alt="${player.name}">
+      </div>
+      <div class="character-name">${player.name}</div>
+    `;
+
+        grid.appendChild(card);
+    });
+});
+
+
+arrow.addEventListener("click", function (e) {
+    e.stopPropagation();
+    if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
+        isRaffleStarted = true;
+        animateRaffle();
+    } else if (loadingComplete && !isRaffleStarted) {
+        nextMessage();
+    }
+});
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
         dialogbox = document.getElementById("dialogbox");
         var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
-        // Dividir por || para separar mensajes
+
         messageStrings = messageString.split("||").map((msg) => msg.trim());
         dialogbox.innerHTML = "";
         messageId = 0;
         currMessage = messageStrings[messageId];
         nextMessage();
 
-        document.getElementById("dialogbox").addEventListener("click", function () {
+        document.getElementById("dialogbox").addEventListener("click", function (e) {
+
             if (!loadingComplete) {
                 clearTimeouts();
                 dialogbox.innerHTML = currMessage;
@@ -31,7 +104,14 @@ document.addEventListener(
                     dialogbox.appendChild(arrow);
                 }
                 loadingComplete = true;
+            } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
+
+                isRaffleStarted = true;
+
+                e.stopPropagation();
+                animateRaffle();
             } else if (!skipNextPress) {
+
                 nextMessage();
             } else {
                 skipNextPress = false;
@@ -79,14 +159,16 @@ function nextMessage() {
         return;
     }
 
-    // Si llegamos al final, volver al principio
     if (messageId >= messageStrings.length) {
         messageId = 0;
     }
 
     currMessage = messageStrings[messageId];
 
-    // Siempre aplicar normal-style (que tiene negrita)
+
+    readyToStartRaffle = (messageId === messageStrings.length - 1);
+
+
     normalStyle();
 
     messageId++;
@@ -102,6 +184,11 @@ function loadMessage(dialog) {
             if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
                 loadingComplete = true;
+                if (readyToStartRaffle) {
+                    arrow.classList.add("raffle-ready");
+                } else {
+                    arrow.classList.remove("raffle-ready");
+                }
             }
         }, timer * i);
     }
@@ -139,63 +226,32 @@ function clearTimeouts() {
     }
 }
 
-// Utils para aleatorio
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+// ============================================
+// SISTEMA DE SORTEO (usando módulo raffle.js)
+// ============================================
 
-// Obtén todos los playerBox (del 1 al 16)
-const playerBoxes = [];
-for (let i = 1; i <= 16; i++) {
-    playerBoxes.push(document.getElementById(`playerBox${i}`));
-}
+// Inicializar el sistema de sorteo cuando el DOM esté listo
+let raffleSystem = null;
 
-const shadowColors = [
-    "rgba(255, 107, 157, 0.7)",
-    "rgba(254, 202, 87, 0.7)",
-    "rgba(162, 155, 254, 0.7)",
-    "rgba(95, 39, 205, 0.7)",
-    "rgba(196, 69, 105, 0.7)",
-    "rgba(238, 90, 111, 0.7)",
-    "rgba(108, 92, 231, 0.7)",
-    "rgba(76, 201, 240, 0.7)",
-];
-
-// Efecto "raffle"
+// Función wrapper para mantener compatibilidad con el código existente
 function animateRaffle() {
-    // Limpia shadows previas
-    playerBoxes.forEach((box) => (box.style.boxShadow = ""));
-
-    // Animación de brillos random
-    let interval = setInterval(() => {
-        playerBoxes.forEach((box) => {
-            const color = shadowColors[getRandomInt(0, shadowColors.length - 1)];
-            box.style.boxShadow = `0 0 25px 6px ${color}`;
+    if (!raffleSystem) {
+        // Inicializar el sistema de sorteo con la configuración actual
+        raffleSystem = new RaffleSystem({
+            playerBoxSelector: '.character-image', // Selector CSS de los elementos
+            totalPlayers: 16,                      // Total de jugadores
+            winnersCount: 8,                       // Cantidad a seleccionar
+            animationDuration: 2000,               // Duración de la animación
+            selectedClass: 'selected',             // Clase CSS para seleccionados
+            glowColor: 'gold'                      // Color del brillo
         });
-    }, 150);
+        raffleSystem.init();
+    }
 
-    // Tras tiempo, selecciona 8 aleatorios y detiene animación
-    setTimeout(() => {
-        clearInterval(interval);
-        playerBoxes.forEach((box) => (box.style.boxShadow = "")); // Limpia todos
-
-        // Elige 8 únicos aleatorios
-        let selectedIndices = [];
-        while (selectedIndices.length < 8) {
-            let idx = getRandomInt(0, playerBoxes.length - 1);
-            if (!selectedIndices.includes(idx)) selectedIndices.push(idx);
-        }
-
-        playerBoxes.forEach((box, idx) => {
-            if (selectedIndices.includes(idx)) {
-                box.classList.add("selected");
-                box.style.boxShadow = "0 0 10px 5px gold";
-            } else {
-                box.classList.remove("selected");
-                box.style.boxShadow = "";
-            }
-        });
-    }, 2000);
+    // Ejecutar el sorteo
+    raffleSystem.start((selectedIndices) => {
+        console.log('Sorteo completado. Índices seleccionados:', selectedIndices);
+        // Aquí puedes agregar lógica adicional después del sorteo si es necesario
+    });
 }
 
-document.querySelector(".raffle-btn").addEventListener("click", animateRaffle);
