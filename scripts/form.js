@@ -1,4 +1,4 @@
-import { gameState } from "./gameState.js"; 
+const { gameState } = require('./gameState.js');
 
 const form = document.getElementById('form'); 
 const nameInput = document.getElementById('name'); 
@@ -172,6 +172,9 @@ if (restartBtn) {
 }
 
 init();
+
+
+module.exports = { addCharacter, removeCharacter, updateUI, createCharacterCard };
 
 
 
