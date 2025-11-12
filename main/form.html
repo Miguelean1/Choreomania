@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,41 +12,44 @@
     <script src="https://kit.fontawesome.com/ea3042a44d.js" crossorigin="anonymous"></script>
     <title>CHOREOMANIA</title>
 </head>
-    <body>
-        <nav class="navbar">
-            <div class="left-spacer"></div>
-            <div class="counter-container">
-                <span id="counter" class="counter">0/16 REGISTERED</span>
-            </div>
-            <div class="controls">
-                <button class="btn" id="muteBtn" onclick="toggleMute()">
-                    <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
-                </button>
-                <button class="btn" onclick="restartGame()">
-                    <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
-                </button>
-            </div>
-        </nav>
-        
-        
-        <marquee></marquee>
-    
-        <div class="terminal-content">
-            <div class="characters-grid" id="charactersGrid">
-            
-            </div>
+
+<body>
+    <nav class="navbar">
+        <div class="left-spacer"></div>
+        <div class="counter-container">
+            <span id="counter" class="counter">0/16 REGISTERED</span>
         </div>
-        
-        <div class="container_form">
-            <form id="form">
-                <div class="form-group">
-                    <input type="text" id="name" placeholder="NAME..." required>
-                    <button type="button" class="add" id="addBtn"><i class="fa-solid fa-plus" style="color:#000000"></i></button>
-                    <button type="button" class="begin">GO!</button>
-                </div>    
-            </form>
+        <div class="controls">
+            <button class="btn" id="muteBtn" onclick="toggleMute()">
+                <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
+            </button>
+            <button class="btn" onclick="restartGame()">
+                <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
+            </button>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-        <script src="../scripts/form.js" type="module"></script>
-    </body>
+    </nav>
+
+
+    <marquee></marquee>
+
+    <div class="terminal-content">
+        <div class="characters-grid" id="charactersGrid">
+
+        </div>
+    </div>
+
+    <div class="container_form">
+        <form id="form">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="NAME..." required>
+                <button type="button" class="add" id="addBtn"><i class="fa-solid fa-plus"
+                        style="color:#000000"></i></button>
+                <button type="button" class="begin">GO!</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../scripts/form.js" type="module"></script>
+</body>
+
 </html>

@@ -56,13 +56,15 @@ function returnHome() {
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: `No`
+        denyButtonText: `No`,
+        background: '#ffffff',
+        color: '#000000'
     }).then((result) => {
 
         if (result.isConfirmed) {
-            Swal.fire("Saved!", "", "success");
+            Swal.fire({ title: "Saved!", icon: "success", background: '#ffffff', color: '#000000' });
         } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
+            Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
         }
     });
 }

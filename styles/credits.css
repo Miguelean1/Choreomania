@@ -38,8 +38,13 @@ body::before {
 }
 
 @keyframes bg-zoom {
-    from { transform: scale(1); }
-    to   { transform: scale(1.5); }
+    from {
+        transform: scale(1);
+    }
+
+    to {
+        transform: scale(1.5);
+    }
 }
 
 
@@ -127,15 +132,15 @@ li {
 }
 
 .img-us {
-    max-width:100%; 
-    display:block; 
-    margin:0 auto;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
 }
 
 .img-logo {
-    max-width:200px; 
-    display:block; 
-    margin:0 auto;
+    max-width: 200px;
+    display: block;
+    margin: 0 auto;
 }
 
 

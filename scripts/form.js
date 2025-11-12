@@ -91,7 +91,9 @@ function returnHome() {
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: "No"
+        denyButtonText: "No",
+        background: '#ffffff',
+        color: '#000000'
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
@@ -99,6 +101,8 @@ function returnHome() {
                 timer: 1000,
                 showConfirmButton: false,
                 allowOutsideClick: false,
+                background: '#ffffff',
+                color: '#000000',
                 didOpen: () => {
                     Swal.showLoading();
                 }
