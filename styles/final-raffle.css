@@ -51,14 +51,12 @@ body {
 .btn {
     padding: 5px 5px;
     border: 4px solid rgb(0, 0, 0);
-    box-shadow: 2px 2px 2px 2px black;
     background: rgb(255, 255, 255);
     color: white;
     font-size: 16px;
     font-weight: 600;
+    transition: transform 0.15s ease;
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -300,9 +298,9 @@ body {
 .raffle-dialog:hover #arrow,
 .raffle-dialog.finished #arrow {
   opacity: 1;
-  animation: bounce 0.8s infinite;
+  animation: bounceHover 0.8s infinite;
 }
-@keyframes bounce {
+@keyframes bounceHover {
   0%,100% { transform: translateY(0);}
   50% { transform: translateY(-7px);}
 }
