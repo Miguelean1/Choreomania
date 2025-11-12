@@ -37,12 +37,12 @@ function muteMusic() {
     icon.classList.toggle('fa-volume-high');
 }
 
-function titleStyle(){
+function titleStyle() {
     dialogbox.classList.remove('normal-style');
     dialogbox.classList.add('title-style');
 }
 
-function normalStyle(){
+function normalStyle() {
     dialogbox.classList.remove('title-style');
     dialogbox.classList.add('normal-style');
 }
@@ -93,7 +93,7 @@ function nextMessage() {
     loadMessage(currMessage);
 }
 
-document.addEventListener("DOMContentLoaded", function(){
+document.addEventListener("DOMContentLoaded", function() {
     dialogbox = document.getElementById("dialogbox");
     var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
     messageStrings = messageString.split('|');
@@ -107,7 +107,6 @@ document.addEventListener("DOMContentLoaded", function(){
     
     dialogbox.addEventListener("click", function() {
         if (!loadingComplete) {
-            
             clearAllTimeouts();
             dialogbox.innerHTML = currMessage + "<br>";
             if (!dialogbox.contains(arrow)) {
@@ -115,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function(){
             }
             loadingComplete = true;
         } else {
-            
             nextMessage();
         }
     });
@@ -126,7 +124,6 @@ document.addEventListener('keydown', function(e) {
         e.preventDefault();
         
         if (!loadingComplete) {
-           
             clearAllTimeouts();
             dialogbox.innerHTML = currMessage + "<br>";
             if (!dialogbox.contains(arrow)) {
