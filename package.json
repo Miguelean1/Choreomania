@@ -210,5 +210,12 @@
   "bugs": {
     "url": "https://github.com/Miguelean1/Choreomania/issues"
   },
+<<<<<<< HEAD
   "homepage": "https://github.com/Miguelean1/Choreomania#readme"
+=======
+  "homepage": "https://github.com/Miguelean1/Choreomania#readme",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+>>>>>>> julia
 }
