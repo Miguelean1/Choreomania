@@ -51,7 +51,6 @@ body {
 .btn {
     padding: 5px 5px;
     border: 4px solid rgb(0, 0, 0);
-    box-shadow: 2px 2px 2px 2px black;
     background: rgb(255, 255, 255);
     color: white;
     font-size: 16px;
@@ -124,7 +123,7 @@ body {
 .image-container {
     width: 100%;
     height: 180px;
-    border-radius: 30px;
+    border-radius: 15px;
     overflow: hidden;
     border: 4px solid black;
     background: #f0f0f0;
