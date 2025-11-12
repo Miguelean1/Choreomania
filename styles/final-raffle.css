@@ -270,24 +270,19 @@ body {
 
 .characters-stage {
     position: fixed;
-    bottom: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 260px;
-    height: auto;
-    z-index: 5;
-    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 25%;
+    
+    
 }
 
-
-
-.characters-img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    display: block;
+.left-player, .right-player {
+    position: relative;
+    top: 44vh; 
+    
 }
-
 
 @media (max-width: 768px) {
     .characters-stage {
