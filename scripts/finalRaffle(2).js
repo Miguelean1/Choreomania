@@ -3,18 +3,40 @@ var messageStrings;
 var dialogbox;
 var currMessage;
 var messageId;
-var applytitlestyle = false;
+var applytitlestyle = true;
 var loadingComplete = true;
-var activeTimeouts = [];
+var skipNextPress = false;
+let isMessageSkipped = false;
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
 
-// AQUI ESTA PASANDO ALGO
-function clearAllTimeouts() {
-    activeTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
-    activeTimeouts = [];
-}
+document.addEventListener("DOMContentLoaded", function () {
+    dialogbox = document.getElementById("dialogbox");
+    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
+    messageStrings = messageString.split('|');
+    dialogbox.innerHTML = "";
+    messageId = 0;
+    currMessage = messageStrings[messageId];
+    nextMessage();
+
+    document.getElementById("dialogbox").addEventListener("click", function () {
+        if (!loadingComplete) {
+            clearTimeouts();
+            dialogbox.innerHTML = currMessage;
+            if (!dialogbox.contains(arrow)) {
+                dialogbox.appendChild(arrow);
+            }
+            loadingComplete = true;
+        } else if (!skipNextPress) {
+            nextMessage();
+        } else {
+            skipNextPress = false;
+        }
+    });
+}, false);
+
+
 
 function returnHome() {
     Swal.fire({
@@ -22,8 +44,9 @@ function returnHome() {
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: "No"
+        denyButtonText: `No`
     }).then((result) => {
+
         if (result.isConfirmed) {
             Swal.fire("Saved!", "", "success");
         } else if (result.isDenied) {
@@ -38,51 +61,29 @@ function muteMusic() {
     icon.classList.toggle('fa-volume-high');
 }
 
-function titleStyle(){
+
+function titleStyle() {
     dialogbox.classList.remove('normal-style');
     dialogbox.classList.add('title-style');
 }
 
-function normalStyle(){
+function normalStyle() {
     dialogbox.classList.remove('title-style');
     dialogbox.classList.add('normal-style');
 }
 
-function loadMessage(dialog) {
-    loadingComplete = false;
-    dialogbox.innerHTML = "";
-    
-    let i = 0;
-    function animateChar() {
-        if (i < dialog.length) {
-            dialogbox.innerHTML += dialog.charAt(i);
-            i++;
-            let timeoutId = setTimeout(animateChar, timer);
-            activeTimeouts.push(timeoutId);
-        } else {
-            dialogbox.innerHTML += "<br>";
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
-            }
-            loadingComplete = true;
-            activeTimeouts = [];
-        }
-    }
-    animateChar();
-}
-
 function nextMessage() {
-    if (!loadingComplete) {
+    if (!loadingComplete || skipNextPress) {
+        skipNextPress = false;
         return;
     }
-    
+
     if (messageId >= messageStrings.length) {
         messageId = 0;
     }
-    
     currMessage = messageStrings[messageId];
     messageId++;
-    
+
     if (applytitlestyle) {
         if (messageId == 1 || messageId == messageStrings.length) {
             titleStyle();
@@ -90,60 +91,48 @@ function nextMessage() {
             normalStyle();
         }
     }
-    
-    loadMessage(currMessage);
+    loadMessage(currMessage.split(''));
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-    dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
-    messageStrings = messageString.split('|');
-    
-    messageId = 0;
-    currMessage = messageStrings[messageId];
-    messageId++;
-    
+function loadMessage(dialog) {
+    loadingComplete = false;
     dialogbox.innerHTML = "";
-    loadMessage(currMessage);
-    
-    dialogbox.addEventListener("click", function() {
-        if (!loadingComplete) {
-            
-            clearAllTimeouts();
-            dialogbox.innerHTML = currMessage + "<br>";
-            if (!dialogbox.contains(arrow)) {
+    for (let i = 0; i < dialog.length; i++) {
+        setTimeout(function () {
+            dialogbox.innerHTML += dialog[i];
+            if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
+                loadingComplete = true;
             }
-            loadingComplete = true;
-        } else {
-            
-            nextMessage();
-        }
-    });
-});
+        }, timer * i);
+    }
+}
 
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        
-        if (!loadingComplete) {
-           
-            clearAllTimeouts();
-            dialogbox.innerHTML = currMessage + "<br>";
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
-            }
-            loadingComplete = true;
+document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
+        clearTimeouts();
+        dialogbox.innerHTML = currMessage;
+        if (!dialogbox.contains(arrow)) {
+            dialogbox.appendChild(arrow);
         }
+        loadingComplete = true;
+        isMessageSkipped = true;
     }
 });
 
-document.addEventListener('keyup', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        
-        if (loadingComplete) {
+document.addEventListener('keyup', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
+        if (!isMessageSkipped) {
             nextMessage();
         }
+        isMessageSkipped = false;
     }
 });
+
+function clearTimeouts() {
+    var highestTimeoutId = setTimeout(";");
+    for (var i = 0; i < highestTimeoutId; i++) {
+        clearTimeout(i);
+    }
+}
+

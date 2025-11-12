@@ -10,7 +10,7 @@ var activeTimeouts = [];
 var arrow = document.createElement("div");
 arrow.id = "arrow";
 
-// AQUI ESTA PASANDO ALGO
+
 function clearAllTimeouts() {
     activeTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
     activeTimeouts = [];
