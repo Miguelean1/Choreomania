@@ -136,10 +136,19 @@ nameInput.addEventListener('keypress', (e) => {
     }
 });
 
+function nextScreen() {
+    document.body.style.transition = 'opacity 0.8s';
+    document.body.style.opacity = '0';
+
+    setTimeout(() => {
+        window.location.href = 'form.html';
+    }, 800);
+}
+
 beginBtn.addEventListener('click', (e) => {
     if (gameState.contestants.length === MAX_CHARACTERS) {
         Swal.fire('All set!', 'The ascension ceremony is about to begin....', 'success');
-        // window.location.href = './round.html'; 
+        window.location.href = './round.html'; 
 
     } else {
         Swal.fire({

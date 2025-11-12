@@ -160,8 +160,7 @@ function nextScreen() {
     document.body.style.opacity = '0';
 
     setTimeout(() => {
-        alert('Loading next screen...');
-        document.body.style.opacity = '1';
+        window.location.href = 'form.html';
     }, 800);
 }
 
