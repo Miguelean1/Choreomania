@@ -281,12 +281,46 @@ body {
     gap: 25%;
 }
 
+
 .left-player,
 .right-player {
-    width: 100%;
     position: relative;
-    top: 35vh;
+    top: 33vh;
     scale: 80%;
+}
+
+
+.character-card {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    transition: transform 0.2s;
+}
+
+
+.character-image {
+    width: 120px;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+}
+
+
+.character-name {
+    background: white;
+    border: 3px solid black;
+    border-radius: 20px;
+    padding: 6px 20px;
+    font-family: "Pokemon GB", monospace;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    font-weight: bold;
 }
 
 @media (max-width: 768px) {
