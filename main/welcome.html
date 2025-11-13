@@ -19,8 +19,8 @@
     <nav class="navbar">
         <div class="controls">
             
-            <button class="btn" id="muteBtn" onclick="muteMusic('../assets/sounds/welcome-music.mp3')">
-                <i class="fa-solid fa-volume-high" style="color: #000000;"></i>
+            <button class="btn" id="muteBtn" onclick="toggleMute()">
+                <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
             </button>
             
             <button class="btn" onclick="returnHome()">
@@ -30,12 +30,6 @@
         </div>
     </nav>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            initMusic('../assets/sounds/welcome-music.mp3');
-        });
-    </script>
-
     <div class="container">
         <button class="start-btn" onclick="nextScreen()">START</button>
     </div>
@@ -44,6 +38,13 @@
     
     <script src="../scripts/welcome.js"></script>
 
-    </body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initAudio('../assets/sounds/welcome-music.mp3');
+            
+            checkMusicPreference();
+        });
+    </script>
 
+    </body>
 </html>
