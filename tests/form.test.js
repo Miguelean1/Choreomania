@@ -1,7 +1,19 @@
-const { gameState } = require('./gameState.js');
-const { addCharacter } = require('./form.js');
-import fs from 'fs';
-import path from "path";
+jest.mock('../scripts/gameState', () => ({
+    gameState: {
+        contestans: [],
+        addContestants: jest.fn((name) => ({ 
+            id: '1', 
+            name, 
+            color: '#fff' , 
+            imagePath: 'avatar.png'
+        })),
+        removeContestant: jest.fn(),
+        save: jest.fn(),
+    }
+}));
+
+const { gameState } = require('../scripts/gameState.js');
+const { addCharacter, initForm } = require('../scripts/form.js');
 
 const html = `
     <input id='name' />
@@ -12,18 +24,7 @@ const html = `
 
 document.body.innerHTML = html;
 
-jest.mock('../scripts/gameState', () => ({
-    gameState: {
-        contestans: [],
-        addContestants: jest.fn((name) => ({ id: '1', name, color: '#fff' , imagePath: 'avatar.png'})),
-        removeContestant: jest.fn(),
-        save: jest.fn(),
-    }
-}))
-
-
-const addCharacter = require('../main/form.js');
-
+initForm();
 
 describe('simple charter tests', () => {
     
@@ -31,15 +32,23 @@ describe('simple charter tests', () => {
         gameState.contestants = []
         document.getElementById('characterGrid').innerHTML = '';
         document.getElementById('name').vale = '';
-    })
+        gameState.addContestant.mockClear();
+        gameState.removeContestant.mockClear();
+        gameState.save.mockClear();
+    });
 
     test('add Character adds a new character', () => {
-        document.getElementById('name').value = 'Julia';
+        const nameImput = document.getElementById('name');
+        nameImput.value = 'Julia';
+        
         addCharacter();
 
         expect(gameState.addContestant).toHaveBeenCalledWith('Julia');
-        expect(document.getElementById('charactersGrid').children.length).toBe(1)
-    })
-
-
-})
+        
+        const grid = document.getElementById('charactersGrid');
+        expect(grid.children.length).toBe(1);
+        expect(grid.children[0].querySelector('.character-name').textContent.toBe('Julia'))
+        
+        expect(gameState.save).toHaveBeenCalledWith();
+    });
+});
