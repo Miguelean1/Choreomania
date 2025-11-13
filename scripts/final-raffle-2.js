@@ -53,7 +53,6 @@ function normalStyle(){
 
 function loadMessage(dialog) {
     loadingComplete = false;
-    // Lock the dialog height to avoid layout jump / flicker when clearing content
     if (dialogbox) {
         dialogbox.style.minHeight = dialogbox.offsetHeight + 'px';
     }
@@ -72,7 +71,6 @@ function loadMessage(dialog) {
                 dialogbox.appendChild(arrow);
             }
             loadingComplete = true;
-            // allow the box to resize again for the next message
             if (dialogbox) {
                 dialogbox.style.minHeight = '';
             }
