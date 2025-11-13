@@ -11,28 +11,31 @@ let isMessageSkipped = false;
 const playerData = JSON.parse(localStorage.getItem('contestants'))
 
 const CLOUDINARY_IMAGE_URLS = [
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human1_cb8b7k.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human2_xymp1q.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human3_snt7pj.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human4_sw23h1.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human5_u2tkyw.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human6_qqj6c0.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human7_wnbwzt.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human8_cpb8ny.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human9_zhmccs.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human12_vmwigz.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human10_kxw3mj.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human11_fpndst.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human14_yawyal.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449704/human13_vxfblm.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human16_l27dtq.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human15_eyc0jx.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023753/RIPPLE_0000_CHAR-_0001_Capa-14_kqirac.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023753/RIPPLE_0001_CHAR-_0002_Capa-12_k4iunv.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0004_CHAR-_0005_Capa-6_mszms8.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0003_CHAR-_0004_Capa-7_rjeh5s.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0006_CHAR-_0007_Capa-10_v6tmdw.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0007_CHAR-_0008_Capa-9_mdfroc.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0005_CHAR-_0006_Capa-8_y10w3s.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0002_CHAR-_0003_Capa-11_l0bqce.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023757/RIPPLE_0026_CHAR-_0000_Capa-15_hwg0i1.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023997/human13_3_fawtvf.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024100/human10_3_u4bhhr.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human11_3_worvg4.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human12_3_ew26jd.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human14_3_omdjsg.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024103/human15_3_ngsfyp.png',
+    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024103/human16_3_awsji6.png',
 ];
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
 var readyToStartRaffle = false;
 var isRaffleStarted = false;
+var raffleFinished = false;
+// Ruta a la que redirigir cuando termine el sorteo. Cámbiala según necesites.
+const POST_RAFFLE_REDIRECT = '../main/secondtrial.html';
 
 document.addEventListener("DOMContentLoaded", () => {
     const grid = document.getElementById("charactersGrid");
@@ -62,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="character-image"
            style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};"
            id="playerBox${index + 1}">
-        <img src="${player.imagePath || 'https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png'}"
+        <img class="principal-img" src="${player.imagePath || 'https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png'}"
              alt="${player.name}">
       </div>
       <div class="character-name">${player.name}</div>
@@ -96,6 +99,19 @@ document.addEventListener(
         nextMessage();
 
         document.getElementById("dialogbox").addEventListener("click", function (e) {
+
+            // Si el sorteo está en marcha, bloquear cualquier clic en el dialogbox
+            if (isRaffleStarted) {
+                e.stopPropagation();
+                return;
+            }
+
+            // Si el sorteo ya terminó, permitir clic que redirige al componente destino
+            if (raffleFinished) {
+                // redirige a la ruta configurada
+                window.location.href = POST_RAFFLE_REDIRECT;
+                return;
+            }
 
             if (!loadingComplete) {
                 clearTimeouts();
@@ -159,19 +175,25 @@ function nextMessage() {
         return;
     }
 
+    // Si messageId está fuera de rango (por algún motivo), lo ajustamos
     if (messageId >= messageStrings.length) {
-        messageId = 0;
+        messageId = messageStrings.length - 1;
     }
 
     currMessage = messageStrings[messageId];
 
-
+    // Determinar si estamos en el último mensaje (preparado para sorteo)
     readyToStartRaffle = (messageId === messageStrings.length - 1);
-
 
     normalStyle();
 
-    messageId++;
+    // Solo incrementamos si NO estamos en el último mensaje.
+    // De esta forma, al llegar al último mensaje y activar el sorteo,
+    // no volveremos a reiniciar el texto desde el principio.
+    if (!readyToStartRaffle) {
+        messageId++;
+    }
+
     loadMessage(currMessage.split(""));
 }
 
@@ -250,8 +272,50 @@ function animateRaffle() {
 
     // Ejecutar el sorteo
     raffleSystem.start((selectedIndices) => {
-        console.log('Sorteo completado. Índices seleccionados:', selectedIndices);
-        // Aquí puedes agregar lógica adicional después del sorteo si es necesario
+        console.log('Raffle completed. Selected indices:', selectedIndices);
+        // Marcar el sorteo como finalizado y permitir que el usuario haga clic
+        // en el dialogbox para continuar (redirigir al componente destino).
+        raffleFinished = true;
+        isRaffleStarted = false;
+        // Actualizar `myRegistrationGameState` para conservar solo los ganadores
+        try {
+            // Leer el estado guardado bajo STORAGE_KEY
+            const raw = localStorage.getItem(STORAGE_KEY);
+            const state = raw ? JSON.parse(raw) : { contestants: [] };
+
+            // Asegurarnos de que existe un array de contestants
+            state.contestants = state.contestants || [];
+
+            // Construir array de ganadores a partir de los índices seleccionados
+            const winners = selectedIndices
+                .map((idx) => state.contestants[idx])
+                .filter(Boolean);
+
+            // Marcar que han completado el primer sorteo (opcional)
+            winners.forEach((w) => {
+                if (w) w.firstTrialCompleted = true;
+            });
+
+            // Reemplazar el array de contestants por los ganadores
+            state.contestants = winners;
+
+            // Guardar de vuelta únicamente bajo STORAGE_KEY (no crear nuevas claves)
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+            console.error('Error actualizando myRegistrationGameState tras el sorteo:', e);
+        }
+        try {
+            if (dialogbox) {
+                dialogbox.innerHTML = 'The competition moves forward. Only the determined will stay in the game.';
+                if (!dialogbox.contains(arrow)) {
+                    dialogbox.appendChild(arrow);
+                }
+                loadingComplete = true;
+                arrow.classList.remove('raffle-ready');
+            }
+        } catch (err) {
+            console.warn('Could not update the dialogbox after the raffle:', err);
+        }
     });
 }
 

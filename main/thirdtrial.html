@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>CHOREOMANIA</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>CHOREOMANIA: The last ascent</title>
+    <link rel="icon" type="image/x-icon"
+        href="https://res.cloudinary.com/dsy30p7gf/image/upload/v1762976509/Recurso_1CHOREOICO_wma7og.png">
+    <link rel="stylesheet" href="../styles/thirdtrial.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
@@ -28,34 +30,29 @@
     </nav>
 
     <div class="main-layout">
-
         <div class="top-section">
             <div class="card-container">
                 <div class="image-wrapper">
                     <div class="name-tag">THE BENEFACTOR</div>
                     <div class="image-container">
-                        <img
-                            src="https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157413/Rectangle_1490_h0vqvo.png">
+                        <img src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1761909656/GOOD_kidkeq.png">
                     </div>
                 </div>
-
-                <div id="dialogbox" class="normal-box">
-                    Hello everyone! This is the benefactor speaking. Welcome to the
-                    ceremony of Ascension! || We see a bunch of eager youngsters!
-                    I wish everyone good luck. || There isn't enough room for my
-                    rocket for all of you. May the luckiest ones win!
-                </div>
+                <div id="dialogbox" class="normal-box">There's not much left now. The suffering will be worth it for
+                    the rest of humankind... || I mean, for all of humankind. And with that, our finalists are:</div>
             </div>
-
         </div>
+
+
         <div class="characters-section">
-            <div class="characters-grid" id="charactersGrid"></div>
+            <div class="characters-grid" id="charactersGrid">
+                <!-- Personajes cargados dinámicamente desde localStorage -->
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Sistema de sorteo reutilizable - debe cargarse antes de script.js -->
-    <script src="raffle.js"></script>
-    <script src="script.js"></script>
+    <script src="../scripts/raffle.js"></script>
+    <script src="../scripts/thirdtrial.js"></script>
 </body>
 
 </html>

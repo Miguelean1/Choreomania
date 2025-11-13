@@ -1,4 +1,5 @@
 const timer = 30;
+const STORAGE_KEY = 'myRegistrationGameState';
 var messageStrings;
 var dialogbox;
 var currMessage;
@@ -7,73 +8,40 @@ var applytitlestyle = true;
 var loadingComplete = true;
 var skipNextPress = false;
 let isMessageSkipped = false;
-const STORAGE_KEY = 'myRegistrationGameState';
-const playerData = JSON.parse(localStorage.getItem('contestants'))
-
-const CLOUDINARY_IMAGE_URLS = [
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023753/RIPPLE_0000_CHAR-_0001_Capa-14_kqirac.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023753/RIPPLE_0001_CHAR-_0002_Capa-12_k4iunv.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0004_CHAR-_0005_Capa-6_mszms8.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0003_CHAR-_0004_Capa-7_rjeh5s.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0006_CHAR-_0007_Capa-10_v6tmdw.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0007_CHAR-_0008_Capa-9_mdfroc.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0005_CHAR-_0006_Capa-8_y10w3s.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0002_CHAR-_0003_Capa-11_l0bqce.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023757/RIPPLE_0026_CHAR-_0000_Capa-15_hwg0i1.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023997/human13_3_fawtvf.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024100/human10_3_u4bhhr.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human11_3_worvg4.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human12_3_ew26jd.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human14_3_omdjsg.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024103/human15_3_ngsfyp.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024103/human16_3_awsji6.png',
-];
-
-var arrow = document.createElement("div");
-arrow.id = "arrow";
 var readyToStartRaffle = false;
 var isRaffleStarted = false;
 var raffleFinished = false;
-// Ruta a la que redirigir cuando termine el sorteo
-const POST_RAFFLE_REDIRECT = '../main/thirdtrial.html';
+const POST_RAFFLE_REDIRECT = '../main/final-raffle.html';
 
-document.addEventListener("DOMContentLoaded", () => {
-    const grid = document.getElementById("charactersGrid");
+var arrow = document.createElement("div");
+arrow.id = "arrow";
 
-    let storedData;
-
-    try {
-        storedData = JSON.parse(localStorage.getItem(STORAGE_KEY)); // usa la misma key que STORAGE_KEY
-    } catch (error) {
-        console.error("Error leyendo localStorage:", error);
-        storedData = null;
-    }
-
-    // Asegurarse de que existe y tiene contestants
-    const players = storedData?.contestants ?? [];
-
-    if (players.length === 0) {
-        grid.innerHTML = "<p>No hay jugadores guardados.</p>";
-        return;
-    }
-
-    players.forEach((player, index) => {
-        const card = document.createElement("div");
-        card.classList.add("character-card");
-
-        card.innerHTML = `
-      <div class="character-image"
-           style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};"
-           id="playerBox${index + 1}">
-        <img class="principal-img" src="${player.imagePath || 'https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png'}"
-             alt="${player.name}">
-      </div>
-      <div class="character-name">${player.name}</div>
-    `;
-
-        grid.appendChild(card);
-    });
-});
+document.addEventListener("DOMContentLoaded", function(){
+	// Cargar personajes desde localStorage
+	try {
+		const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+		const players = storedData?.contestants ?? [];
+		
+		if (players.length > 0) {
+			const grid = document.getElementById("charactersGrid");
+			if (grid) {
+				players.forEach((player, index) => {
+					const card = document.createElement('div');
+					card.className = 'character-card';
+					card.innerHTML = `
+						<div class="character-image" style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};" id="playerBox${index + 1}">
+							<img class="principal-img" src="${player.imagePath}" alt="${player.name}">
+						</div>
+						<div class="character-name">${player.name}</div>
+					`;
+					grid.appendChild(card);
+				});
+			}
+		}
+	} catch (e) {
+		console.error('Error cargando personajes:', e);
+	}
+}, false);
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -126,27 +94,33 @@ document.addEventListener(
     false
 );
 
+
+
 function returnHome() {
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: `No`
+        denyButtonText: `No`,
+        background: '#ffffff',
+        color: '#000000'
     }).then((result) => {
+
         if (result.isConfirmed) {
-            Swal.fire("Saved!", "", "success");
+            Swal.fire({ title: "Saved!", icon: "success", background: '#ffffff', color: '#000000' });
         } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
+            Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
         }
     });
 }
 
 function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
-}
+            const icon = document.querySelector('#muteBtn i');
+            icon.classList.toggle('fa-volume-xmark');
+            icon.classList.toggle('fa-volume-high');
+        }
+
 
 function titleStyle(){
 	dialogbox.classList.remove('normal-style');
@@ -164,24 +138,27 @@ function nextMessage() {
         return;
     }
 
-    // Si messageId está fuera de rango, lo ajustamos
     if (messageId >= messageStrings.length) {
         messageId = messageStrings.length - 1;
     }
-    
     currMessage = messageStrings[messageId];
-
-    // Determinar si estamos en el último mensaje
+    
+    // Determinar si estamos en el último mensaje (preparado para sorteo)
     readyToStartRaffle = (messageId === messageStrings.length - 1);
 	
-	// Siempre aplicar normal-style
-	normalStyle();
-
-    // Solo incrementamos si NO estamos en el último mensaje
-    if (!readyToStartRaffle) {
-        messageId++;
-    }
-
+	if (applytitlestyle) {
+		if (messageId == 1 || messageId == messageStrings.length) {
+			titleStyle();
+		} else {
+			normalStyle();
+		}
+	}
+	
+	// Solo incrementamos si NO estamos en el último mensaje
+	if (!readyToStartRaffle) {
+		messageId++;
+	}
+	
     loadMessage(currMessage.split(''));
 }
 
@@ -231,17 +208,15 @@ function clearTimeouts() {
 // SISTEMA DE SORTEO (usando módulo raffle.js)
 // ============================================
 
-// Inicializar el sistema de sorteo cuando el DOM esté listo
 let raffleSystem = null;
 
-// Función wrapper para mantener compatibilidad con el código existente
 function animateRaffle() {
     if (!raffleSystem) {
         // Inicializar el sistema de sorteo con la configuración actual
         raffleSystem = new RaffleSystem({
             playerBoxSelector: '.character-image', // Selector CSS de los elementos
-            totalPlayers: 8,                      // Total de jugadores
-            winnersCount: 4,                       // Cantidad a seleccionar
+            totalPlayers: 4,                       // Total de jugadores
+            winnersCount: 2,                       // Cantidad a seleccionar (ganador final)
             animationDuration: 2000,               // Duración de la animación
             selectedClass: 'selected',             // Clase CSS para seleccionados
             glowColor: 'gold'                      // Color del brillo
@@ -251,11 +226,10 @@ function animateRaffle() {
 
     // Ejecutar el sorteo
     raffleSystem.start((selectedIndices) => {
-        console.log('Sorteo completado. Índices seleccionados:', selectedIndices);
-        // Marcar el sorteo como finalizado
+        console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
         raffleFinished = true;
         isRaffleStarted = false;
-        // Actualizar `myRegistrationGameState` para conservar solo los ganadores
+        // Actualizar `myRegistrationGameState` para conservar solo a los ganador
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };
@@ -264,7 +238,7 @@ function animateRaffle() {
                 .map((idx) => state.contestants[idx])
                 .filter(Boolean);
             winners.forEach((w) => {
-                if (w) w.secondTrialCompleted = true;
+                if (w) w.thirdTrialCompleted = true;
             });
             state.contestants = winners;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
@@ -273,7 +247,7 @@ function animateRaffle() {
         }
         try {
             if (dialogbox) {
-                dialogbox.innerHTML = 'The final four. Only the strongest will reign.';
+                dialogbox.innerHTML = 'And now, only two remain. The final step before one earns the right to ascend.';
                 if (!dialogbox.contains(arrow)) {
                     dialogbox.appendChild(arrow);
                 }
@@ -285,3 +259,5 @@ function animateRaffle() {
         }
     });
 }
+
+

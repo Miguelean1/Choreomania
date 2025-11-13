@@ -23,7 +23,7 @@ function createCharacterCard(character) {
         <div class="character-image" style="background-color: ${character.color
         };">
             <img src="${character.imagePath}" alt="${character.name
-        }" class="character-avatar">
+        }" class="principal-img">
         </div>
         <div class="character-name">${character.name.toUpperCase()}</div>
     `;
@@ -147,7 +147,7 @@ beginBtn.addEventListener("click", (e) => {
             confirmButtonText: "Okay",
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "../../firsttrial/index.html";
+                window.location.href = "../../firsttrial/firsttrial.html";
             }
         });
     } else {

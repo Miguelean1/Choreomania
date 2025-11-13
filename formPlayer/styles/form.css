@@ -169,10 +169,10 @@ marquee {
     background-color:rgba(221, 128, 193, 1);
 }
 
-.character-image img {
-    width: 90%;
+.principal-img {
+    margin-top: 20px;
+    width: 80%; /* la mitad del ancho del contenedor */
     height: auto;
-    object-fit: contain;
 }
 
 .character-name {
