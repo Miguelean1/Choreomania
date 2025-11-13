@@ -152,7 +152,7 @@ function nextScreen() {
 beginBtn.addEventListener('click', (e) => {
     if (gameState.contestants.length === MAX_CHARACTERS) {
         Swal.fire('All set!', 'The ascension ceremony is about to begin....', 'success');
-        window.location.href = './round.html'; 
+        window.location.href = '../main/firsttrial.html'; 
 
     } else {
         Swal.fire({
