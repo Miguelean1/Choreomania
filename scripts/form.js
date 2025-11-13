@@ -1,4 +1,4 @@
-import { gameState } from "./gameState.js";
+import { gameState } from "../formPlayer/scripts/gameState.js";
 
 const form = document.getElementById("form");
 const nameInput = document.getElementById("name");
@@ -147,7 +147,7 @@ beginBtn.addEventListener("click", (e) => {
             confirmButtonText: "Okay",
         }).then((result) => {
             if (result.isConfirmed) {
-                window.location.href = "../../firsttrial/firsttrial.html";
+                window.location.href = "../../main/firsttrial.html";
             }
         });
     } else {
