@@ -52,9 +52,44 @@ function normalStyle(){
 }
 
 function nextScreen() {
-    // stop any pending timeouts and navigate to the next HTML
     clearAllTimeouts();
-    window.location.href = 'final-raffle-2.html';
+
+    const overlay = document.createElement('div');
+    overlay.id = 'flash-overlay';
+    Object.assign(overlay.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        height: '100vh',
+        background: '#ffffff',
+        opacity: '0',
+        pointerEvents: 'none',
+        zIndex: '2147483647',
+        transition: 'opacity 80ms linear'
+    });
+    document.body.appendChild(overlay);
+
+    const sequence = [
+        { delay: 0,    opacity: '1' },
+        { delay: 100,  opacity: '0' },
+        { delay: 200,  opacity: '1' },
+        { delay: 300,  opacity: '0' },
+        { delay: 380,  opacity: '1' }
+    ];
+
+    sequence.forEach(step => {
+        const id = setTimeout(() => {
+            overlay.style.opacity = step.opacity;
+        }, step.delay);
+        activeTimeouts.push(id);
+    });
+
+
+    const navigateTimeout = setTimeout(() => {
+        window.location.href = 'final-raffle-2.html';
+    }, 480);
+    activeTimeouts.push(navigateTimeout);
 }
 
 function loadMessage(dialog) {
@@ -85,7 +120,6 @@ function nextMessage() {
         return;
     }
     
-    // If we've reached past the last message, go to the next screen
     if (messageId >= messageStrings.length) {
         nextScreen();
         return;
