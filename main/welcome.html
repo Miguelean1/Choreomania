@@ -5,10 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/welcome.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    
     <script src="https://kit.fontawesome.com/ea3042a44d.js" crossorigin="anonymous"></script>
+    
     <title>CHOREOMANIA: The last ascent</title>
     <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dsy30p7gf/image/upload/v1762976509/Recurso_1CHOREOICO_wma7og.png">
     
@@ -20,7 +23,7 @@
         <div class="controls">
             
             <button class="btn" id="muteBtn" onclick="toggleMute()">
-                <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
+                <i class="fa-solid fa-volume-high" style="color: #000000;"></i>
             </button>
             
             <button class="btn" onclick="returnHome()">
@@ -35,16 +38,18 @@
     </div>
     
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <script src="../scripts/welcome.js"></script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            initAudio('../assets/sounds/welcome-music.mp3');
+
+            initAudio('../assets/sounds/WelcomeMusic.mp3');
             
-            checkMusicPreference();
+            if (typeof checkMusicPreference === "function") { 
+                checkMusicPreference(); 
+            }
         });
     </script>
 
-    </body>
+</body>
 </html>
