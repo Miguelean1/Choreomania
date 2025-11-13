@@ -228,17 +228,7 @@ body {
         z-index: 5;
     }
 
-    .left-player img,
-    .right-player img {
-        width: 70px;
-        height: auto;
-    }
 
-    .left-player,
-    .right-player {
-        scale: 0.8;
-
-    }
 
     #dialogbox {
         position: relative;
