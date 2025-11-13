@@ -12,7 +12,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("https://res.cloudinary.com/dwldyiruu/image/upload/v1762769836/CESAR_he6zed.png");
+    background-image: url("https://res.cloudinary.com/dsy30p7gf/image/upload/v1763019236/CESAR_x3ugq1.png");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center top;
@@ -166,7 +166,7 @@ body {
 
 
 #dialogbox.normal-style {
-    text-align: left;
+    text-align: center;
     font-size: 12px;
     font-weight: 700;
     line-height: 16px;
