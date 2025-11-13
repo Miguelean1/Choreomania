@@ -176,12 +176,6 @@ body {
 
 
 
-#dialog-text {
-    font-family: "Courier Prime", monospace;
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: 0px;
-}
 
 #arrow {
     width: 0;
@@ -210,15 +204,13 @@ body {
     justify-content: center;
     align-items: flex-end;
     gap: 25%;
-
-
 }
 
 .left-player,
 .right-player {
     position: relative;
-    top: 44vh;
-
+    top: 35vh;
+    scale: 80%;
 }
 
 @media (max-width: 1024px) {

@@ -279,15 +279,14 @@ body {
     justify-content: center;
     align-items: flex-end;
     gap: 25%;
-
-
 }
 
 .left-player,
 .right-player {
+    width: 100%;
     position: relative;
-    top: 44vh;
-
+    top: 35vh;
+    scale: 80%;
 }
 
 @media (max-width: 768px) {
