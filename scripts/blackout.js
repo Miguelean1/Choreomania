@@ -11,6 +11,8 @@ var lastMessage = false;
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
+let bgAudioPlayed = false;
+
 
 document.addEventListener("DOMContentLoaded", function(){
 	dialogbox = document.getElementById("dialogbox");
@@ -20,8 +22,17 @@ document.addEventListener("DOMContentLoaded", function(){
     messageId = 0;
 	currMessage = messageStrings[messageId];
 	nextMessage();
-	
-	document.getElementById("dialogbox").addEventListener("click", function() {
+    const bgAudio = document.getElementById('bg-audio');
+
+    document.getElementById("dialogbox").addEventListener("click", function() {
+        if (bgAudio && !bgAudioPlayed) {
+            bgAudio.play().then(() => {
+                bgAudioPlayed = true;
+            }).catch(err => {
+                console.warn('Reproducción de audio bloqueada o fallida:', err);
+            });
+        }
+
         if (!loadingComplete) {
             clearTimeouts();
             dialogbox.innerHTML = currMessage;
@@ -150,10 +161,14 @@ function nextScreen() {
     document.body.style.opacity = '0';
 
     setTimeout(() => {
-        alert('Loading next screen...');
-        document.body.style.opacity = '1';
+        window.location.href = 'plot-twist.html';
     }, 800);
 }
+
+
+
+
+
 
 function clearTimeouts() {
     var highestTimeoutId = setTimeout(";");

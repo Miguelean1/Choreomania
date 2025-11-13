@@ -9,6 +9,22 @@ var activeTimeouts = [];
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
+let thunderPlayed = false;
+
+function playThunderOnce() {
+    if (thunderPlayed) return;
+    thunderPlayed = true;
+    try {
+        const thunderAudio = new Audio('../assets/sounds/thunder.mp3');
+        thunderAudio.loop = false;
+        thunderAudio.preload = 'auto';
+        thunderAudio.play().catch(err => {
+            console.warn('No se pudo reproducir thunder:', err);
+        });
+    } catch (e) {
+        console.warn('Error creando audio de thunder:', e);
+    }
+}
 
 
 function clearAllTimeouts() {
@@ -70,13 +86,30 @@ function nextScreen() {
     });
     document.body.appendChild(overlay);
 
+
+    const totalDuration = 2000;
+
+
     const sequence = [
-        { delay: 0,    opacity: '1' },
-        { delay: 100,  opacity: '0' },
-        { delay: 200,  opacity: '1' },
-        { delay: 300,  opacity: '0' },
-        { delay: 380,  opacity: '1' }
+        { delay: 0, opacity: '1' },
+        { delay: 150, opacity: '0' },
+        { delay: 300, opacity: '1' },
+        { delay: 450, opacity: '0' },
+        { delay: 600, opacity: '1' },
+        { delay: 750, opacity: '0' },
+        { delay: 900, opacity: '1' },
+        { delay: 1050, opacity: '0' },
+        { delay: 1200, opacity: '1' },
+        { delay: 1350, opacity: '0' },
+        { delay: 1500, opacity: '1' },
+        { delay: 1650, opacity: '0' },
+        { delay: 1800, opacity: '1' },
+        { delay: 1950, opacity: '0' },
+        { delay: 2000, opacity: '1' }
     ];
+
+
+    playThunderOnce();
 
     sequence.forEach(step => {
         const id = setTimeout(() => {
@@ -88,7 +121,7 @@ function nextScreen() {
 
     const navigateTimeout = setTimeout(() => {
         window.location.href = 'final-raffle-2.html';
-    }, 480);
+    }, totalDuration + 200);
     activeTimeouts.push(navigateTimeout);
 }
 
