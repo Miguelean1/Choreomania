@@ -32,7 +32,7 @@ function generateRandomColor() {
     return hslColor;
 }
 
-export const gameState = {
+const gameState = {
     contestants: [],
     usedImageIndices: [],
     
@@ -106,7 +106,26 @@ export const gameState = {
         this.contestants = this.contestants.filter(c => c.id.toString() !== id.toString());
 
         return this.contestants.length < initialLength;
+    },
+    
+    reset() {
+        this.contestants = [];
+        this.usedImageIndices = [];
     }
 };
 
-gameState.load();
+if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    gameState.load();
+}
+
+if (typeof window !== 'undefined') {
+    window.gameState = gameState;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { gameState };
+}
+
+if (typeof exports !== 'undefined') {
+    exports.gameState = gameState;
+}
