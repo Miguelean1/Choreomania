@@ -51,6 +51,12 @@ function normalStyle(){
     dialogbox.classList.add('normal-style');
 }
 
+function nextScreen() {
+    // stop any pending timeouts and navigate to the next HTML
+    clearAllTimeouts();
+    window.location.href = 'final-raffle-2.html';
+}
+
 function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
@@ -79,10 +85,12 @@ function nextMessage() {
         return;
     }
     
+    // If we've reached past the last message, go to the next screen
     if (messageId >= messageStrings.length) {
-        messageId = 0;
+        nextScreen();
+        return;
     }
-    
+
     currMessage = messageStrings[messageId];
     messageId++;
     
