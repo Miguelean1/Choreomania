@@ -1,54 +1,86 @@
+global.Swal = {
+    fire: jest.fn().mockResolvedValue({ isConfirmed: true })
+};
+
+const mockGameState = {
+    contestants: [],
+    usedImageIndices: [],
+    addContestant: jest.fn((name) => ({
+        id: '1',
+        name: name.toUpperCase(),
+        color: '#fff',
+        imagePath: 'avatar.png'
+    })),
+    removeContestant: jest.fn(),
+    save: jest.fn(),
+    load: jest.fn(),
+    reset: jest.fn()
+};
+
 jest.mock('../scripts/gameState', () => ({
-    gameState: {
-        contestans: [],
-        addContestants: jest.fn((name) => ({ 
-            id: '1', 
-            name, 
-            color: '#fff' , 
-            imagePath: 'avatar.png'
-        })),
-        removeContestant: jest.fn(),
-        save: jest.fn(),
-    }
+    gameState: mockGameState
 }));
 
+global.window.gameState = mockGameState;
+
 const { gameState } = require('../scripts/gameState.js');
-const { addCharacter, initForm } = require('../scripts/form.js');
+const { addCharacter, initForm, updateUI } = require('../scripts/form.js');
 
 const html = `
-    <input id='name' />
-    <button id='addBtn'></button>
-    <div id='charactersGrid'></div>
-    <span id='counter'></span>
+    <input id="name" />
+    <button id="addBtn"></button>
+    <button class="begin"></button>
+    <div id="charactersGrid"></div>
+    <span id="counter"></span>
 `;
 
-document.body.innerHTML = html;
-
-initForm();
-
-describe('simple charter tests', () => {
-    
+describe('simple character tests', () => {
     beforeEach(() => {
-        gameState.contestants = []
-        document.getElementById('characterGrid').innerHTML = '';
-        document.getElementById('name').vale = '';
-        gameState.addContestant.mockClear();
-        gameState.removeContestant.mockClear();
-        gameState.save.mockClear();
+        document.body.innerHTML = html;
+        
+        mockGameState.contestants = [];
+        mockGameState.usedImageIndices = [];
+        
+        mockGameState.addContestant.mockClear();
+        mockGameState.removeContestant.mockClear();
+        mockGameState.save.mockClear();
+        
+        initForm();
     });
 
-    test('add Character adds a new character', () => {
-        const nameImput = document.getElementById('name');
-        nameImput.value = 'Julia';
-        
+    test('addCharacter adds a new character', () => {
+        const nameInput = document.getElementById('name');
+        nameInput.value = 'Julia';
+
         addCharacter();
 
-        expect(gameState.addContestant).toHaveBeenCalledWith('Julia');
-        
+        expect(mockGameState.addContestant).toHaveBeenCalledWith('Julia');
+
         const grid = document.getElementById('charactersGrid');
         expect(grid.children.length).toBe(1);
-        expect(grid.children[0].querySelector('.character-name').textContent.toBe('Julia'))
-        
-        expect(gameState.save).toHaveBeenCalledWith();
+        expect(grid.children[0].querySelector('.character-name').textContent).toBe('JULIA');
+
+        expect(mockGameState.save).toHaveBeenCalled();
+    });
+
+    test('addCharacter shows error when name is empty', () => {
+        const nameInput = document.getElementById('name');
+        nameInput.value = '';
+
+        addCharacter();
+
+        expect(Swal.fire).toHaveBeenCalledWith({
+            title: 'Error',
+            text: 'Please, enter a name!',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+
+        expect(mockGameState.addContestant).not.toHaveBeenCalled();
+    });
+
+    test('counter updates correctly', () => {
+        const counter = document.getElementById('counter');
+        expect(counter.textContent).toBe('0/16 REGISTERED');
     });
 });
