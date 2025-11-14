@@ -107,6 +107,7 @@ function initForm() {
     if (beginBtn) {
         beginBtn.addEventListener('click', (e) => {
             if (window.gameState.contestants.length === MAX_CHARACTERS) {
+                stopMusic();
                 Swal.fire('All set!', 'The ascension ceremony is about to begin....', 'success');
                 window.location.href = '../main/firsttrial.html';
             } else {
@@ -134,6 +135,8 @@ function initForm() {
 }
 
 function returnHome() {
+
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -153,14 +156,6 @@ function returnHome() {
             });
         }
     });
-}
-
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    if (icon) {
-        icon.classList.toggle('fa-volume-xmark');
-        icon.classList.toggle('fa-volume-high');
-    }
 }
 
 if (typeof document !== 'undefined') {
