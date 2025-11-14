@@ -1,0 +1,27 @@
+{
+  "name": "choreomania",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": ""
+  },
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Miguelean1/Choreomania.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Miguelean1/Choreomania/issues"
+  },
+  "homepage": "https://github.com/Miguelean1/Choreomania#readme",
+  "devDependencies": {
+    "jest": "^30.2.0"
+  }
+}
