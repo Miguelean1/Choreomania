@@ -47,8 +47,8 @@ function pauseAudio() {
     localStorage.setItem('musicEnabled', 'false');
 }
 
-function toggleMute() {
-    console.log('Botón toggleMute pulsado.');
+function muteMusic() {
+    console.log('Botón Mute pulsado.');
     if (isMuted) {
         playAudio();
     } else {
