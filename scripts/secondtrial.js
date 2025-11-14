@@ -97,6 +97,7 @@ document.addEventListener(
 
             // Si el sorteo ya terminó, permitir clic que redirige al componente destino
             if (raffleFinished) {
+                stopMusic();
                 // redirige a la ruta configurada
                 window.location.href = POST_RAFFLE_REDIRECT;
                 return;
@@ -127,6 +128,7 @@ document.addEventListener(
 );
 
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -140,12 +142,6 @@ function returnHome() {
             Swal.fire("Changes are not saved", "", "info");
         }
     });
-}
-
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
 }
 
 function titleStyle(){
