@@ -7,6 +7,8 @@
     box-sizing: border-box;
 }
 
+
+
 body {
     margin: 0;
     padding: 0;
@@ -94,7 +96,7 @@ body {
 
 .name-tag {
     position: absolute;
-    top: -30px;
+    top: -35px;
     left: -15px;
     background: white;
     color: black;
@@ -131,12 +133,23 @@ body {
     line-height: 1.9em;
 }
 
-
 #dialogbox.normal-style {
     text-align: center;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 16px;
+    line-height: 25px;
+}
+
+#dialogbox.final-style {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 25px;
+    color: #EE553D;
+    transform-origin: center center;
+    will-change: transform;
+
+    animation: shake-horizontal-tilt 0.28s cubic-bezier(.25,.1,.25,1) infinite;
 }
 
 #arrow {
@@ -152,12 +165,32 @@ body {
 
 @keyframes bounce {
     0% {
-        transform: translateY(0);
+        transform: translateY();
     }
 
     100% {
-        transform: translateY(-8px);
+        transform: translateY(-3px);
     }
+}
+
+@keyframes tilt-shaking {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(1deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-1deg); }
+ 100% { transform: rotate(0deg); }
+}
+
+@keyframes shake-horizontal-tilt {
+    0%   { transform: translateX(0) rotate(0deg); }
+    12%  { transform: translateX(-6px) rotate(-1deg); }
+    25%  { transform: translateX(6px)  rotate(1deg); }
+    38%  { transform: translateX(-4px) rotate(-0.6deg); }
+    50%  { transform: translateX(4px)  rotate(0.6deg); }
+    62%  { transform: translateX(-2px) rotate(-0.3deg); }
+    75%  { transform: translateX(2px)  rotate(0.3deg); }
+    88%  { transform: translateX(-1px) rotate(-0.15deg); }
+ 100%  { transform: translateX(0)  rotate(0deg); }
 }
 
 .sound-waves {

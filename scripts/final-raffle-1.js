@@ -1,4 +1,5 @@
 const timer = 30;
+const STORAGE_KEY = 'myRegistrationGameState';
 var messageStrings;
 var dialogbox;
 var currMessage;
@@ -9,6 +10,48 @@ var activeTimeouts = [];
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
+let thunderPlayed = false;
+
+function playThunderOnce() {
+    if (thunderPlayed) return;
+    thunderPlayed = true;
+    try {
+        const thunderAudio = new Audio('../assets/sounds/thunder.mp3');
+        thunderAudio.loop = false;
+        thunderAudio.preload = 'auto';
+        thunderAudio.play().catch(err => {
+            console.warn('No se pudo reproducir thunder:', err);
+        });
+    } catch (e) {
+        console.warn('Error creando audio de thunder:', e);
+    }
+}
+document.addEventListener("DOMContentLoaded", function(){
+	// Cargar personajes desde localStorage
+	try {
+		const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+		const players = storedData?.contestants ?? [];
+		
+		if (players.length > 0) {
+			const grid = document.getElementById("characters-stage");
+			if (grid) {
+				players.forEach((player, index) => {
+					const card = document.createElement('div');
+					card.className = 'character-card';
+					card.innerHTML = `
+						<div class="character-name">${player.name}</div>
+						<div class="character-image">
+							<img src="${player.imagePath}" alt="${player.name}">
+						</div>
+					`;
+					grid.appendChild(card);
+				});
+			}
+		}
+	} catch (e) {
+		console.error('Error cargando personajes:', e);
+	}
+}, false);
 
 
 function clearAllTimeouts() {
@@ -51,6 +94,64 @@ function normalStyle(){
     dialogbox.classList.add('normal-style');
 }
 
+function nextScreen() {
+    clearAllTimeouts();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'flash-overlay';
+    Object.assign(overlay.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        height: '100vh',
+        background: '#ffffff',
+        opacity: '0',
+        pointerEvents: 'none',
+        zIndex: '2147483647',
+        transition: 'opacity 80ms linear'
+    });
+    document.body.appendChild(overlay);
+
+
+    const totalDuration = 2000;
+
+
+    const sequence = [
+        { delay: 0, opacity: '1' },
+        { delay: 150, opacity: '0' },
+        { delay: 300, opacity: '1' },
+        { delay: 450, opacity: '0' },
+        { delay: 600, opacity: '1' },
+        { delay: 750, opacity: '0' },
+        { delay: 900, opacity: '1' },
+        { delay: 1050, opacity: '0' },
+        { delay: 1200, opacity: '1' },
+        { delay: 1350, opacity: '0' },
+        { delay: 1500, opacity: '1' },
+        { delay: 1650, opacity: '0' },
+        { delay: 1800, opacity: '1' },
+        { delay: 1950, opacity: '0' },
+        { delay: 2000, opacity: '1' }
+    ];
+
+
+    playThunderOnce();
+
+    sequence.forEach(step => {
+        const id = setTimeout(() => {
+            overlay.style.opacity = step.opacity;
+        }, step.delay);
+        activeTimeouts.push(id);
+    });
+
+
+    const navigateTimeout = setTimeout(() => {
+        window.location.href = 'final-raffle-2.html';
+    }, totalDuration + 200);
+    activeTimeouts.push(navigateTimeout);
+}
+
 function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
@@ -80,9 +181,10 @@ function nextMessage() {
     }
     
     if (messageId >= messageStrings.length) {
-        messageId = 0;
+        nextScreen();
+        return;
     }
-    
+
     currMessage = messageStrings[messageId];
     messageId++;
     

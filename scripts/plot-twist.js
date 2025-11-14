@@ -15,6 +15,69 @@ function clearAllTimeouts() {
     activeTimeouts = [];
 }
 
+function nextScreen() {
+    clearAllTimeouts();
+
+    const overlay = document.createElement('div');
+    overlay.id = 'flash-overlay';
+    Object.assign(overlay.style, {
+        position: 'fixed',
+        top: '0',
+        left: '0',
+        width: '100vw',
+        height: '100vh',
+        background: '#ffffff',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+        opacity: '0',
+        pointerEvents: 'none',
+        zIndex: '2147483647',
+        transition: 'opacity 80ms linear'
+    });
+    document.body.appendChild(overlay);
+
+    const sequence = [
+        { delay: 0,    opacity: '1' },
+        { delay: 100,  opacity: '0' },
+        { delay: 200,  opacity: '1' },
+        { delay: 300,  opacity: '0' },
+        { delay: 380,  opacity: '1' }
+    ];
+
+    const flashImageUrl = 'https://res.cloudinary.com/dsy30p7gf/image/upload/v1763033689/Two_faced_Benefactor_aqmvq8.png';
+
+
+
+    const forcedPattern = [true, false, true, false, true];
+    sequence.forEach((step, idx) => {
+
+        step.showImage = (step.opacity === '1') && (!!forcedPattern[idx]);
+    });
+
+    sequence.forEach(step => {
+        const id = setTimeout(() => {
+            overlay.style.opacity = step.opacity;
+
+            if (step.showImage && step.opacity === '1') {
+                overlay.style.backgroundImage = `url('${flashImageUrl}')`;
+                overlay.style.backgroundColor = 'transparent';
+            } else {
+
+                overlay.style.backgroundImage = 'none';
+                overlay.style.backgroundColor = '#000000ff';
+            }
+        }, step.delay);
+        activeTimeouts.push(id);
+    });
+
+
+    const navigateTimeout = setTimeout(() => {
+        window.location.href = '../main/credits.html';
+    }, 480);
+    activeTimeouts.push(navigateTimeout);
+}
+
 function returnHome() {
     Swal.fire({
         title: "Do you want to go to the homepage?",
@@ -49,6 +112,11 @@ function normalStyle() {
     dialogbox.classList.add('normal-style');
 }
 
+function finalStyle() {
+    dialogbox.classList.remove('title-style', 'normal-style');
+    dialogbox.classList.add('final-style');
+}
+
 function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
@@ -80,18 +148,23 @@ function nextMessage() {
     if (messageId >= messageStrings.length) {
         messageId = 0;
     }
-    
-    currMessage = messageStrings[messageId];
+
+    const selectedIndex = messageId;
+    currMessage = messageStrings[selectedIndex];
     messageId++;
-    
-    if (applytitlestyle) {
-        if (messageId == 1 || messageId == messageStrings.length) {
+
+    if (selectedIndex === messageStrings.length - 1) {
+        finalStyle();
+    } else if (applytitlestyle) {
+        if (selectedIndex === 0 || selectedIndex === messageStrings.length - 1) {
             titleStyle();
         } else {
             normalStyle();
         }
+    } else {
+        normalStyle();
     }
-    
+
     loadMessage(currMessage);
 }
 
@@ -116,7 +189,11 @@ document.addEventListener("DOMContentLoaded", function() {
             }
             loadingComplete = true;
         } else {
-            nextMessage();
+            if (messageId >= messageStrings.length) {
+                nextScreen();
+            } else {
+                nextMessage();
+            }
         }
     });
 });
@@ -141,7 +218,12 @@ document.addEventListener('keyup', function(e) {
         e.preventDefault();
         
         if (loadingComplete) {
-            nextMessage();
+            if (messageId >= messageStrings.length) {
+                nextScreen();
+            } else {
+                nextMessage();
+            }
         }
     }
 });
+

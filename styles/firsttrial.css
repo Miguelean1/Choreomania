@@ -138,6 +138,11 @@ body {
     object-fit: cover;
 }
 
+.principal-img {
+    width: 80%; /* la mitad del ancho del contenedor */
+    height: auto;
+}
+
 #dialogbox {
     cursor: pointer;
     font-size: 11px;
@@ -162,7 +167,7 @@ body {
 }
 
 #dialogbox.normal-style {
-    text-align: left;
+    text-align: center;
     font-size: 12px;
     font-weight: 700;
     line-height: 16px;
@@ -256,7 +261,6 @@ body {
     width: 80%;
     height: 100%;
     object-fit: cover;
-    object-position: 0 5px;
 }
 
 
@@ -270,55 +274,6 @@ body {
     letter-spacing: 0.5px;
     font-weight: bold;
     text-transform: uppercase;
-}
-
-.raffle-btn-section {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 17px;
-}
-
-.raffle-btn {
-    padding: 14px 38px;
-    font-size: 15px;
-    font-family: "Pokemon GB", monospace;
-    font-weight: bold;
-    border: 3px solid black;
-    border-radius: 18px;
-    background: #fff;
-    color: #222;
-    box-shadow: 3px 3px 0px rgba(0,0,0,0.18), 0 0 6px #ffffff inset;
-    cursor: pointer;
-    transition: 
-        transform 0.18s cubic-bezier(.36,1.57,.71,1.24), 
-        box-shadow 0.2s, 
-        background 0.2s,
-        filter 0.2s;
-    position: relative;
-    outline: none;
-    animation: bounceBtn 1.1s infinite alternate cubic-bezier(.68,.75,.48,1.22);
-}
-
-.raffle-btn:hover, .raffle-btn:focus {
-    transform: scale(1.08);
-    box-shadow:
-        0 0 20px #f5eb2a,
-        0 0 7px #f5eb2a inset,
-        3px 3px 0px rgba(0,0,0,0.18);
-    background: #f3fffa;
-    filter: brightness(1.09) drop-shadow(0 0 5px #f5eb2a);
-}
-
-.raffle-btn:active {
-    background: linear-gradient(90deg,#fff 65%,#fbde90 100%);
-    filter: brightness(1.12);
-    box-shadow: 0 0 24px #f5bf2a, 1px 2px 0px #f5bf2a;
-    transform: scale(0.961);
-}
-
-.selected {
-    border: 4px solid gold;
 }
 
 

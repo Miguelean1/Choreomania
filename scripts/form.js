@@ -1,21 +1,11 @@
-import { gameState } from "./gameState.js"; 
-
-const form = document.getElementById('form'); 
-const nameInput = document.getElementById('name'); 
-const addBtn = document.getElementById('addBtn'); 
-const beginBtn = document.querySelector('.begin'); 
-const gridContainer = document.getElementById('charactersGrid'); 
-const counterSpan = document.getElementById('counter'); 
-const muteBtn = document.getElementById('muteBtn'); 
-const restartBtn = document.querySelector('.controls button:nth-child(2)');
-
 const MAX_CHARACTERS = 16;
 
 function createCharacterCard(character) {
+    const gridContainer = document.getElementById('charactersGrid');
     const card = document.createElement('div');
     card.className = 'character-card';
     card.dataset.id = character.id;
-    
+
     card.innerHTML = `
         <button class="remove-btn" type="button" data-id="${character.id}">
             <i class="fa-solid fa-xmark" style="color:#000000"></i>
@@ -23,66 +13,124 @@ function createCharacterCard(character) {
         <div class="character-image" style="background-color: ${character.color};">
             <img src="${character.imagePath}" alt="${character.name}" class="character-avatar">
         </div>
-        <div class="character-name">${character.name.toUpperCase()}</div>
+        <div class="character-name">${character.name}</div>
     `;
-    
+
     gridContainer.appendChild(card);
-    
-    card.querySelector('.remove-btn').addEventListener('click', (e) => {
-        const idToRemove = e.currentTarget.dataset.id;
-        removeCharacter(idToRemove);
-    });
+
+    const removeBtn = card.querySelector('.remove-btn');
+    if (removeBtn) {
+        removeBtn.addEventListener('click', (e) => {
+            const idToRemove = e.currentTarget.dataset.id;
+            removeCharacter(idToRemove);
+        });
+    }
 }
 
 function addCharacter() {
-    const name = nameInput.value.trim();
-    
+    const nameInput = document.getElementById('name');
+    if (!nameInput) return;
 
+    const name = nameInput.value.trim();
     if (!name) {
-        Swal.fire({ title: 'Error', text: 'Please, enter a name!', icon: 'error', confirmButtonText: 'OK' });
+        Swal.fire({ 
+            title: 'Error', 
+            text: 'Please, enter a name!', 
+            icon: 'error', 
+            confirmButtonText: 'OK' 
+        });
         return;
     }
-    
-    const newCharacter = gameState.addContestant(name); 
-    
+
+    const newCharacter = window.gameState.addContestant(name);
+
     if (newCharacter) {
         createCharacterCard(newCharacter);
         nameInput.value = '';
         nameInput.focus();
-        gameState.save(); 
-        updateUI(); 
+        window.gameState.save();
+        updateUI();
     }
 }
 
 function removeCharacter(id) {
     const card = document.querySelector(`.character-card[data-id="${id}"]`);
-    
     if (card) {
         card.style.opacity = '0';
         card.style.transform = 'scale(0.8)';
-        
+
         setTimeout(() => {
-            gameState.removeContestant(id);
-            gameState.save();
+            window.gameState.removeContestant(id);
+            window.gameState.save();
             card.remove();
-            updateUI(); 
+            updateUI();
         }, 300);
     }
 }
 
-
 function updateUI() {
-    const count = gameState.contestants.length;
-    
-    counterSpan.textContent = `${count}/${MAX_CHARACTERS} REGISTERED`;
-    
+    const counterSpan = document.getElementById('counter');
+    const addBtn = document.getElementById('addBtn');
+    const nameInput = document.getElementById('name');
+
+    const count = window.gameState.contestants.length;
+
+    if (counterSpan) counterSpan.textContent = `${count}/${MAX_CHARACTERS} REGISTERED`;
+
     if (count >= MAX_CHARACTERS) {
-        addBtn.disabled = true;
-        nameInput.disabled = true;
+        if (addBtn) addBtn.disabled = true;
+        if (nameInput) nameInput.disabled = true;
     } else {
-        addBtn.disabled = false;
-        nameInput.disabled = false;
+        if (addBtn) addBtn.disabled = false;
+        if (nameInput) nameInput.disabled = false;
     }
+}
+
+function initForm() {
+    const addBtn = document.getElementById('addBtn');
+    const nameInput = document.getElementById('name');
+    const beginBtn = document.querySelector('.begin');
+    const muteBtn = document.getElementById('muteBtn');
+    const restartBtn = document.querySelector('.controls button:nth-child(2)');
+
+    if (addBtn) addBtn.addEventListener('click', addCharacter);
+    
+    if (nameInput) {
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                addCharacter();
+            }
+        });
+    }
+    
+    if (beginBtn) {
+        beginBtn.addEventListener('click', (e) => {
+            if (window.gameState.contestants.length === MAX_CHARACTERS) {
+                Swal.fire('All set!', 'The ascension ceremony is about to begin....', 'success');
+                window.location.href = '../main/firsttrial.html';
+            } else {
+                Swal.fire({
+                    title: 'Wait!',
+                    text: `You need 16 participants to get started. You have ${window.gameState.contestants.length}.`,
+                    icon: 'info',
+                    toast: true,
+                    position: 'bottom-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                });
+            }
+        });
+    }
+    
+    if (muteBtn) muteBtn.addEventListener('click', muteMusic);
+    if (restartBtn) restartBtn.addEventListener('click', returnHome);
+
+    window.gameState.contestants.forEach(contestant => createCharacterCard(contestant));
+    updateUI();
+
+    if (nameInput) nameInput.focus();
 }
 
 function returnHome() {
@@ -91,9 +139,7 @@ function returnHome() {
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: "No",
-        background: '#ffffff',
-        color: '#000000'
+        denyButtonText: "No"
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
@@ -101,11 +147,7 @@ function returnHome() {
                 timer: 1000,
                 showConfirmButton: false,
                 allowOutsideClick: false,
-                background: '#ffffff',
-                color: '#000000',
-                didOpen: () => {
-                    Swal.showLoading();
-                }
+                didOpen: () => Swal.showLoading()
             }).then(() => {
                 window.location.href = 'welcome.html';
             });
@@ -115,78 +157,37 @@ function returnHome() {
 
 function muteMusic() {
     const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
-}
-
-
-function init() {
-    gameState.contestants.forEach(contestant => {
-        createCharacterCard(contestant);
-    });
-    
-    updateUI();
-    nameInput.focus();
-}
-
-addBtn.addEventListener('click', addCharacter);
-
-
-nameInput.addEventListener('keypress', (e) => {
-    
-    if (e.key === 'Enter') {
-        e.preventDefault(); 
-        addCharacter();
+    if (icon) {
+        icon.classList.toggle('fa-volume-xmark');
+        icon.classList.toggle('fa-volume-high');
     }
-});
-
-function nextScreen() {
-    document.body.style.transition = 'opacity 0.8s';
-    document.body.style.opacity = '0';
-
-    setTimeout(() => {
-        window.location.href = 'form.html';
-    }, 800);
 }
 
-beginBtn.addEventListener('click', (e) => {
-    if (gameState.contestants.length === MAX_CHARACTERS) {
-        Swal.fire('All set!', 'The ascension ceremony is about to begin....', 'success');
-        window.location.href = './round.html'; 
-
+if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initForm);
     } else {
-        Swal.fire({
-            title: 'Wait!',
-            text: `You need 16 participants to get started. You have ${gameState.contestants.length}.`,
-            icon: 'info',
-            toast: true, 
-            position: 'bottom-end', 
-            showConfirmButton: false, 
-            timer: 3000, 
-            timerProgressBar: true,
-        });
+        initForm();
     }
-});
-
-addBtn.addEventListener('click', addCharacter);
-
-
-beginBtn.addEventListener('click', (e) => {
-    
-});
-
-
-if (muteBtn) {
-    muteBtn.addEventListener('click', muteMusic); 
 }
 
-if (restartBtn) {
-    restartBtn.addEventListener('click', returnHome); 
+if (typeof window !== 'undefined') {
+    window.addCharacter = addCharacter;
+    window.removeCharacter = removeCharacter;
+    window.updateUI = updateUI;
+    window.createCharacterCard = createCharacterCard;
+    window.initForm = initForm;
 }
 
-init();
-
-
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        addCharacter,
+        removeCharacter,
+        updateUI,
+        createCharacterCard,
+        initForm
+    };
+}
 
 
 

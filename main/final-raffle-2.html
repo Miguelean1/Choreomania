@@ -5,7 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>CHOREOMANIA: The last ascent</title>
-    <link rel="icon" type="image/x-icon" href="https://res.cloudinary.com/dsy30p7gf/image/upload/v1762976509/Recurso_1CHOREOICO_wma7og.png">
+    <link rel="icon" type="image/x-icon"
+        href="https://res.cloudinary.com/dsy30p7gf/image/upload/v1762976509/Recurso_1CHOREOICO_wma7og.png">
     <link rel="stylesheet" href="../styles/final-raffle-2.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,25 +39,18 @@
                             alt="Benefactor avatar">
                     </div>
                 </div>
-                <div id="dialogbox" class="normal-style">But now, the rhythm fades. The music stops. And only one of you
-                    will rise. And the winner is…
+                <div id="dialogbox" class="title-style">But now, the rhythm fades. The music stops. And only one of you will rise.| And the winner is…
                 </div>
             </div>
         </div>
-        <div class="characters-stage">
-            <div class="left-player">
-                <img src="https://res.cloudinary.com/dhhxrrgut/image/upload/v1762955580/human1_uilhcu.png"
-                    alt="Left player">
-            </div>
-            <div class="right-player">
-                <img src="https://res.cloudinary.com/dhhxrrgut/image/upload/v1762955634/human2_ukpmmg.png"
-                    alt=" Right player">
-            </div>
+        <div class="characters-stage" id="characters-stage">
+            <!-- Personajes cargados dinámicamente desde localStorage -->
         </div>
-
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../scripts/raffle.js"></script>
+    <script src="../scripts/gameState.js"></script>
     <script src="../scripts/final-raffle-2.js"></script>
 </body>
 
