@@ -42,15 +42,8 @@ document.addEventListener("DOMContentLoaded", function(){
     });
 }, false);
 
-
-function muteMusic() {
-            const icon = document.querySelector('#muteBtn i');
-            icon.classList.toggle('fa-volume-xmark');
-            icon.classList.toggle('fa-volume-high');
-        }
-
-
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -148,6 +141,7 @@ function clearTimeouts() {
 
     // Acción del botón: recargar la página para "play again" (se puede cambiar a otra ruta)
     playBtn.addEventListener('click', function() {
+        stopMusic();
         btnContainer.classList.remove('show');
         setTimeout(function() {
             window.location.reload();
