@@ -112,6 +112,11 @@ function normalStyle() {
     dialogbox.classList.add('normal-style');
 }
 
+function finalStyle() {
+    dialogbox.classList.remove('title-style', 'normal-style');
+    dialogbox.classList.add('final-style');
+}
+
 function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
@@ -143,18 +148,23 @@ function nextMessage() {
     if (messageId >= messageStrings.length) {
         messageId = 0;
     }
-    
-    currMessage = messageStrings[messageId];
+
+    const selectedIndex = messageId;
+    currMessage = messageStrings[selectedIndex];
     messageId++;
-    
-    if (applytitlestyle) {
-        if (messageId == 1 || messageId == messageStrings.length) {
+
+    if (selectedIndex === messageStrings.length - 1) {
+        finalStyle();
+    } else if (applytitlestyle) {
+        if (selectedIndex === 0 || selectedIndex === messageStrings.length - 1) {
             titleStyle();
         } else {
             normalStyle();
         }
+    } else {
+        normalStyle();
     }
-    
+
     loadMessage(currMessage);
 }
 

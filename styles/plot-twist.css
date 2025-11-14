@@ -94,7 +94,7 @@ body {
 
 .name-tag {
     position: absolute;
-    top: -30px;
+    top: -35px;
     left: -15px;
     background: white;
     color: black;
@@ -131,12 +131,19 @@ body {
     line-height: 1.9em;
 }
 
-
 #dialogbox.normal-style {
     text-align: center;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 16px;
+    line-height: 25px;
+}
+
+#dialogbox.final-style {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 25px;
+    color: #EE553D;
 }
 
 #arrow {

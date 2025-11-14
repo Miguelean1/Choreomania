@@ -162,7 +162,7 @@ body {
 }
 
 #dialogbox.normal-style {
-    text-align: left;
+    text-align: center;
     font-size: 12px;
     font-weight: 700;
     line-height: 16px;
@@ -251,7 +251,7 @@ body {
 
 .principal-img {
     margin-top: 30px;
-    width: 80%; /* la mitad del ancho del contenedor */
+    width: 80%;
     height: auto;
 }
 
