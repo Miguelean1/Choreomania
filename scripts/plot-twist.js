@@ -96,11 +96,7 @@ function returnHome() {
     });
 }
 
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
-}
+
 
 function titleStyle() {
     dialogbox.classList.remove('normal-style');
@@ -227,3 +223,12 @@ document.addEventListener('keyup', function(e) {
     }
 });
 
+function checkMusicPreference() {
+    const musicChoice = localStorage.getItem('musicEnabled');
+
+    if (musicChoice === 'true') {
+        playAudio(); 
+    } else if (musicChoice === 'false') {
+        pauseAudio();
+    }
+}

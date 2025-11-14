@@ -1,3 +1,6 @@
+
+
+
 function checkMusicPreference() {
     const musicChoice = localStorage.getItem('musicEnabled');
 
