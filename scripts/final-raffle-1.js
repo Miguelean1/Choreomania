@@ -1,4 +1,5 @@
 const timer = 30;
+const STORAGE_KEY = 'myRegistrationGameState';
 var messageStrings;
 var dialogbox;
 var currMessage;
@@ -25,6 +26,32 @@ function playThunderOnce() {
         console.warn('Error creando audio de thunder:', e);
     }
 }
+document.addEventListener("DOMContentLoaded", function(){
+	// Cargar personajes desde localStorage
+	try {
+		const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+		const players = storedData?.contestants ?? [];
+		
+		if (players.length > 0) {
+			const grid = document.getElementById("characters-stage");
+			if (grid) {
+				players.forEach((player, index) => {
+					const card = document.createElement('div');
+					card.className = 'character-card';
+					card.innerHTML = `
+						<div class="character-name">${player.name}</div>
+						<div class="character-image">
+							<img src="${player.imagePath}" alt="${player.name}">
+						</div>
+					`;
+					grid.appendChild(card);
+				});
+			}
+		}
+	} catch (e) {
+		console.error('Error cargando personajes:', e);
+	}
+}, false);
 
 
 function clearAllTimeouts() {

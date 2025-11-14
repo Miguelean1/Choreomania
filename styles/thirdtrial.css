@@ -122,13 +122,12 @@ body {
 .image-container img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: fill;
 }
 
 .principal-img {
-    margin-top: 50px;
-    width: 80%; /* la mitad del ancho del contenedor */
-    height: auto;
+    width: 125%;
+    height: 100%;
 }
 
 
@@ -156,7 +155,7 @@ body {
 }
 
 #dialogbox.normal-style {
-    text-align: left;
+    text-align: center;
     font-size: 12px;
     font-weight: 100;
     line-height: 16px;

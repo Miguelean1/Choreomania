@@ -223,7 +223,7 @@ body {
     grid-template-columns: repeat(4, 1fr);
     gap: 20px 15px;
     padding: 10px;
-    width: 42%;
+    width: 40%;
     margin: 0 auto;
 }
 

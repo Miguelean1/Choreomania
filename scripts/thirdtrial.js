@@ -11,7 +11,7 @@ let isMessageSkipped = false;
 var readyToStartRaffle = false;
 var isRaffleStarted = false;
 var raffleFinished = false;
-const POST_RAFFLE_REDIRECT = '../main/final-raffle.html';
+const POST_RAFFLE_REDIRECT = '../main/final-raffle-1.html';
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";

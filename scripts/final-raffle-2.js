@@ -3,18 +3,49 @@ var messageStrings;
 var dialogbox;
 var currMessage;
 var messageId;
-var applytitlestyle = false;
+var applytitlestyle = true;
 var loadingComplete = true;
+var skipNextPress = false;
+let isMessageSkipped = false;
+var readyToStartRaffle = false;
+var isRaffleStarted = false;
+var raffleFinished = false;
 var activeTimeouts = [];
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
 
-
 function clearAllTimeouts() {
     activeTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
     activeTimeouts = [];
 }
+
+document.addEventListener("DOMContentLoaded", function(){
+	// Cargar personajes desde localStorage
+	try {
+		const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+		const players = storedData?.contestants ?? [];
+		
+		if (players.length > 0) {
+			const grid = document.getElementById("characters-stage");
+			if (grid) {
+				players.forEach((player, index) => {
+					const card = document.createElement('div');
+					card.className = 'character-card';
+					card.innerHTML = `
+						<div class="character-name">${player.name}</div>
+						<div class="character-image">
+							<img src="${player.imagePath}" alt="${player.name}">
+						</div>
+					`;
+					grid.appendChild(card);
+				});
+			}
+		}
+	} catch (e) {
+		console.error('Error cargando personajes:', e);
+	}
+}, false);
 
 
 function returnHome() {
@@ -53,113 +84,176 @@ function normalStyle(){
 
 function loadMessage(dialog) {
     loadingComplete = false;
-    if (dialogbox) {
-        dialogbox.style.minHeight = dialogbox.offsetHeight + 'px';
-    }
     dialogbox.innerHTML = "";
-    
-    let i = 0;
-    function animateChar() {
-        if (i < dialog.length) {
-            dialogbox.innerHTML += dialog.charAt(i);
-            i++;
-            let timeoutId = setTimeout(animateChar, timer);
-            activeTimeouts.push(timeoutId);
-        } else {
-            dialogbox.innerHTML += "<br>";
-            if (!dialogbox.contains(arrow)) {
+    for (let i = 0; i < dialog.length; i++) {
+        setTimeout(function() {
+            dialogbox.innerHTML += dialog[i];
+            if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
+                loadingComplete = true;
             }
-            loadingComplete = true;
-            if (dialogbox) {
-                dialogbox.style.minHeight = '';
-            }
-            activeTimeouts = [];
-        }
+        }, timer * i);
     }
-    animateChar();
 }
 
 function nextMessage() {
-    if (!loadingComplete) {
+    if (!loadingComplete || skipNextPress) {
+        skipNextPress = false;
         return;
     }
-    
+
     if (messageId >= messageStrings.length) {
-        messageId = 0;
+        messageId = messageStrings.length - 1;
     }
-    
     currMessage = messageStrings[messageId];
-    messageId++;
     
-    if (applytitlestyle) {
-        if (messageId == 1 || messageId == messageStrings.length) {
-            titleStyle();
-        } else {
-            normalStyle();
-        }
-    }
-    
-    loadMessage(currMessage);
+    // Determinar si estamos en el último mensaje (preparado para sorteo)
+    readyToStartRaffle = (messageId === messageStrings.length - 1);
+	
+	if (applytitlestyle) {
+		if (messageId == 1 || messageId == messageStrings.length) {
+			titleStyle();
+		} else {
+			normalStyle();
+		}
+	}
+	
+	// Solo incrementamos si NO estamos en el último mensaje
+	if (!readyToStartRaffle) {
+		messageId++;
+	}
+	
+    loadMessage(currMessage.split(''));
 }
 
 document.addEventListener("DOMContentLoaded", function(){
     dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
-    messageStrings = messageString.split('|');
-    
+    var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+
+    messageStrings = messageString.split("|").map((msg) => msg.trim());
+    dialogbox.innerHTML = "";
     messageId = 0;
     currMessage = messageStrings[messageId];
-    messageId++;
-    
-    dialogbox.innerHTML = "";
-    loadMessage(currMessage);
-    
-    dialogbox.addEventListener("click", function() {
+    nextMessage();
+
+    document.getElementById("dialogbox").addEventListener("click", function (e) {
+
+        // Si el sorteo está en marcha, bloquear cualquier clic en el dialogbox
+        if (isRaffleStarted) {
+            e.stopPropagation();
+            return;
+        }
+
+        // Si el sorteo ya terminó, permitir clic que redirige al componente destino
+        if (raffleFinished) {
+            // redirige a la ruta configurada
+            window.location.href = '../main/blackout.html';
+            return;
+        }
+
         if (!loadingComplete) {
-            
             clearAllTimeouts();
-            dialogbox.innerHTML = currMessage + "<br>";
+            dialogbox.innerHTML = currMessage;
             if (!dialogbox.contains(arrow)) {
                 dialogbox.appendChild(arrow);
             }
             loadingComplete = true;
-        } else {
-            
+        } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
+
+            isRaffleStarted = true;
+
+            e.stopPropagation();
+            animateRaffle();
+        } else if (!skipNextPress) {
+
             nextMessage();
+        } else {
+            skipNextPress = false;
         }
     });
-});
+},
+false
+);
 
 document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        
-        if (!loadingComplete) {
-           
-            clearAllTimeouts();
-            dialogbox.innerHTML = currMessage + "<br>";
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
-            }
-            loadingComplete = true;
+    if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
+        clearAllTimeouts();
+        dialogbox.innerHTML = currMessage;
+        if (!dialogbox.contains(arrow)) {
+            dialogbox.appendChild(arrow);
         }
+        loadingComplete = true;
+        isMessageSkipped = true;
     }
 });
 
 document.addEventListener('keyup', function(e) {
-    if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        
-        if (loadingComplete) {
+    if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
+        if (!isMessageSkipped) {
             nextMessage();
         }
+        isMessageSkipped = false;
     }
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof typeDialog === 'function') {
-        setTimeout(typeDialog, 400);
-    }
+  // typeDialog no es necesario aquí
 });
+
+
+// ============================================
+// SISTEMA DE SORTEO (usando módulo raffle.js)
+// ============================================
+
+let raffleSystem = null;
+
+function animateRaffle() {
+    if (!raffleSystem) {
+        // Inicializar el sistema de sorteo con la configuración actual
+        raffleSystem = new RaffleSystem({
+            playerBoxSelector: '.character-image', // Selector CSS de los elementos
+            totalPlayers: 2,                       // Total de jugadores
+            winnersCount: 1,                       // Cantidad a seleccionar (ganador final)
+            animationDuration: 2000,               // Duración de la animación
+            selectedClass: 'selected',             // Clase CSS para seleccionados
+            glowColor: 'gold'                      // Color del brillo
+        });
+        raffleSystem.init();
+    }
+
+    // Ejecutar el sorteo
+    raffleSystem.start((selectedIndices) => {
+        console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
+        raffleFinished = true;
+        isRaffleStarted = false;
+        // Actualizar `myRegistrationGameState` para conservar solo a los ganador
+        try {
+            const raw = localStorage.getItem(STORAGE_KEY);
+            const state = raw ? JSON.parse(raw) : { contestants: [] };
+            state.contestants = state.contestants || [];
+            const winners = selectedIndices
+                .map((idx) => state.contestants[idx])
+                .filter(Boolean);
+            winners.forEach((w) => {
+                if (w) w.finalRaffleCompleted = true;
+            });
+            state.contestants = winners;
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (e) {
+            console.error('Error actualizando myRegistrationGameState:', e);
+        }
+        try {
+            if (dialogbox) {
+                dialogbox.innerHTML = 'The ascension is complete. Your name will be forever inscribed in our records.';
+                if (!dialogbox.contains(arrow)) {
+                    dialogbox.appendChild(arrow);
+                }
+                loadingComplete = true;
+                arrow.classList.remove('raffle-ready');
+            }
+        } catch (err) {
+            console.warn('Could not update dialogbox after raffle:', err);
+        }
+    });
+}
 
