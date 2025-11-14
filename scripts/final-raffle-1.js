@@ -61,6 +61,7 @@ function clearAllTimeouts() {
 
 
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -78,12 +79,6 @@ function returnHome() {
     });
 }
 
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
-}
-
 function titleStyle(){
     dialogbox.classList.remove('normal-style');
     dialogbox.classList.add('title-style');
@@ -95,6 +90,7 @@ function normalStyle(){
 }
 
 function nextScreen() {
+    stopMusic();
     clearAllTimeouts();
 
     const overlay = document.createElement('div');
