@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
     <script src="https://kit.fontawesome.com/ea3042a44d.js" crossorigin="anonymous"></script>
+
+    <script src="../scripts/audio-manager.js"></script>
 </head>
 
 <body>
@@ -52,6 +54,35 @@
     <script src="../scripts/raffle.js"></script>
     <script src="../scripts/gameState.js"></script>
     <script src="../scripts/final-raffle-2.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        initAudio('../assets/sounds/WelcomeMusic.mp3'); 
+
+        const musicChoice = localStorage.getItem('musicEnabled');
+        const icon = document.querySelector('#muteBtn i');
+
+        if (musicChoice === 'true') {
+            isMuted = false;
+            if (icon) {
+                icon.classList.remove('fa-volume-xmark');
+                icon.classList.add('fa-volume-high');
+            }
+            playAudio(); 
+        } else if (musicChoice === 'false') {
+            isMuted = true;
+            if (icon) {
+                icon.classList.add('fa-volume-xmark');
+                icon.classList.remove('fa-volume-high');
+            }
+        } else {
+            isMuted = true;
+            if (icon) {
+                icon.classList.add('fa-volume-xmark');
+            }
+        }
+    });
+</script>
 </body>
 
 </html>

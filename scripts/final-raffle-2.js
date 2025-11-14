@@ -49,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -64,12 +65,6 @@ function returnHome() {
             Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
         }
     });
-}
-
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
 }
 
 function titleStyle(){
@@ -146,6 +141,7 @@ document.addEventListener("DOMContentLoaded", function(){
 
         // Si el sorteo ya terminó, permitir clic que redirige al componente destino
         if (raffleFinished) {
+            stopMusic();
             // redirige a la ruta configurada
             window.location.href = '../main/blackout.html';
             return;
