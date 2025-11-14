@@ -147,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function(){
         // Si el sorteo ya terminó, permitir clic que redirige al componente destino
         if (raffleFinished) {
             // redirige a la ruta configurada
-            window.location.href = '../main/plot-twist.html';
+            window.location.href = '../main/blackout.html';
             return;
         }
 
