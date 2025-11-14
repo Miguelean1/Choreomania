@@ -1,11 +1,11 @@
 let backgroundMusic = null;
 let isMuted = true; 
 
-function initAudio(audioPath) {
+function initAudio(audioPath, shouldLoop = true) {
     if (backgroundMusic) return;
     
     backgroundMusic = new Audio(audioPath);
-    backgroundMusic.loop = true;
+    backgroundMusic.loop = shouldLoop;
     backgroundMusic.volume = 0.3;
 }
 

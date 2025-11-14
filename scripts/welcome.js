@@ -53,6 +53,9 @@ function returnHome() {
 }
 
 function nextScreen() {
+
+    stopMusic();
+    
     document.body.style.transition = 'opacity 0.8s';
     document.body.style.opacity = '0';
 
