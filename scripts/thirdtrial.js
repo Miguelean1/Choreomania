@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    initAudio('../assets/sounds/WelcomeMusic.mp3'); 
+    initAudio('../assets/sounds/MusicForm.mp3'); 
 
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');

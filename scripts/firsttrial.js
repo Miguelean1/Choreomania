@@ -293,8 +293,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // 3. Lógica de audio (El Patrón)
-    initAudio('../assets/sounds/WelcomeMusic.mp3'); 
+    
+    initAudio('../assets/sounds/MusicForm.mp3'); 
 
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');
