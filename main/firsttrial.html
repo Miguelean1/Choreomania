@@ -55,18 +55,15 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Sistema de sorteo reutilizable - debe cargarse antes de script.js -->
+
     <script src="../scripts/raffle.js"></script>
     <script src="../scripts/firsttrial.js"></script>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. Carga la música de ESTA página
-        // ¡OJO! Pongo WelcomeMusic en bucle por defecto.
-        // Cámbiala si esta vista usa otra música.
+
         initAudio('../assets/sounds/WelcomeMusic.mp3'); 
 
-        // 2. Lee la decisión guardada
         const musicChoice = localStorage.getItem('musicEnabled');
         const icon = document.querySelector('#muteBtn i');
 
@@ -76,7 +73,7 @@
                 icon.classList.remove('fa-volume-xmark');
                 icon.classList.add('fa-volume-high');
             }
-            playAudio(); // Intentará sonar
+            playAudio(); 
 
         } else if (musicChoice === 'false') {
             isMuted = true;
@@ -86,7 +83,7 @@
             }
 
         } else {
-            // Caso Raro (sin 'welcome')
+            
             isMuted = true;
             if (icon) {
                 icon.classList.add('fa-volume-xmark');
