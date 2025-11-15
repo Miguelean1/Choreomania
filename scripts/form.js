@@ -158,13 +158,36 @@ function returnHome() {
     });
 }
 
-if (typeof document !== 'undefined') {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initForm);
+
+window.addEventListener('load', () => {
+
+    initForm(); 
+
+    initAudio('../assets/sounds/WelcomeMusic.mp3'); 
+
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+        playAudio(); 
+    } else if (musicChoice === 'false') {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
     } else {
-        initForm();
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
     }
-}
+});
 
 if (typeof window !== 'undefined') {
     window.addCharacter = addCharacter;
