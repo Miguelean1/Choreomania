@@ -138,7 +138,8 @@ class RaffleSystem {
             }
 
             this.isRunning = true;
-            playRaffleSound(); //Linea de Mike
+            
+            playRaffleSound(); 
 
             // Limpiar efectos previos
             this.playerBoxes.forEach((box) => (box.style.boxShadow = ""));
