@@ -62,3 +62,15 @@ function stopMusic() {
         backgroundMusic.currentTime = 0;
     }
 }
+
+let rafflePlayed = false;
+function playRaffleSound(){
+    try {
+        const raffleAudio = new Audio('../assets/sounds/raffleSound.mp3');
+        raffleAudio.play().catch(err => {
+            console.warn('No se pudo reproducir raffle:', err);
+        });
+    } catch (e) {
+        console.warn('Error creando audio de raffle:', e);
+    }
+}
