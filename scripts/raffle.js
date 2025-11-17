@@ -1,48 +1,6 @@
-/**
- * RAFFLE SYSTEM - Sistema de sorteo reutilizable
- * ===============================================
- * 
- * Este módulo proporciona funcionalidad de sorteo animado que puede
- * ser utilizado en múltiples vistas/páginas del proyecto.
- * 
- * USO BÁSICO:
- * -----------
- * 1. Incluir este archivo antes del script principal:
- *    <script src="raffle.js"></script>
- *    <script src="tu-script.js"></script>
- * 
- * 2. Crear una instancia del sistema de sorteo:
- *    const miSorteo = new RaffleSystem({
- *        playerBoxSelector: '.character-image',  // Selector CSS de los elementos
- *        totalPlayers: 16,                       // Total de jugadores/elementos
- *        winnersCount: 8,                        // Cantidad a seleccionar
- *        animationDuration: 2000,                // Duración de la animación (ms)
- *        selectedClass: 'selected',              // Clase CSS para elementos seleccionados
- *        glowColor: 'gold'                       // Color del brillo para seleccionados
- *    });
- * 
- * 3. Inicializar (cargar los elementos del DOM):
- *    miSorteo.init();
- * 
- * 4. Ejecutar el sorteo:
- *    miSorteo.start();
- * 
- * 5. Opcional - Resetear:
- *    miSorteo.reset();
- * 
- * EJEMPLO COMPLETO:
- * -----------------
- * const raffle = new RaffleSystem();
- * raffle.init();
- * 
- * document.getElementById('startButton').addEventListener('click', () => {
- *     raffle.start();
- * });
- */
-
 class RaffleSystem {
     constructor(config = {}) {
-        // Configuración por defecto
+
         this.config = {
             playerBoxSelector: '.character-image',
             totalPlayers: 16,
@@ -69,26 +27,19 @@ class RaffleSystem {
         this.animationInterval = null;
     }
 
-    /**
-     * Genera un número entero aleatorio entre min y max (inclusive)
-     */
-    getRandomInt(min, max) {
+        getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    /**
-     * Inicializa el sistema cargando los elementos del DOM
-     * Debe llamarse después de que el DOM esté listo
-     */
-    init() {
+        init() {
         this.playerBoxes = [];
         
-        // Opción 1: Usar selector CSS directo
+
         const elements = document.querySelectorAll(this.config.playerBoxSelector);
         if (elements.length > 0) {
             this.playerBoxes = Array.from(elements);
         } 
-        // Opción 2: Buscar por ID (playerBox1, playerBox2, etc.)
+
         else {
             for (let i = 1; i <= this.config.totalPlayers; i++) {
                 const box = document.getElementById(`playerBox${i}`);
@@ -105,10 +56,7 @@ class RaffleSystem {
         return this;
     }
 
-    /**
-     * Limpia todos los efectos visuales de los elementos
-     */
-    reset() {
+        reset() {
         this.playerBoxes.forEach((box) => {
             box.style.boxShadow = "";
             box.classList.remove(this.config.selectedClass);
@@ -120,12 +68,7 @@ class RaffleSystem {
         }
     }
 
-    /**
-     * Inicia la animación del sorteo
-     * @param {Function} onComplete - Callback opcional que se ejecuta al terminar
-     * @returns {Promise} Promesa que se resuelve con los índices seleccionados
-     */
-    start(onComplete) {
+        start(onComplete) {
         return new Promise((resolve) => {
             if (this.isRunning) {
                 console.warn('RaffleSystem: El sorteo ya está en ejecución.');
@@ -141,10 +84,10 @@ class RaffleSystem {
             
             playRaffleSound(); 
 
-            // Limpiar efectos previos
+
             this.playerBoxes.forEach((box) => (box.style.boxShadow = ""));
 
-            // Animación de brillos aleatorios
+
             this.animationInterval = setInterval(() => {
                 this.playerBoxes.forEach((box) => {
                     const color = this.config.shadowColors[
@@ -154,21 +97,21 @@ class RaffleSystem {
                 });
             }, this.config.blinkInterval);
 
-            // Tras la duración configurada, seleccionar ganadores
+
             setTimeout(() => {
                 clearInterval(this.animationInterval);
                 this.animationInterval = null;
 
-                // Limpiar todos los brillos
+
                 this.playerBoxes.forEach((box) => (box.style.boxShadow = ""));
 
-                // Seleccionar índices únicos aleatorios
+
                 const selectedIndices = this.selectRandomIndices(
                     this.playerBoxes.length,
                     this.config.winnersCount
                 );
 
-                // Aplicar estilos a los seleccionados
+
                 this.playerBoxes.forEach((box, idx) => {
                     if (selectedIndices.includes(idx)) {
                         box.classList.add(this.config.selectedClass);
@@ -181,24 +124,18 @@ class RaffleSystem {
 
                 this.isRunning = false;
 
-                // Ejecutar callback si existe
+
                 if (typeof onComplete === 'function') {
                     onComplete(selectedIndices);
                 }
 
-                // Resolver la promesa con los índices seleccionados
+
                 resolve(selectedIndices);
             }, this.config.animationDuration);
         });
     }
 
-    /**
-     * Selecciona N índices únicos aleatorios de un rango
-     * @param {number} max - Número máximo de elementos
-     * @param {number} count - Cantidad de elementos a seleccionar
-     * @returns {Array} Array de índices seleccionados
-     */
-    selectRandomIndices(max, count) {
+        selectRandomIndices(max, count) {
         const selectedIndices = [];
         while (selectedIndices.length < count && selectedIndices.length < max) {
             const idx = this.getRandomInt(0, max - 1);
@@ -209,21 +146,13 @@ class RaffleSystem {
         return selectedIndices;
     }
 
-    /**
-     * Obtiene los elementos del DOM que fueron seleccionados
-     * @returns {Array} Array de elementos DOM seleccionados
-     */
-    getSelectedElements() {
+        getSelectedElements() {
         return this.playerBoxes.filter(box => 
             box.classList.contains(this.config.selectedClass)
         );
     }
 
-    /**
-     * Obtiene los índices de los elementos seleccionados
-     * @returns {Array} Array de índices seleccionados
-     */
-    getSelectedIndices() {
+        getSelectedIndices() {
         const indices = [];
         this.playerBoxes.forEach((box, idx) => {
             if (box.classList.contains(this.config.selectedClass)) {
@@ -234,7 +163,7 @@ class RaffleSystem {
     }
 }
 
-// Exportar para uso global (si no usas módulos ES6)
+
 if (typeof window !== 'undefined') {
     window.RaffleSystem = RaffleSystem;
 }

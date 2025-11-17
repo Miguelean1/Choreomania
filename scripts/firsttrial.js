@@ -34,7 +34,6 @@ arrow.id = "arrow";
 var readyToStartRaffle = false;
 var isRaffleStarted = false;
 var raffleFinished = false;
-// Ruta a la que redirigir cuando termine el sorteo. Cámbiala según necesites.
 const POST_RAFFLE_REDIRECT = '../main/secondtrial.html';
 
 arrow.addEventListener("click", function (e) {
@@ -79,22 +78,14 @@ function nextMessage() {
         skipNextPress = false;
         return;
     }
-
-    // Si messageId está fuera de rango (por algún motivo), lo ajustamos
     if (messageId >= messageStrings.length) {
         messageId = messageStrings.length - 1;
     }
 
     currMessage = messageStrings[messageId];
-
-    // Determinar si estamos en el último mensaje (preparado para sorteo)
     readyToStartRaffle = (messageId === messageStrings.length - 1);
 
     normalStyle();
-
-    // Solo incrementamos si NO estamos en el último mensaje.
-    // De esta forma, al llegar al último mensaje y activar el sorteo,
-    // no volveremos a reiniciar el texto desde el principio.
     if (!readyToStartRaffle) {
         messageId++;
     }
@@ -152,18 +143,9 @@ function clearTimeouts() {
         clearTimeout(i);
     }
 }
-
-// ============================================
-// SISTEMA DE SORTEO (usando módulo raffle.js)
-// ============================================
-
-// Inicializar el sistema de sorteo cuando el DOM esté listo
 let raffleSystem = null;
-
-// Función wrapper para mantener compatibilidad con el código existente
 function animateRaffle() {
     if (!raffleSystem) {
-        // Inicializar el sistema de sorteo con la configuración actual
         raffleSystem = new RaffleSystem({
             playerBoxSelector: '.character-image', // Selector CSS de los elementos
             totalPlayers: 16,                      // Total de jugadores
@@ -174,37 +156,21 @@ function animateRaffle() {
         });
         raffleSystem.init();
     }
-
-    // Ejecutar el sorteo
     raffleSystem.start((selectedIndices) => {
         console.log('Raffle completed. Selected indices:', selectedIndices);
-        // Marcar el sorteo como finalizado y permitir que el usuario haga clic
-        // en el dialogbox para continuar (redirigir al componente destino).
         raffleFinished = true;
         isRaffleStarted = false;
-        // Actualizar `myRegistrationGameState` para conservar solo los ganadores
         try {
-            // Leer el estado guardado bajo STORAGE_KEY
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };
-
-            // Asegurarnos de que existe un array de contestants
             state.contestants = state.contestants || [];
-
-            // Construir array de ganadores a partir de los índices seleccionados
             const winners = selectedIndices
                 .map((idx) => state.contestants[idx])
                 .filter(Boolean);
-
-            // Marcar que han completado el primer sorteo (opcional)
             winners.forEach((w) => {
                 if (w) w.firstTrialCompleted = true;
             });
-
-            // Reemplazar el array de contestants por los ganadores
             state.contestants = winners;
-
-            // Guardar de vuelta únicamente bajo STORAGE_KEY (no crear nuevas claves)
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (e) {
             console.error('Error actualizando myRegistrationGameState tras el sorteo:', e);
@@ -225,8 +191,6 @@ function animateRaffle() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    
-    // 1. Lógica de cargar jugadores (del primer bloque)
     const grid = document.getElementById("charactersGrid");
     let storedData;
     try {
@@ -254,8 +218,6 @@ document.addEventListener("DOMContentLoaded", function () {
             grid.appendChild(card);
         });
     }
-
-    // 2. Lógica de diálogo (del segundo bloque)
     dialogbox = document.getElementById("dialogbox");
     var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
 

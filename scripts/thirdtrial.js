@@ -56,8 +56,6 @@ function nextMessage() {
         messageId = messageStrings.length - 1;
     }
     currMessage = messageStrings[messageId];
-    
-    // Determinar si estamos en el último mensaje (preparado para sorteo)
     readyToStartRaffle = (messageId === messageStrings.length - 1);
 	
 	if (applytitlestyle) {
@@ -67,8 +65,6 @@ function nextMessage() {
 			normalStyle();
 		}
 	}
-	
-	// Solo incrementamos si NO estamos en el último mensaje
 	if (!readyToStartRaffle) {
 		messageId++;
 	}
@@ -118,15 +114,10 @@ function clearTimeouts() {
     }
 }
 
-// ============================================
-// SISTEMA DE SORTEO (usando módulo raffle.js)
-// ============================================
-
 let raffleSystem = null;
 
 function animateRaffle() {
     if (!raffleSystem) {
-        // Inicializar el sistema de sorteo con la configuración actual
         raffleSystem = new RaffleSystem({
             playerBoxSelector: '.character-image', // Selector CSS de los elementos
             totalPlayers: 4,                       // Total de jugadores
@@ -137,13 +128,10 @@ function animateRaffle() {
         });
         raffleSystem.init();
     }
-
-    // Ejecutar el sorteo
     raffleSystem.start((selectedIndices) => {
         console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
         raffleFinished = true;
         isRaffleStarted = false;
-        // Actualizar `myRegistrationGameState` para conservar solo a los ganador
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };

@@ -34,7 +34,6 @@ arrow.id = "arrow";
 var readyToStartRaffle = false;
 var isRaffleStarted = false;
 var raffleFinished = false;
-// Ruta a la que redirigir cuando termine el sorteo
 const POST_RAFFLE_REDIRECT = '../main/thirdtrial.html';
 
 function returnHome() {
@@ -69,21 +68,13 @@ function nextMessage() {
         skipNextPress = false;
         return;
     }
-
-    // Si messageId está fuera de rango, lo ajustamos
     if (messageId >= messageStrings.length) {
         messageId = messageStrings.length - 1;
     }
     
     currMessage = messageStrings[messageId];
-
-    // Determinar si estamos en el último mensaje
     readyToStartRaffle = (messageId === messageStrings.length - 1);
-	
-	// Siempre aplicar normal-style
 	normalStyle();
-
-    // Solo incrementamos si NO estamos en el último mensaje
     if (!readyToStartRaffle) {
         messageId++;
     }
@@ -132,18 +123,9 @@ function clearTimeouts() {
         clearTimeout(i);
     }
 }
-
-// ============================================
-// SISTEMA DE SORTEO (usando módulo raffle.js)
-// ============================================
-
-// Inicializar el sistema de sorteo cuando el DOM esté listo
 let raffleSystem = null;
-
-// Función wrapper para mantener compatibilidad con el código existente
 function animateRaffle() {
     if (!raffleSystem) {
-        // Inicializar el sistema de sorteo con la configuración actual
         raffleSystem = new RaffleSystem({
             playerBoxSelector: '.character-image', // Selector CSS de los elementos
             totalPlayers: 8,                      // Total de jugadores
@@ -154,14 +136,10 @@ function animateRaffle() {
         });
         raffleSystem.init();
     }
-
-    // Ejecutar el sorteo
     raffleSystem.start((selectedIndices) => {
         console.log('Sorteo completado. Índices seleccionados:', selectedIndices);
-        // Marcar el sorteo como finalizado
         raffleFinished = true;
         isRaffleStarted = false;
-        // Actualizar `myRegistrationGameState` para conservar solo los ganadores
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };

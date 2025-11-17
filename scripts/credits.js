@@ -78,7 +78,7 @@ function clearTimeouts() {
     }
 }
 
-// --- Mostrar botón "PLAY AGAIN?" cuando el <marquee> termine ---
+
 (function() {
     const btnContainer = document.querySelector('.button-container');
     const playBtn = document.getElementById('playAgainBtn');

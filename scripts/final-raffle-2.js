@@ -74,7 +74,7 @@ function nextMessage() {
     }
     currMessage = messageStrings[messageId];
     
-    // Determinar si estamos en el último mensaje (preparado para sorteo)
+    
     readyToStartRaffle = (messageId === messageStrings.length - 1);
 	
 	if (applytitlestyle) {
@@ -85,7 +85,7 @@ function nextMessage() {
 		}
 	}
 	
-	// Solo incrementamos si NO estamos en el último mensaje
+	
 	if (!readyToStartRaffle) {
 		messageId++;
 	}
@@ -114,32 +114,32 @@ document.addEventListener('keyup', function(e) {
     }
 });
 
-// ============================================
-// SISTEMA DE SORTEO (usando módulo raffle.js)
-// ============================================
+
+
+
 
 let raffleSystem = null;
 
 function animateRaffle() {
     if (!raffleSystem) {
-        // Inicializar el sistema de sorteo con la configuración actual
+        
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: '.character-image', // Selector CSS de los elementos
-            totalPlayers: 2,                       // Total de jugadores
-            winnersCount: 1,                       // Cantidad a seleccionar (ganador final)
-            animationDuration: 2000,               // Duración de la animación
-            selectedClass: 'selected',             // Clase CSS para seleccionados
-            glowColor: 'gold'                      // Color del brillo
+            playerBoxSelector: '.character-image', 
+            totalPlayers: 2,                       
+            winnersCount: 1,                       
+            animationDuration: 2000,               
+            selectedClass: 'selected',             
+            glowColor: 'gold'                      
         });
         raffleSystem.init();
     }
 
-    // Ejecutar el sorteo
+    
     raffleSystem.start((selectedIndices) => {
         console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
         raffleFinished = true;
         isRaffleStarted = false;
-        // Actualizar `myRegistrationGameState` para conservar solo a los ganador
+        
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };
