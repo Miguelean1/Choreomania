@@ -39,12 +39,12 @@ function returnHome() {
     });
 }
 
-function titleStyle(){
+function titleStyle() {
     dialogbox.classList.remove('normal-style');
     dialogbox.classList.add('title-style');
 }
 
-function normalStyle(){
+function normalStyle() {
     dialogbox.classList.remove('title-style');
     dialogbox.classList.add('normal-style');
 }
@@ -53,7 +53,7 @@ function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
     for (let i = 0; i < dialog.length; i++) {
-        setTimeout(function() {
+        setTimeout(function () {
             dialogbox.innerHTML += dialog[i];
             if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
@@ -73,27 +73,27 @@ function nextMessage() {
         messageId = messageStrings.length - 1;
     }
     currMessage = messageStrings[messageId];
-    
-    
+
+
     readyToStartRaffle = (messageId === messageStrings.length - 1);
-	
-	if (applytitlestyle) {
-		if (messageId == 1 || messageId == messageStrings.length) {
-			titleStyle();
-		} else {
-			normalStyle();
-		}
-	}
-	
-	
-	if (!readyToStartRaffle) {
-		messageId++;
-	}
-	
+
+    if (applytitlestyle) {
+        if (messageId == 1 || messageId == messageStrings.length) {
+            titleStyle();
+        } else {
+            normalStyle();
+        }
+    }
+
+
+    if (!readyToStartRaffle) {
+        messageId++;
+    }
+
     loadMessage(currMessage.split(''));
 }
 
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
         clearAllTimeouts();
         dialogbox.innerHTML = currMessage;
@@ -105,7 +105,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
         if (!isMessageSkipped) {
             nextMessage();
@@ -122,24 +122,24 @@ let raffleSystem = null;
 
 function animateRaffle() {
     if (!raffleSystem) {
-        
+
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: '.character-image', 
-            totalPlayers: 2,                       
-            winnersCount: 1,                       
-            animationDuration: 2000,               
-            selectedClass: 'selected',             
-            glowColor: 'gold'                      
+            playerBoxSelector: '.character-image',
+            totalPlayers: 2,
+            winnersCount: 1,
+            animationDuration: 2000,
+            selectedClass: 'selected',
+            glowColor: 'gold'
         });
         raffleSystem.init();
     }
 
-    
+
     raffleSystem.start((selectedIndices) => {
         console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
         raffleFinished = true;
         isRaffleStarted = false;
-        
+
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };
@@ -171,11 +171,11 @@ function animateRaffle() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    
+
     try {
         const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
         const players = storedData?.contestants ?? [];
-        
+
         if (players.length > 0) {
             const grid = document.getElementById("characters-stage");
             if (grid) {
@@ -263,7 +263,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    initAudio('../assets/sounds/ScaryTechno.mp3'); 
+    initAudio('../assets/sounds/ScaryTechno.mp3');
 
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');
@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function () {
             icon.classList.remove('fa-volume-xmark');
             icon.classList.add('fa-volume-high');
         }
-        playAudio(); 
+        playAudio();
     } else if (musicChoice === 'false') {
         isMuted = true;
         if (icon) {

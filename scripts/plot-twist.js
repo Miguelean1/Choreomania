@@ -56,27 +56,27 @@ function nextScreen() {
     document.body.appendChild(overlay);
 
     const sequence = [
-        { delay: 0,    opacity: '1' },
-        { delay: 100,  opacity: '0' },
-        { delay: 200,  opacity: '1' },
-        { delay: 300,  opacity: '0' },
-        { delay: 380,  opacity: '1' },
-        { delay: 480,  opacity: '0' },
-        { delay: 580,  opacity: '1' },
-        { delay: 680,  opacity: '0' },
-        { delay: 780,  opacity: '1' },
-        { delay: 880,  opacity: '0' },
-        { delay: 980,  opacity: '1' },
-        { delay: 1080,  opacity: '0' },
-        { delay: 1180,  opacity: '1' },
-        { delay: 1280,  opacity: '0' },
-        { delay: 1380,  opacity: '1' },
-        { delay: 1480,  opacity: '0' },
-        { delay: 1580,  opacity: '1' },
-        { delay: 1680,  opacity: '0' },
-        { delay: 1780,  opacity: '1' },
-        { delay: 1880,  opacity: '0' },
-        { delay: 1980,  opacity: '1' },
+        { delay: 0, opacity: '1' },
+        { delay: 100, opacity: '0' },
+        { delay: 200, opacity: '1' },
+        { delay: 300, opacity: '0' },
+        { delay: 380, opacity: '1' },
+        { delay: 480, opacity: '0' },
+        { delay: 580, opacity: '1' },
+        { delay: 680, opacity: '0' },
+        { delay: 780, opacity: '1' },
+        { delay: 880, opacity: '0' },
+        { delay: 980, opacity: '1' },
+        { delay: 1080, opacity: '0' },
+        { delay: 1180, opacity: '1' },
+        { delay: 1280, opacity: '0' },
+        { delay: 1380, opacity: '1' },
+        { delay: 1480, opacity: '0' },
+        { delay: 1580, opacity: '1' },
+        { delay: 1680, opacity: '0' },
+        { delay: 1780, opacity: '1' },
+        { delay: 1880, opacity: '0' },
+        { delay: 1980, opacity: '1' },
 
     ];
 
@@ -113,7 +113,8 @@ function nextScreen() {
     activeTimeouts.push(navigateTimeout);
 }
 
-function returnHome() {ç
+function returnHome() {
+    ç
     stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
@@ -152,7 +153,7 @@ function finalStyle() {
 function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
-    
+
     let i = 0;
     function animateChar() {
         if (i < dialog.length) {
@@ -176,7 +177,7 @@ function nextMessage() {
     if (!loadingComplete) {
         return;
     }
-    
+
     if (messageId >= messageStrings.length) {
         messageId = 0;
     }
@@ -200,19 +201,19 @@ function nextMessage() {
     loadMessage(currMessage);
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     dialogbox = document.getElementById("dialogbox");
     var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
     messageStrings = messageString.split('|');
-    
+
     messageId = 0;
     currMessage = messageStrings[messageId];
     messageId++;
-    
+
     dialogbox.innerHTML = "";
     loadMessage(currMessage);
-    
-    dialogbox.addEventListener("click", function() {
+
+    dialogbox.addEventListener("click", function () {
         if (!loadingComplete) {
             clearAllTimeouts();
             dialogbox.innerHTML = currMessage + "<br>";
@@ -229,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    initAudio('../assets/sounds/PLOT_TWIST_STATIC.mp3', false); 
+    initAudio('../assets/sounds/PLOT_TWIST_STATIC.mp3', false);
 
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');
@@ -240,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function() {
             icon.classList.remove('fa-volume-xmark');
             icon.classList.add('fa-volume-high');
         }
-        playAudio(); 
+        playAudio();
     } else if (musicChoice === 'false') {
         isMuted = true;
         if (icon) {
@@ -255,10 +256,10 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        
+
         if (!loadingComplete) {
             clearAllTimeouts();
             dialogbox.innerHTML = currMessage + "<br>";
@@ -270,10 +271,10 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        
+
         if (loadingComplete) {
             if (messageId >= messageStrings.length) {
                 nextScreen();

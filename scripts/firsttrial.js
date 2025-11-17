@@ -255,8 +255,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    
-    initAudio('../assets/sounds/MusicForm.mp3'); 
+
+    initAudio('../assets/sounds/MusicForm.mp3');
 
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');
@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
             icon.classList.remove('fa-volume-xmark');
             icon.classList.add('fa-volume-high');
         }
-        playAudio(); 
+        playAudio();
     } else if (musicChoice === 'false') {
         isMuted = true;
         if (icon) {

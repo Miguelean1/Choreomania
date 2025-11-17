@@ -12,9 +12,9 @@ var lastMessage = false;
 var arrow = document.createElement("div");
 arrow.id = "arrow";
 
-document.addEventListener("DOMContentLoaded", function(){
-    
-    initAudio('../assets/sounds/WelcomeMusic.mp3'); 
+document.addEventListener("DOMContentLoaded", function () {
+
+    initAudio('../assets/sounds/WelcomeMusic.mp3');
 
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function(){
             icon.classList.remove('fa-volume-xmark');
             icon.classList.add('fa-volume-high');
         }
-        playAudio(); 
+        playAudio();
     } else if (musicChoice === 'false') {
         isMuted = true;
         if (icon) {
@@ -67,7 +67,7 @@ function returnHome() {
 function nextScreen() {
 
     stopMusic();
-    
+
     document.body.style.transition = 'opacity 0.8s';
     document.body.style.opacity = '0';
 
@@ -84,7 +84,7 @@ function clearTimeouts() {
 }
 
 
-(function() {
+(function () {
     const btnContainer = document.querySelector('.button-container');
     const playBtn = document.getElementById('playAgainBtn');
 
@@ -98,7 +98,7 @@ function clearTimeouts() {
     }
 
     if (marquee) {
-        
+
         const children = Array.from(marquee.children).filter(n => n.nodeType === 1);
         const lastChild = children.length ? children[children.length - 1] : marquee;
         let rafId = null;
@@ -121,7 +121,7 @@ function clearTimeouts() {
         }, 30000);
 
     } else {
-        
+
         function checkScrollToEnd() {
             const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2);
             if (scrolledToBottom) {
@@ -134,7 +134,7 @@ function clearTimeouts() {
         window.addEventListener('scroll', onScroll, { passive: true });
     }
 
-    playBtn.addEventListener('click', function(e) {
+    playBtn.addEventListener('click', function (e) {
         e.stopImmediatePropagation();
         btnContainer.classList.remove('show');
         nextScreen();

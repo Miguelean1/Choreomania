@@ -36,11 +36,11 @@ function addCharacter() {
 
     const name = nameInput.value.trim();
     if (!name) {
-        Swal.fire({ 
-            title: 'Error', 
-            text: 'Please, enter a name!', 
-            icon: 'error', 
-            confirmButtonText: 'OK' 
+        Swal.fire({
+            title: 'Error',
+            text: 'Please, enter a name!',
+            icon: 'error',
+            confirmButtonText: 'OK'
         });
         return;
     }
@@ -97,7 +97,7 @@ function initForm() {
     const restartBtn = document.querySelector('.controls button:nth-child(2)');
 
     if (addBtn) addBtn.addEventListener('click', addCharacter);
-    
+
     if (nameInput) {
         nameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
@@ -106,7 +106,7 @@ function initForm() {
             }
         });
     }
-    
+
     if (beginBtn) {
         beginBtn.addEventListener('click', (e) => {
             if (window.gameState.contestants.length === MAX_CHARACTERS) {
@@ -127,7 +127,7 @@ function initForm() {
             }
         });
     }
-    
+
     if (muteBtn) muteBtn.addEventListener('click', muteMusic);
     if (restartBtn) restartBtn.addEventListener('click', returnHome);
 
@@ -164,9 +164,9 @@ function returnHome() {
 
 window.addEventListener('load', () => {
 
-    initForm(); 
+    initForm();
 
-    initAudio('../assets/sounds/MusicForm.mp3'); 
+    initAudio('../assets/sounds/MusicForm.mp3');
 
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');
@@ -177,7 +177,7 @@ window.addEventListener('load', () => {
             icon.classList.remove('fa-volume-xmark');
             icon.classList.add('fa-volume-high');
         }
-        playAudio(); 
+        playAudio();
     } else if (musicChoice === 'false') {
         isMuted = true;
         if (icon) {

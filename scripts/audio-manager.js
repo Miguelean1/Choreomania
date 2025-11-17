@@ -1,9 +1,9 @@
 let backgroundMusic = null;
-let isMuted = true; 
+let isMuted = true;
 
 function initAudio(audioPath, shouldLoop = true) {
     if (backgroundMusic) return;
-    
+
     backgroundMusic = new Audio(audioPath);
     backgroundMusic.loop = shouldLoop;
     backgroundMusic.volume = 0.3;
@@ -36,14 +36,14 @@ function pauseAudio() {
     if (!backgroundMusic) return;
 
     backgroundMusic.pause();
-    
+
     isMuted = true;
     const icon = document.querySelector('#muteBtn i');
     if (icon) {
         icon.classList.add('fa-volume-xmark');
         icon.classList.remove('fa-volume-high');
     }
-    
+
     localStorage.setItem('musicEnabled', 'false');
 }
 
@@ -64,7 +64,7 @@ function stopMusic() {
 }
 
 let rafflePlayed = false;
-function playRaffleSound(){
+function playRaffleSound() {
     try {
         const raffleAudio = new Audio('../assets/sounds/raffleSound.mp3');
         raffleAudio.play().catch(err => {

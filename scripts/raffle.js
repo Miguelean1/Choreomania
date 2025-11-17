@@ -27,18 +27,18 @@ class RaffleSystem {
         this.animationInterval = null;
     }
 
-        getRandomInt(min, max) {
+    getRandomInt(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-        init() {
+    init() {
         this.playerBoxes = [];
-        
+
 
         const elements = document.querySelectorAll(this.config.playerBoxSelector);
         if (elements.length > 0) {
             this.playerBoxes = Array.from(elements);
-        } 
+        }
 
         else {
             for (let i = 1; i <= this.config.totalPlayers; i++) {
@@ -56,7 +56,7 @@ class RaffleSystem {
         return this;
     }
 
-        reset() {
+    reset() {
         this.playerBoxes.forEach((box) => {
             box.style.boxShadow = "";
             box.classList.remove(this.config.selectedClass);
@@ -68,7 +68,7 @@ class RaffleSystem {
         }
     }
 
-        start(onComplete) {
+    start(onComplete) {
         return new Promise((resolve) => {
             if (this.isRunning) {
                 console.warn('RaffleSystem: El sorteo ya está en ejecución.');
@@ -81,8 +81,8 @@ class RaffleSystem {
             }
 
             this.isRunning = true;
-            
-            playRaffleSound(); 
+
+            playRaffleSound();
 
 
             this.playerBoxes.forEach((box) => (box.style.boxShadow = ""));
@@ -135,7 +135,7 @@ class RaffleSystem {
         });
     }
 
-        selectRandomIndices(max, count) {
+    selectRandomIndices(max, count) {
         const selectedIndices = [];
         while (selectedIndices.length < count && selectedIndices.length < max) {
             const idx = this.getRandomInt(0, max - 1);
@@ -146,13 +146,13 @@ class RaffleSystem {
         return selectedIndices;
     }
 
-        getSelectedElements() {
-        return this.playerBoxes.filter(box => 
+    getSelectedElements() {
+        return this.playerBoxes.filter(box =>
             box.classList.contains(this.config.selectedClass)
         );
     }
 
-        getSelectedIndices() {
+    getSelectedIndices() {
         const indices = [];
         this.playerBoxes.forEach((box, idx) => {
             if (box.classList.contains(this.config.selectedClass)) {

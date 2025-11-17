@@ -8,7 +8,7 @@ const paragraphs = [
 
 const textBox = document.getElementById('textBox');
 const buttonContainer = document.getElementById('buttonContainer');
-const progressDots = document.querySelectorAll('.dot'); 
+const progressDots = document.querySelectorAll('.dot');
 const backgrounds = document.querySelectorAll('.background');
 const arrow = document.getElementById('arrow');
 
@@ -109,8 +109,8 @@ function startIntro() {
 }
 
 function returnHome() {
-    stopMusic(); 
-    
+    stopMusic();
+
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -155,7 +155,7 @@ function skipScene() {
 }
 
 function nextScreen() {
-    stopMusic(); 
+    stopMusic();
 
     document.body.style.transition = 'opacity 0.8s';
     document.body.style.opacity = '0';
@@ -178,11 +178,11 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('load', () => {
-    
+
     setTimeout(startIntro, 1000);
 
-    initAudio('../assets/sounds/INTRO_SPEECH.mp3', false); 
-    
+    initAudio('../assets/sounds/INTRO_SPEECH.mp3', false);
+
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');
 
@@ -192,8 +192,8 @@ window.addEventListener('load', () => {
             icon.classList.remove('fa-volume-xmark');
             icon.classList.add('fa-volume-high');
         }
-        playAudio(); 
-        
+        playAudio();
+
     } else if (musicChoice === 'false') {
 
         isMuted = true;
@@ -201,7 +201,7 @@ window.addEventListener('load', () => {
             icon.classList.add('fa-volume-xmark');
             icon.classList.remove('fa-volume-high');
         }
-    
+
     } else {
 
         isMuted = true;

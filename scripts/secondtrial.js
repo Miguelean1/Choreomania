@@ -53,14 +53,14 @@ function returnHome() {
     });
 }
 
-function titleStyle(){
-	dialogbox.classList.remove('normal-style');
-	dialogbox.classList.add('title-style');
+function titleStyle() {
+    dialogbox.classList.remove('normal-style');
+    dialogbox.classList.add('title-style');
 }
 
-function normalStyle(){
-	dialogbox.classList.remove('title-style');
-	dialogbox.classList.add('normal-style');
+function normalStyle() {
+    dialogbox.classList.remove('title-style');
+    dialogbox.classList.add('normal-style');
 }
 
 function nextMessage() {
@@ -71,10 +71,10 @@ function nextMessage() {
     if (messageId >= messageStrings.length) {
         messageId = messageStrings.length - 1;
     }
-    
+
     currMessage = messageStrings[messageId];
     readyToStartRaffle = (messageId === messageStrings.length - 1);
-	normalStyle();
+    normalStyle();
     if (!readyToStartRaffle) {
         messageId++;
     }
@@ -86,7 +86,7 @@ function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
     for (let i = 0; i < dialog.length; i++) {
-        setTimeout(function() {
+        setTimeout(function () {
             dialogbox.innerHTML += dialog[i];
             if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
@@ -96,7 +96,7 @@ function loadMessage(dialog) {
     }
 }
 
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
         clearTimeouts();
         dialogbox.innerHTML = currMessage;
@@ -108,7 +108,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
         if (!isMessageSkipped) {
             nextMessage();
@@ -171,7 +171,7 @@ function animateRaffle() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    
+
     const grid = document.getElementById("charactersGrid");
     let storedData;
     try {
@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    initAudio('../assets/sounds/MusicForm.mp3'); 
+    initAudio('../assets/sounds/MusicForm.mp3');
 
     const musicChoice = localStorage.getItem('musicEnabled');
     const icon = document.querySelector('#muteBtn i');
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
             icon.classList.remove('fa-volume-xmark');
             icon.classList.add('fa-volume-high');
         }
-        playAudio(); 
+        playAudio();
     } else if (musicChoice === 'false') {
         isMuted = true;
         if (icon) {

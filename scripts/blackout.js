@@ -14,17 +14,17 @@ arrow.id = "arrow";
 let bgAudioPlayed = false;
 
 
-document.addEventListener("DOMContentLoaded", function(){
-	dialogbox = document.getElementById("dialogbox");
+document.addEventListener("DOMContentLoaded", function () {
+    dialogbox = document.getElementById("dialogbox");
     var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
     messageStrings = messageString.split('|');
-	dialogbox.innerHTML = "";
+    dialogbox.innerHTML = "";
     messageId = 0;
-	currMessage = messageStrings[messageId];
-	nextMessage();
+    currMessage = messageStrings[messageId];
+    nextMessage();
     const bgAudio = document.getElementById('bg-audio');
 
-    document.getElementById("dialogbox").addEventListener("click", function() {
+    document.getElementById("dialogbox").addEventListener("click", function () {
         if (bgAudio && !bgAudioPlayed) {
             bgAudio.play().then(() => {
                 bgAudioPlayed = true;
@@ -55,10 +55,10 @@ document.addEventListener("DOMContentLoaded", function(){
 
 
 function muteMusic() {
-            const icon = document.querySelector('#muteBtn i');
-            icon.classList.toggle('fa-volume-xmark');
-            icon.classList.toggle('fa-volume-high');
-        }
+    const icon = document.querySelector('#muteBtn i');
+    icon.classList.toggle('fa-volume-xmark');
+    icon.classList.toggle('fa-volume-high');
+}
 
 
 function returnHome() {
@@ -81,14 +81,14 @@ function returnHome() {
 }
 
 
-function titleStyle(){
-	dialogbox.classList.remove('normal-style');
-	dialogbox.classList.add('title-style');
+function titleStyle() {
+    dialogbox.classList.remove('normal-style');
+    dialogbox.classList.add('title-style');
 }
 
-function normalStyle(){
-	dialogbox.classList.remove('title-style');
-	dialogbox.classList.add('normal-style');
+function normalStyle() {
+    dialogbox.classList.remove('title-style');
+    dialogbox.classList.add('normal-style');
 }
 
 function nextMessage() {
@@ -104,14 +104,14 @@ function nextMessage() {
     lastMessage = (messageId === messageStrings.length - 1);
     currMessage = messageStrings[messageId];
     messageId++;
-	
-	if (applytitlestyle) {
-		if (messageId == 1 || messageId == messageStrings.length) {
-			titleStyle();
-		} else {
-			normalStyle();
-		}
-	}
+
+    if (applytitlestyle) {
+        if (messageId == 1 || messageId == messageStrings.length) {
+            titleStyle();
+        } else {
+            normalStyle();
+        }
+    }
     loadMessage(currMessage.split(''));
 }
 
@@ -119,7 +119,7 @@ function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
     for (let i = 0; i < dialog.length; i++) {
-        setTimeout(function() {
+        setTimeout(function () {
             dialogbox.innerHTML += dialog[i];
             if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
@@ -129,7 +129,7 @@ function loadMessage(dialog) {
     }
 }
 
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
         clearTimeouts();
         dialogbox.innerHTML = currMessage;
@@ -141,7 +141,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
         if (!isMessageSkipped) {
             if (lastMessage) {
