@@ -234,4 +234,10 @@ body {
     .characters-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+    
+    .navbar {
+        height: 140px;
+        padding: 0 20px;
+    }
+
 }

@@ -274,4 +274,9 @@ body {
         font-size: 10px;
         line-height: 15px;
     }
+
+    .navbar {
+        height: 140px;
+        padding: 0 20px;
+    }
 }
