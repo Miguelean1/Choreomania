@@ -27,6 +27,9 @@ function createCharacterCard(character) {
     }
 }
 
+
+
+
 function addCharacter() {
     const nameInput = document.getElementById('name');
     if (!nameInput) return;

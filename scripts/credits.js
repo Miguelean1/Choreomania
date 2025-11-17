@@ -61,13 +61,14 @@ function returnHome() {
 }
 
 function nextScreen() {
-    stopMusic(); 
+
+    stopMusic();
+    
     document.body.style.transition = 'opacity 0.8s';
     document.body.style.opacity = '0';
 
     setTimeout(() => {
-        alert('Loading next screen...');
-        document.body.style.opacity = '1';
+        window.location.href = 'welcome.html';
     }, 800);
 }
 
@@ -129,12 +130,10 @@ function clearTimeouts() {
         window.addEventListener('scroll', onScroll, { passive: true });
     }
 
-    playBtn.addEventListener('click', function() {
-        stopMusic();
+    playBtn.addEventListener('click', function(e) {
+        e.stopImmediatePropagation();
         btnContainer.classList.remove('show');
-        setTimeout(function() {
-            window.location.reload();
-        }, 120);
+        nextScreen();
     });
 
 })();
