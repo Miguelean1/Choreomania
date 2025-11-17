@@ -1,4 +1,3 @@
-
 const paragraphs = [
     "Year 2047. Earth no longer belongs to us. From the ruins of a dying world came the Lagomorph Sapiens: humanoid rabbits born from a failed experiment. They spread fast, too fast, and within months they ruled everything.",
     "Obsessed with disco music and flashy attires, cities became their stages. Humans were forced to dance for them, day and night, trapped in an endless rhythm under their glowing eyes. Those who stopped… disappeared.",
@@ -9,7 +8,7 @@ const paragraphs = [
 
 const textBox = document.getElementById('textBox');
 const buttonContainer = document.getElementById('buttonContainer');
-const progressDots = document.querySelectorAll('.dot');
+const progressDots = document.querySelectorAll('.dot'); 
 const backgrounds = document.querySelectorAll('.background');
 const arrow = document.getElementById('arrow');
 
@@ -62,11 +61,9 @@ function typeText() {
         }, speed);
     } else {
         isTyping = false;
-
         if (currentParagraphIndex < paragraphs.length - 1) {
             arrow.classList.add('show');
         }
-
         if (currentParagraphIndex === paragraphs.length - 1) {
             setTimeout(() => {
                 buttonContainer.classList.add('show');
@@ -77,7 +74,6 @@ function typeText() {
 
 function nextParagraph() {
     if (isTyping) {
-
         const p = textBox.querySelector('p');
         if (p) {
             p.textContent = currentText;
@@ -85,18 +81,15 @@ function nextParagraph() {
         isTyping = false;
         charIndex = currentText.length;
 
-
         if (currentParagraphIndex < paragraphs.length - 1) {
             arrow.classList.add('show');
         }
-
         if (currentParagraphIndex === paragraphs.length - 1) {
             setTimeout(() => {
                 buttonContainer.classList.add('show');
             }, 300);
         }
     } else if (currentParagraphIndex < paragraphs.length - 1) {
-
         arrow.classList.remove('show');
         currentParagraphIndex++;
         currentText = paragraphs[currentParagraphIndex];
@@ -116,13 +109,14 @@ function startIntro() {
 }
 
 function returnHome() {
+    stopMusic(); 
+    
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: `No`
-        ,
+        denyButtonText: `No`,
         background: '#ffffff',
         color: '#000000'
     }).then((result) => {
@@ -161,6 +155,8 @@ function skipScene() {
 }
 
 function nextScreen() {
+    stopMusic(); 
+
     document.body.style.transition = 'opacity 0.8s';
     document.body.style.opacity = '0';
 
@@ -169,19 +165,10 @@ function nextScreen() {
     }, 800);
 }
 
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
-}
-
-
 document.addEventListener('click', (e) => {
-
     if (e.target.closest('button')) return;
     nextParagraph();
 });
-
 
 document.addEventListener('keydown', (e) => {
     if (e.key === ' ' || e.key === 'Enter') {
@@ -191,5 +178,35 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('load', () => {
+    
     setTimeout(startIntro, 1000);
+
+    initAudio('../assets/sounds/INTRO_SPEECH.mp3', false); 
+    
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+        playAudio(); 
+        
+    } else if (musicChoice === 'false') {
+
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
+    
+    } else {
+
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
+    }
 });

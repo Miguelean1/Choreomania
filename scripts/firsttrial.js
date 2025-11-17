@@ -34,47 +34,7 @@ arrow.id = "arrow";
 var readyToStartRaffle = false;
 var isRaffleStarted = false;
 var raffleFinished = false;
-// Ruta a la que redirigir cuando termine el sorteo. Cámbiala según necesites.
 const POST_RAFFLE_REDIRECT = '../main/secondtrial.html';
-
-document.addEventListener("DOMContentLoaded", () => {
-    const grid = document.getElementById("charactersGrid");
-
-    let storedData;
-
-    try {
-        storedData = JSON.parse(localStorage.getItem(STORAGE_KEY)); // usa la misma key que STORAGE_KEY
-    } catch (error) {
-        console.error("Error leyendo localStorage:", error);
-        storedData = null;
-    }
-
-    // Asegurarse de que existe y tiene contestants
-    const players = storedData?.contestants ?? [];
-
-    if (players.length === 0) {
-        grid.innerHTML = "<p>No hay jugadores guardados.</p>";
-        return;
-    }
-
-    players.forEach((player, index) => {
-        const card = document.createElement("div");
-        card.classList.add("character-card");
-
-        card.innerHTML = `
-      <div class="character-image"
-           style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};"
-           id="playerBox${index + 1}">
-        <img class="principal-img" src="${player.imagePath || 'https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png'}"
-             alt="${player.name}">
-      </div>
-      <div class="character-name">${player.name}</div>
-    `;
-
-        grid.appendChild(card);
-    });
-});
-
 
 arrow.addEventListener("click", function (e) {
     e.stopPropagation();
@@ -86,58 +46,8 @@ arrow.addEventListener("click", function (e) {
     }
 });
 
-document.addEventListener(
-    "DOMContentLoaded",
-    function () {
-        dialogbox = document.getElementById("dialogbox");
-        var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
-
-        messageStrings = messageString.split("||").map((msg) => msg.trim());
-        dialogbox.innerHTML = "";
-        messageId = 0;
-        currMessage = messageStrings[messageId];
-        nextMessage();
-
-        document.getElementById("dialogbox").addEventListener("click", function (e) {
-
-            // Si el sorteo está en marcha, bloquear cualquier clic en el dialogbox
-            if (isRaffleStarted) {
-                e.stopPropagation();
-                return;
-            }
-
-            // Si el sorteo ya terminó, permitir clic que redirige al componente destino
-            if (raffleFinished) {
-                // redirige a la ruta configurada
-                window.location.href = POST_RAFFLE_REDIRECT;
-                return;
-            }
-
-            if (!loadingComplete) {
-                clearTimeouts();
-                dialogbox.innerHTML = currMessage;
-                if (!dialogbox.contains(arrow)) {
-                    dialogbox.appendChild(arrow);
-                }
-                loadingComplete = true;
-            } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
-
-                isRaffleStarted = true;
-
-                e.stopPropagation();
-                animateRaffle();
-            } else if (!skipNextPress) {
-
-                nextMessage();
-            } else {
-                skipNextPress = false;
-            }
-        });
-    },
-    false
-);
-
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -151,12 +61,6 @@ function returnHome() {
             Swal.fire("Changes are not saved", "", "info");
         }
     });
-}
-
-function muteMusic() {
-    const icon = document.querySelector("#muteBtn i");
-    icon.classList.toggle("fa-volume-xmark");
-    icon.classList.toggle("fa-volume-high");
 }
 
 function titleStyle() {
@@ -174,22 +78,14 @@ function nextMessage() {
         skipNextPress = false;
         return;
     }
-
-    // Si messageId está fuera de rango (por algún motivo), lo ajustamos
     if (messageId >= messageStrings.length) {
         messageId = messageStrings.length - 1;
     }
 
     currMessage = messageStrings[messageId];
-
-    // Determinar si estamos en el último mensaje (preparado para sorteo)
     readyToStartRaffle = (messageId === messageStrings.length - 1);
 
     normalStyle();
-
-    // Solo incrementamos si NO estamos en el último mensaje.
-    // De esta forma, al llegar al último mensaje y activar el sorteo,
-    // no volveremos a reiniciar el texto desde el principio.
     if (!readyToStartRaffle) {
         messageId++;
     }
@@ -247,18 +143,9 @@ function clearTimeouts() {
         clearTimeout(i);
     }
 }
-
-// ============================================
-// SISTEMA DE SORTEO (usando módulo raffle.js)
-// ============================================
-
-// Inicializar el sistema de sorteo cuando el DOM esté listo
 let raffleSystem = null;
-
-// Función wrapper para mantener compatibilidad con el código existente
 function animateRaffle() {
     if (!raffleSystem) {
-        // Inicializar el sistema de sorteo con la configuración actual
         raffleSystem = new RaffleSystem({
             playerBoxSelector: '.character-image', // Selector CSS de los elementos
             totalPlayers: 16,                      // Total de jugadores
@@ -269,37 +156,21 @@ function animateRaffle() {
         });
         raffleSystem.init();
     }
-
-    // Ejecutar el sorteo
     raffleSystem.start((selectedIndices) => {
         console.log('Raffle completed. Selected indices:', selectedIndices);
-        // Marcar el sorteo como finalizado y permitir que el usuario haga clic
-        // en el dialogbox para continuar (redirigir al componente destino).
         raffleFinished = true;
         isRaffleStarted = false;
-        // Actualizar `myRegistrationGameState` para conservar solo los ganadores
         try {
-            // Leer el estado guardado bajo STORAGE_KEY
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };
-
-            // Asegurarnos de que existe un array de contestants
             state.contestants = state.contestants || [];
-
-            // Construir array de ganadores a partir de los índices seleccionados
             const winners = selectedIndices
                 .map((idx) => state.contestants[idx])
                 .filter(Boolean);
-
-            // Marcar que han completado el primer sorteo (opcional)
             winners.forEach((w) => {
                 if (w) w.firstTrialCompleted = true;
             });
-
-            // Reemplazar el array de contestants por los ganadores
             state.contestants = winners;
-
-            // Guardar de vuelta únicamente bajo STORAGE_KEY (no crear nuevas claves)
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (e) {
             console.error('Error actualizando myRegistrationGameState tras el sorteo:', e);
@@ -318,4 +189,98 @@ function animateRaffle() {
         }
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const grid = document.getElementById("charactersGrid");
+    let storedData;
+    try {
+        storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    } catch (error) {
+        console.error("Error leyendo localStorage:", error);
+        storedData = null;
+    }
+    const players = storedData?.contestants ?? [];
+    if (players.length === 0) {
+        grid.innerHTML = "<p>No hay jugadores guardados.</p>";
+    } else {
+        players.forEach((player, index) => {
+            const card = document.createElement("div");
+            card.classList.add("character-card");
+            card.innerHTML = `
+          <div class="character-image"
+               style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};"
+               id="playerBox${index + 1}">
+            <img class="principal-img" src="${player.imagePath || 'https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png'}"
+                 alt="${player.name}">
+          </div>
+          <div class="character-name">${player.name}</div>
+        `;
+            grid.appendChild(card);
+        });
+    }
+    dialogbox = document.getElementById("dialogbox");
+    var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+
+    messageStrings = messageString.split("||").map((msg) => msg.trim());
+    dialogbox.innerHTML = "";
+    messageId = 0;
+    currMessage = messageStrings[messageId];
+    nextMessage();
+
+    document.getElementById("dialogbox").addEventListener("click", function (e) {
+        if (isRaffleStarted) {
+            e.stopPropagation();
+            return;
+        }
+        if (raffleFinished) {
+            stopMusic();
+            window.location.href = POST_RAFFLE_REDIRECT;
+            return;
+        }
+        if (!loadingComplete) {
+            clearTimeouts();
+            dialogbox.innerHTML = currMessage;
+            if (!dialogbox.contains(arrow)) {
+                dialogbox.appendChild(arrow);
+            }
+            loadingComplete = true;
+        } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
+            isRaffleStarted = true;
+            e.stopPropagation();
+            animateRaffle();
+        } else if (!skipNextPress) {
+            nextMessage();
+        } else {
+            skipNextPress = false;
+        }
+    });
+
+    
+    initAudio('../assets/sounds/MusicForm.mp3'); 
+
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+        playAudio(); 
+    } else if (musicChoice === 'false') {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
+    } else {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
+    }
+}, false);
+
+
 

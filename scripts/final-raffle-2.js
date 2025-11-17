@@ -20,35 +20,8 @@ function clearAllTimeouts() {
     activeTimeouts = [];
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-
-	try {
-		const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-		const players = storedData?.contestants ?? [];
-		
-		if (players.length > 0) {
-			const grid = document.getElementById("characters-stage");
-			if (grid) {
-				players.forEach((player, index) => {
-					const card = document.createElement('div');
-					card.className = 'character-card';
-					card.innerHTML = `
-						<div class="character-name">${player.name}</div>
-						<div class="character-image">
-							<img src="${player.imagePath}" alt="${player.name}">
-						</div>
-					`;
-					grid.appendChild(card);
-				});
-			}
-		}
-	} catch (e) {
-		console.error('Error cargando personajes:', e);
-	}
-}, false);
-
-
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -64,12 +37,6 @@ function returnHome() {
             Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
         }
     });
-}
-
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
 }
 
 function titleStyle(){
@@ -107,7 +74,7 @@ function nextMessage() {
     }
     currMessage = messageStrings[messageId];
     
-
+    
     readyToStartRaffle = (messageId === messageStrings.length - 1);
 	
 	if (applytitlestyle) {
@@ -118,62 +85,13 @@ function nextMessage() {
 		}
 	}
 	
-
+	
 	if (!readyToStartRaffle) {
 		messageId++;
 	}
 	
     loadMessage(currMessage.split(''));
 }
-
-document.addEventListener("DOMContentLoaded", function(){
-    dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
-
-    messageStrings = messageString.split("|").map((msg) => msg.trim());
-    dialogbox.innerHTML = "";
-    messageId = 0;
-    currMessage = messageStrings[messageId];
-    nextMessage();
-
-    document.getElementById("dialogbox").addEventListener("click", function (e) {
-
-
-        if (isRaffleStarted) {
-            e.stopPropagation();
-            return;
-        }
-
-
-        if (raffleFinished) {
-            // redirige a la ruta configurada
-            window.location.href = '../main/blackout.html';
-            return;
-        }
-
-        if (!loadingComplete) {
-            clearAllTimeouts();
-            dialogbox.innerHTML = currMessage;
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
-            }
-            loadingComplete = true;
-        } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
-
-            isRaffleStarted = true;
-
-            e.stopPropagation();
-            animateRaffle();
-        } else if (!skipNextPress) {
-
-            nextMessage();
-        } else {
-            skipNextPress = false;
-        }
-    });
-},
-false
-);
 
 document.addEventListener('keydown', function(e) {
     if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
@@ -196,19 +114,18 @@ document.addEventListener('keyup', function(e) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
 
-});
+
 
 
 let raffleSystem = null;
 
 function animateRaffle() {
     if (!raffleSystem) {
-
+        
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: '.character-name', 
-            totalPlayers: 2,                      
+            playerBoxSelector: '.character-image', 
+            totalPlayers: 2,                       
             winnersCount: 1,                       
             animationDuration: 2000,               
             selectedClass: 'selected',             
@@ -217,12 +134,12 @@ function animateRaffle() {
         raffleSystem.init();
     }
 
-
+    
     raffleSystem.start((selectedIndices) => {
         console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
         raffleFinished = true;
         isRaffleStarted = false;
-
+        
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };
@@ -252,4 +169,94 @@ function animateRaffle() {
         }
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    
+    try {
+        const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        const players = storedData?.contestants ?? [];
+        
+        if (players.length > 0) {
+            const grid = document.getElementById("characters-stage");
+            if (grid) {
+                players.forEach((player, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'character-card';
+                    card.innerHTML = `
+                    <div class="character-name">${player.name}</div>
+                        <div class="character-image" style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};" id="playerBox${index + 1}">
+                            <img class="principal-img" src="${player.imagePath}" alt="${player.name}">
+                        </div>
+                        
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+    } catch (e) {
+        console.error('Error cargando personajes:', e);
+    }
+
+    dialogbox = document.getElementById("dialogbox");
+    var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+
+    messageStrings = messageString.split("|").map((msg) => msg.trim());
+    dialogbox.innerHTML = "";
+    messageId = 0;
+    currMessage = messageStrings[messageId];
+    nextMessage();
+
+    document.getElementById("dialogbox").addEventListener("click", function (e) {
+        if (isRaffleStarted) {
+            e.stopPropagation();
+            return;
+        }
+        if (raffleFinished) {
+            stopMusic();
+            window.location.href = '../main/blackout.html';
+            return;
+        }
+        if (!loadingComplete) {
+            clearAllTimeouts();
+            dialogbox.innerHTML = currMessage;
+            if (!dialogbox.contains(arrow)) {
+                dialogbox.appendChild(arrow);
+            }
+            loadingComplete = true;
+        } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
+            isRaffleStarted = true;
+            e.stopPropagation();
+            animateRaffle();
+        } else if (!skipNextPress) {
+            nextMessage();
+        } else {
+            skipNextPress = false;
+        }
+    });
+
+    initAudio('../assets/sounds/ScaryTechno.mp3'); 
+
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+        playAudio(); 
+    } else if (musicChoice === 'false') {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
+    } else {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
+    }
+}, false);
 

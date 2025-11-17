@@ -13,44 +13,35 @@ var arrow = document.createElement("div");
 arrow.id = "arrow";
 
 document.addEventListener("DOMContentLoaded", function(){
-	dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
-    messageStrings = messageString.split('|');
-	dialogbox.innerHTML = "";
-    messageId = 0;
-	currMessage = messageStrings[messageId];
-	nextMessage();
-	
-	document.getElementById("dialogbox").addEventListener("click", function() {
-        if (!loadingComplete) {
-            clearTimeouts();
-            dialogbox.innerHTML = currMessage;
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
-            }
-            loadingComplete = true;
-        } else if (!skipNextPress) {
+    
+    initAudio('../assets/sounds/WelcomeMusic.mp3'); 
 
-            if (lastMessage) {
-                nextScreen();
-            } else {
-                nextMessage();
-            }
-        } else {
-            skipNextPress = false;
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
         }
-    });
+        playAudio(); 
+    } else if (musicChoice === 'false') {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
+    } else {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
+    }
 }, false);
 
-
-function muteMusic() {
-            const icon = document.querySelector('#muteBtn i');
-            icon.classList.toggle('fa-volume-xmark');
-            icon.classList.toggle('fa-volume-high');
-        }
-
-
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -69,9 +60,8 @@ function returnHome() {
     });
 }
 
-
-
 function nextScreen() {
+    stopMusic(); 
     document.body.style.transition = 'opacity 0.8s';
     document.body.style.opacity = '0';
 
@@ -88,7 +78,7 @@ function clearTimeouts() {
     }
 }
 
-// --- Mostrar botón "PLAY AGAIN?" cuando el <marquee> termine ---
+
 (function() {
     const btnContainer = document.querySelector('.button-container');
     const playBtn = document.getElementById('playAgainBtn');
@@ -103,20 +93,15 @@ function clearTimeouts() {
     }
 
     if (marquee) {
-        // Elegimos el último elemento dentro del marquee para detectar cuando pasa fuera
+        
         const children = Array.from(marquee.children).filter(n => n.nodeType === 1);
         const lastChild = children.length ? children[children.length - 1] : marquee;
-
         let rafId = null;
         const marqueeRect = () => marquee.getBoundingClientRect();
-
         function checkMarqueeEnd() {
             if (!lastChild) return;
             const lastRect = lastChild.getBoundingClientRect();
             const mRect = marqueeRect();
-
-            // Para marquee con direction="up": consideramos terminado cuando la parte inferior
-            // del último elemento pasa por encima de la parte superior del marquee.
             if (lastRect.bottom <= mRect.top + 2) {
                 showButton();
                 if (rafId) cancelAnimationFrame(rafId);
@@ -124,16 +109,14 @@ function clearTimeouts() {
             }
             rafId = requestAnimationFrame(checkMarqueeEnd);
         }
-
-        // Iniciar comprobación. También agregamos un fallback por si algo falla.
         checkMarqueeEnd();
         const fallback = setTimeout(() => {
             showButton();
             if (rafId) cancelAnimationFrame(rafId);
-        }, 30000); // 30s fallback
+        }, 30000);
 
     } else {
-        // Fallback: si no hay <marquee>, mostramos el botón al llegar al bottom (comportamiento antiguo)
+        
         function checkScrollToEnd() {
             const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2);
             if (scrolledToBottom) {
@@ -146,8 +129,8 @@ function clearTimeouts() {
         window.addEventListener('scroll', onScroll, { passive: true });
     }
 
-    // Acción del botón: recargar la página para "play again" (se puede cambiar a otra ruta)
     playBtn.addEventListener('click', function() {
+        stopMusic();
         btnContainer.classList.remove('show');
         setTimeout(function() {
             window.location.reload();
@@ -155,3 +138,4 @@ function clearTimeouts() {
     });
 
 })();
+

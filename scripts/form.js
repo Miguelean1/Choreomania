@@ -107,6 +107,7 @@ function initForm() {
     if (beginBtn) {
         beginBtn.addEventListener('click', (e) => {
             if (window.gameState.contestants.length === MAX_CHARACTERS) {
+                stopMusic();
                 Swal.fire('All set!', 'The ascension ceremony is about to begin....', 'success');
                 window.location.href = '../main/firsttrial.html';
             } else {
@@ -134,6 +135,8 @@ function initForm() {
 }
 
 function returnHome() {
+
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -155,21 +158,36 @@ function returnHome() {
     });
 }
 
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    if (icon) {
-        icon.classList.toggle('fa-volume-xmark');
-        icon.classList.toggle('fa-volume-high');
-    }
-}
 
-if (typeof document !== 'undefined') {
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initForm);
+window.addEventListener('load', () => {
+
+    initForm(); 
+
+    initAudio('../assets/sounds/MusicForm.mp3'); 
+
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+        playAudio(); 
+    } else if (musicChoice === 'false') {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
     } else {
-        initForm();
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
     }
-}
+});
 
 if (typeof window !== 'undefined') {
     window.addCharacter = addCharacter;

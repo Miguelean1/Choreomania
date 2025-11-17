@@ -16,6 +16,7 @@ function clearAllTimeouts() {
 }
 
 function nextScreen() {
+    stopMusic();
     clearAllTimeouts();
 
     const overlay = document.createElement('div');
@@ -78,7 +79,8 @@ function nextScreen() {
     activeTimeouts.push(navigateTimeout);
 }
 
-function returnHome() {
+function returnHome() {ç
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -96,11 +98,7 @@ function returnHome() {
     });
 }
 
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
-}
+
 
 function titleStyle() {
     dialogbox.classList.remove('normal-style');
@@ -196,6 +194,31 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     });
+
+    initAudio('../assets/sounds/PLOT_TWIST_STATIC.mp3', false); 
+
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+        playAudio(); 
+    } else if (musicChoice === 'false') {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
+    } else {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
+    }
 });
 
 document.addEventListener('keydown', function(e) {

@@ -26,33 +26,6 @@ function playThunderOnce() {
         console.warn('Error creando audio de thunder:', e);
     }
 }
-document.addEventListener("DOMContentLoaded", function(){
-	// Cargar personajes desde localStorage
-	try {
-		const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-		const players = storedData?.contestants ?? [];
-		
-		if (players.length > 0) {
-			const grid = document.getElementById("characters-stage");
-			if (grid) {
-				players.forEach((player, index) => {
-					const card = document.createElement('div');
-					card.className = 'character-card';
-					card.innerHTML = `
-						<div class="character-name">${player.name}</div>
-						<div class="character-image">
-							<img src="${player.imagePath}" alt="${player.name}">
-						</div>
-					`;
-					grid.appendChild(card);
-				});
-			}
-		}
-	} catch (e) {
-		console.error('Error cargando personajes:', e);
-	}
-}, false);
-
 
 function clearAllTimeouts() {
     activeTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
@@ -61,6 +34,7 @@ function clearAllTimeouts() {
 
 
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -78,12 +52,6 @@ function returnHome() {
     });
 }
 
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
-}
-
 function titleStyle(){
     dialogbox.classList.remove('normal-style');
     dialogbox.classList.add('title-style');
@@ -95,6 +63,7 @@ function normalStyle(){
 }
 
 function nextScreen() {
+    stopMusic();
     clearAllTimeouts();
 
     const overlay = document.createElement('div');
@@ -199,34 +168,6 @@ function nextMessage() {
     loadMessage(currMessage);
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-    dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
-    messageStrings = messageString.split('|');
-    
-    messageId = 0;
-    currMessage = messageStrings[messageId];
-    messageId++;
-    
-    dialogbox.innerHTML = "";
-    loadMessage(currMessage);
-    
-    dialogbox.addEventListener("click", function() {
-        if (!loadingComplete) {
-            
-            clearAllTimeouts();
-            dialogbox.innerHTML = currMessage + "<br>";
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
-            }
-            loadingComplete = true;
-        } else {
-            
-            nextMessage();
-        }
-    });
-});
-
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
@@ -253,7 +194,84 @@ document.addEventListener('keyup', function(e) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(typeDialog, 400);
-});
+document.addEventListener("DOMContentLoaded", function () {
+    
+    try {
+        const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        const players = storedData?.contestants ?? [];
+        
+        if (players.length > 0) {
+            const grid = document.getElementById("characters-stage");
+            if (grid) {
+                players.forEach((player, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'character-card';
+                    card.innerHTML = `
+                    <div class="character-name">${player.name}</div>
+                        <div class="character-image" style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};" id="playerBox${index + 1}">
+                            <img class="principal-img" src="${player.imagePath}" alt="${player.name}">
+                        </div>
+                        
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+    } catch (e) {
+        console.error('Error cargando personajes:', e);
+    }
+
+
+
+    dialogbox = document.getElementById("dialogbox");
+    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
+    messageStrings = messageString.split('|');
+    
+    messageId = 0;
+    currMessage = messageStrings[messageId];
+    messageId++;
+    
+    dialogbox.innerHTML = "";
+    loadMessage(currMessage);
+    
+    dialogbox.addEventListener("click", function() {
+        if (!loadingComplete) {
+            clearAllTimeouts();
+            dialogbox.innerHTML = currMessage + "<br>";
+            if (!dialogbox.contains(arrow)) {
+                dialogbox.appendChild(arrow);
+            }
+            loadingComplete = true;
+        } else {
+            nextMessage();
+        }
+    });
+
+    initAudio('../assets/sounds/MusicForm.mp3'); 
+
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+        playAudio(); 
+    } else if (musicChoice === 'false') {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
+    } else {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
+    }
+}, false);
+
+
 
