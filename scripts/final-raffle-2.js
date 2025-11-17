@@ -124,7 +124,7 @@ function animateRaffle() {
     if (!raffleSystem) {
         // Inicializar el sistema de sorteo con la configuración actual
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: '.character-image', // Selector CSS de los elementos
+            playerBoxSelector: '.character-name', // Selector CSS de los elementos
             totalPlayers: 2,                       // Total de jugadores
             winnersCount: 1,                       // Cantidad a seleccionar (ganador final)
             animationDuration: 2000,               // Duración de la animación
