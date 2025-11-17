@@ -207,10 +207,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     const card = document.createElement('div');
                     card.className = 'character-card';
                     card.innerHTML = `
-                        <div class="character-name">${player.name}</div>
-                        <div class="character-image">
-                            <img src="${player.imagePath}" alt="${player.name}">
+                    <div class="character-name">${player.name}</div>
+                        <div class="character-image" style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};" id="playerBox${index + 1}">
+                            <img class="principal-img" src="${player.imagePath}" alt="${player.name}">
                         </div>
+                        
                     `;
                     grid.appendChild(card);
                 });
@@ -219,6 +220,8 @@ document.addEventListener("DOMContentLoaded", function () {
     } catch (e) {
         console.error('Error cargando personajes:', e);
     }
+
+
 
     dialogbox = document.getElementById("dialogbox");
     var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();

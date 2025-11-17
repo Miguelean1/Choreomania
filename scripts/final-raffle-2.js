@@ -124,7 +124,7 @@ function animateRaffle() {
     if (!raffleSystem) {
         // Inicializar el sistema de sorteo con la configuración actual
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: '.character-name', // Selector CSS de los elementos
+            playerBoxSelector: '.character-image', // Selector CSS de los elementos
             totalPlayers: 2,                       // Total de jugadores
             winnersCount: 1,                       // Cantidad a seleccionar (ganador final)
             animationDuration: 2000,               // Duración de la animación
@@ -183,10 +183,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     const card = document.createElement('div');
                     card.className = 'character-card';
                     card.innerHTML = `
-                        <div class="character-name">${player.name}</div>
-                        <div class="character-image">
-                            <img src="${player.imagePath}" alt="${player.name}">
+                    <div class="character-name">${player.name}</div>
+                        <div class="character-image" style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};" id="playerBox${index + 1}">
+                            <img class="principal-img" src="${player.imagePath}" alt="${player.name}">
                         </div>
+                        
                     `;
                     grid.appendChild(card);
                 });
