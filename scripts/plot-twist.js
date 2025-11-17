@@ -6,6 +6,7 @@ var messageId;
 var applytitlestyle = false;
 var loadingComplete = true;
 var activeTimeouts = [];
+let thunderPlayed = false;
 
 var arrow = document.createElement("div");
 arrow.id = "arrow";
@@ -15,9 +16,25 @@ function clearAllTimeouts() {
     activeTimeouts = [];
 }
 
+function playThunderOnce() {
+    if (thunderPlayed) return;
+    thunderPlayed = true;
+    try {
+        const thunderAudio = new Audio('../assets/sounds/laugh.mp3');
+        thunderAudio.loop = false;
+        thunderAudio.preload = 'auto';
+        thunderAudio.play().catch(err => {
+            console.warn('No se pudo reproducir thunder:', err);
+        });
+    } catch (e) {
+        console.warn('Error creando audio de thunder:', e);
+    }
+}
+
 function nextScreen() {
     stopMusic();
     clearAllTimeouts();
+
 
     const overlay = document.createElement('div');
     overlay.id = 'flash-overlay';
@@ -43,18 +60,35 @@ function nextScreen() {
         { delay: 100,  opacity: '0' },
         { delay: 200,  opacity: '1' },
         { delay: 300,  opacity: '0' },
-        { delay: 380,  opacity: '1' }
+        { delay: 380,  opacity: '1' },
+        { delay: 480,  opacity: '0' },
+        { delay: 580,  opacity: '1' },
+        { delay: 680,  opacity: '0' },
+        { delay: 780,  opacity: '1' },
+        { delay: 880,  opacity: '0' },
+        { delay: 980,  opacity: '1' },
+        { delay: 1080,  opacity: '0' },
+        { delay: 1180,  opacity: '1' },
+        { delay: 1280,  opacity: '0' },
+        { delay: 1380,  opacity: '1' },
+        { delay: 1480,  opacity: '0' },
+        { delay: 1580,  opacity: '1' },
+        { delay: 1680,  opacity: '0' },
+        { delay: 1780,  opacity: '1' },
+        { delay: 1880,  opacity: '0' },
+        { delay: 1980,  opacity: '1' },
+
     ];
 
     const flashImageUrl = 'https://res.cloudinary.com/dsy30p7gf/image/upload/v1763033689/Two_faced_Benefactor_aqmvq8.png';
 
-
-
-    const forcedPattern = [true, false, true, false, true];
+    const forcedPattern = [true, false];
     sequence.forEach((step, idx) => {
-
-        step.showImage = (step.opacity === '1') && (!!forcedPattern[idx]);
+        const patternValue = forcedPattern[idx % forcedPattern.length];
+        step.showImage = (step.opacity === '1') && (!!patternValue);
     });
+
+    playThunderOnce();
 
     sequence.forEach(step => {
         const id = setTimeout(() => {
@@ -75,7 +109,7 @@ function nextScreen() {
 
     const navigateTimeout = setTimeout(() => {
         window.location.href = '../main/credits.html';
-    }, 480);
+    }, 2000);
     activeTimeouts.push(navigateTimeout);
 }
 
