@@ -213,7 +213,36 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         if (raffleFinished) {
             stopMusic();
-            window.location.href = '../main/blackout.html';
+
+
+            if (document.getElementById('fade-overlay')) return;
+
+
+            const overlay = document.createElement('div');
+            overlay.id = 'fade-overlay';
+            Object.assign(overlay.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#000',
+                opacity: '0',
+                transition: 'opacity 2000ms ease',
+                zIndex: '9999',
+                pointerEvents: 'none'
+            });
+            document.body.appendChild(overlay);
+
+
+            overlay.offsetHeight;
+            overlay.style.opacity = '1';
+
+
+            setTimeout(() => {
+                window.location.href = '../main/blackout.html';
+            }, 2000);
+
             return;
         }
         if (!loadingComplete) {
