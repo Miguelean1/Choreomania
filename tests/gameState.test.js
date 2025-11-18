@@ -1,4 +1,4 @@
-const { gameState } = requere('../scripts/gameState.js');
+const { gameState } = require('../scripts/gameState.js');
 
 beforeEach(() =>{
     const localStorageMock = (() => {
@@ -15,3 +15,20 @@ beforeEach(() =>{
     gameState.reset();
 });
 
+describe('gameState tests', () => {
+    test('addContestant agregar un concursante correctamente', () => {
+        const contestant = gameState.addContestant('Pepe');
+
+        expect(contestant).toHaveProperty('id');
+        expect(contestant.name).toBe('PEPE');
+        expect(contestant.color).toMatch(/^hsl\(/);
+        expect(contestant.imagePath).toMatch(/^https:\/\/res\.cloudinary/);
+
+        expect(gameState.contestants.length).toBe(1);
+    });
+
+
+
+
+
+});
