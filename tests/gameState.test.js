@@ -70,6 +70,25 @@ describe('gameState tests', () => {
         const uniqueImages = [...new Set(images)];
         expect(uniqueImages.length).toBe(16);
     });
-
+    
+    test('save and load work correctly with localStorage using mocks', () => {
+    const contestant = gameState.addContestant('Pepe');
+    const originalId = contestant.id;
+    
+    expect(gameState.contestants.length).toBe(1);
+    gameState.save();
+    
+    gameState.reset();
+    expect(gameState.contestants.length).toBe(0);
+    
+    gameState.load();
+    
+    expect(gameState.contestants.length).toBe(1);
+    expect(gameState.contestants[0].name).toBe('PEPE');
+    expect(gameState.contestants[0].id).toBe(originalId);
+    expect(gameState.contestants[0]).toHaveProperty('color');
+    expect(gameState.contestants[0]).toHaveProperty('imagePath');
+    });
+    
 
 });
