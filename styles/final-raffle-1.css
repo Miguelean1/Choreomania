@@ -262,20 +262,10 @@ body {
 
 }
 
-@media (max-width: 1024px) {
-    .characters-stage {
-        gap: 18px;
-        padding-bottom: 24px;
-    }
-
     #dialogbox {
         position: relative;
         z-index: 10;
     }
-}
-
-
-
 
 @media (max-width: 600px) {
     
