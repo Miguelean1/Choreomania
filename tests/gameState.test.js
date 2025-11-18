@@ -42,7 +42,15 @@ describe('gameState tests', () => {
         expect(removed).toBe(false);
     });
 
+    test('removeContestant removes contestant and releases image', () => {
+        const c = gameState.addContestant('Pepe');
+        const usedBefore = gameState.usedImageIndices.length;
+        const removed = gameState.removeContestant(c.id);
 
+        expect(removed).toBe(true);
+        expect(gameState.contestants.find(x => x.id === c.id)).toBeUndefined();
+        expect(gameState.usedImageIndices.length).toBe(usedBefore - 1);
+    });
 
 
 });
