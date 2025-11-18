@@ -281,3 +281,102 @@ body {
     }
 }
 
+@media (max-width: 600px) {
+    
+    body {
+        padding-top: 60px;
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center 50%;
+        background-attachment: scroll;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .navbar {
+        padding: 10px 15px;
+        height: auto;
+    }
+    
+    .controls {
+        gap: 8px;
+    }
+    
+    .btn {
+        padding: 6px 8px;
+        font-size: 12px;
+        border: 3px solid rgb(0, 0, 0);
+    }
+    
+    .main-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 10px;
+        z-index: 10;
+    }
+    
+    .top-section {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .card-container {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .name-tag {
+        font-size: 11px;
+        padding: 3px 8px;
+        top: -20px;
+        left: -8px;
+        border: 2px solid black;
+        letter-spacing: 0.3px;
+    }
+    
+    #dialogbox {
+        font-size: 9px;
+        padding: 10px 20px 10px 15px;
+        border: 2px solid black;
+        border-radius: 8px;
+        line-height: 1.5em;
+    }
+    
+    #dialogbox.title-style {
+        font-size: 10px;
+        line-height: 1.6em;
+        font-weight: 700;
+    }
+    
+    #dialogbox.normal-style {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 17px;
+    }
+    
+    #dialogbox.final-style {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #EE553D;
+    }
+    
+    #arrow {
+        border: 3px solid transparent;
+        border-top-color: black;
+        bottom: 5px;
+        right: 8px;
+    }
+    
+    .sound-waves {
+        display: none;
+    }
+}
+
+
