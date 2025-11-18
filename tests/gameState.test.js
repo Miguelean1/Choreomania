@@ -1,11 +1,12 @@
 const { gameState } = require('../scripts/gameState.js');
 
 beforeEach(() =>{
+    jest.resetModules();
     const localStorageMock = (() => {
         let store = {};
         return {
             getItem: jest.fn((key) => store[key] || null),
-            setItem: jest.fn((key, value) => { store[key] = value.toString(); }),
+            setItem: jest.fn((key, value) => { store[key] = value; }),
             clear: jest.fn(() => { store = {}; }),
             removeItem: jest.fn((key) => {delete store[key]; })
         }
@@ -51,6 +52,15 @@ describe('gameState tests', () => {
         expect(gameState.contestants.find(x => x.id === c.id)).toBeUndefined();
         expect(gameState.usedImageIndices.length).toBe(usedBefore - 1);
     });
+
+    test('reset limpia el estado completamente', () => {
+        gameState.addContestant('Pepe');
+        gameState.reset();
+
+        expect(gameState.contestants.length).toBe(0);
+        expect(gameState.usedImageIndices.length).toBe(0);
+    });
+
 
 
 });
