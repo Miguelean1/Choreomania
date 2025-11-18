@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>CHOREOMANIA: The last ascent</title>
+    <link rel="icon" type="image/x-icon"
+        href="https://res.cloudinary.com/dsy30p7gf/image/upload/v1762976509/Recurso_1CHOREOICO_wma7og.png">
+    <link rel="stylesheet" href="../styles/credits.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/ea3042a44d.js" crossorigin="anonymous"></script>
+
+    <script src="../scripts/audio-manager.js"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="controls">
+            <div class="controls">
+                <button class="btn" id="muteBtn" onclick="muteMusic()">
+                    <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
+                </button>
+                <button class="btn" onclick="returnHome()">
+                    <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
+                </button>
+            </div>
+    </nav>
+
+    <div class="main-layout">
+        <marquee behavior="scroll" scrollamount="6" loop="1" direction="up">
+            <div class="img-container">
+                <div class="img">
+                    <img class="img-logo"
+                        src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1762157957/LOGO_1_uvfsci.png"
+                        alt="Choreomania Logo" class="credits-logo">
+                </div>
+            </div>
+            <h3>Disclaimer</h3>
+            <li>This is a work of fiction. Any resemblance to actual persons, living or dead, or to actual events, is
+                purely coincidental.</li>
+            <li>All characters, organizations, and scenarios are entirely fictional and created for entertainment
+                purposes only.</li>
+
+            <h3>Development Team</h3>
+            <li>Cesoti Medina</li>
+            <li>Julia Naranjo</li>
+            <li>Álvaro Sánchez</li>
+            <h3>SCRUM Master</h3>
+            <li>Sammy Cabello</li>
+            <h3>Product Owner</h3>
+            <li>Miguel Pernía</li>
+            <h3>Special Thanks</h3>
+            <li>To everyone who supported this project and believed in us little bunnies. And mostly to Paloma, for
+                always making us push our boundaries and think outside the box. </li>
+            <h3>Copyright Notice</h3>
+            <li> © 2025. CHOREOMANIA: The last ascent. All rights reserved.
+            </li>
+            <li>Unauthorized reproduction, distribution, or modification of this software is strictly prohibited.
+                Or not. Who knows.
+            </li>
+            <br>
+            <h1>THANKS A BUNCH!</h1>
+            <div class="img-container">
+                <div class="img">
+                    <img class="img-us"
+                        src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1762159640/Group_1_thqv1h.png"
+                        alt="Us as bunnies" class="credits-bunnies">
+                </div>
+            </div>
+        </marquee>
+    </div>
+
+    <div class="button-container" aria-hidden="true">
+
+
+        <button class="continue-btn" id="playAgainBtn">PLAY AGAIN!</button>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../scripts/credits.js"></script>
+
+</body>
+
+</html>

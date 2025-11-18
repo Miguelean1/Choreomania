@@ -1,21 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <title>CHOREOMANIA</title>
-    <link rel="stylesheet" href="../styles/firsttrial.css">
+    <title>CHOREOMANIA: The last ascent</title>
+    <link rel="icon" type="image/x-icon"
+        href="https://res.cloudinary.com/dsy30p7gf/image/upload/v1762976509/Recurso_1CHOREOICO_wma7og.png">
+    <link rel="stylesheet" href="../styles/blackout.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap"
         rel="stylesheet">
     <script src="https://kit.fontawesome.com/ea3042a44d.js" crossorigin="anonymous"></script>
-
-    <script src="../scripts/audio-manager.js"></script>
 </head>
 
 <body>
+    <audio id="bg-audio">
+        <source src="../assets/sounds/rocket-launch.mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
 
     <nav class="navbar">
         <div class="controls">
@@ -30,34 +34,14 @@
     </nav>
 
     <div class="main-layout">
-
         <div class="top-section">
             <div class="card-container">
-                <div class="image-wrapper">
-                    <div class="name-tag">THE BENEFACTOR</div>
-                    <div class="image-container">
-                        <img src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1763388456/Group_92_iwc5u7.png">
-                    </div>
-                </div>
-
-                <div id="dialogbox" class="normal-box">
-                    Hello everyone! This is the benefactor speaking. Welcome to the
-                    ceremony of Ascension! || We see a bunch of eager youngsters!
-                    I wish everyone good luck. || There isn't enough room for my
-                    rocket for all of you. May the luckiest ones win!
-                </div>
+                <div id="dialogbox" class="normal-style">..............| What's going on in here...?</div>
             </div>
-
-        </div>
-        <div class="characters-section">
-            <div class="characters-grid" id="charactersGrid"></div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <script src="../scripts/raffle.js"></script>
-    <script src="../scripts/firsttrial.js"></script>
-
+    <script src="../scripts/blackout.js"></script>
 </body>
 
 </html>

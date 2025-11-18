@@ -1,5 +1,5 @@
-const STORAGE_KEY = 'myRegistrationGameState';
 const timer = 30;
+const STORAGE_KEY = 'myRegistrationGameState';
 var messageStrings;
 var dialogbox;
 var currMessage;
@@ -8,43 +8,13 @@ var applytitlestyle = true;
 var loadingComplete = true;
 var skipNextPress = false;
 let isMessageSkipped = false;
-const playerData = JSON.parse(localStorage.getItem('contestants'))
-
-const CLOUDINARY_IMAGE_URLS = [
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023753/RIPPLE_0000_CHAR-_0001_Capa-14_kqirac.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023753/RIPPLE_0001_CHAR-_0002_Capa-12_k4iunv.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0004_CHAR-_0005_Capa-6_mszms8.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0003_CHAR-_0004_Capa-7_rjeh5s.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0006_CHAR-_0007_Capa-10_v6tmdw.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0007_CHAR-_0008_Capa-9_mdfroc.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0005_CHAR-_0006_Capa-8_y10w3s.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023754/RIPPLE_0002_CHAR-_0003_Capa-11_l0bqce.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023757/RIPPLE_0026_CHAR-_0000_Capa-15_hwg0i1.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763023997/human13_3_fawtvf.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024100/human10_3_u4bhhr.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human11_3_worvg4.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human12_3_ew26jd.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024101/human14_3_omdjsg.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024103/human15_3_ngsfyp.png',
-    'https://res.cloudinary.com/dhbjoltyy/image/upload/v1763024103/human16_3_awsji6.png',
-];
-
-var arrow = document.createElement("div");
-arrow.id = "arrow";
 var readyToStartRaffle = false;
 var isRaffleStarted = false;
 var raffleFinished = false;
-const POST_RAFFLE_REDIRECT = '../main/secondtrial.html';
+const POST_RAFFLE_REDIRECT = '../main/final-raffle-1.html';
 
-arrow.addEventListener("click", function (e) {
-    e.stopPropagation();
-    if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
-        isRaffleStarted = true;
-        animateRaffle();
-    } else if (loadingComplete && !isRaffleStarted) {
-        nextMessage();
-    }
-});
+var arrow = document.createElement("div");
+arrow.id = "arrow";
 
 function returnHome() {
     stopMusic();
@@ -54,23 +24,26 @@ function returnHome() {
         showCancelButton: true,
         confirmButtonText: "Yes",
         denyButtonText: `No`,
+        background: '#ffffff',
+        color: '#000000'
     }).then((result) => {
+
         if (result.isConfirmed) {
-            Swal.fire("Saved!", "", "success");
+            Swal.fire({ title: "Saved!", icon: "success", background: '#ffffff', color: '#000000' });
         } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
+            Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
         }
     });
 }
 
 function titleStyle() {
-    dialogbox.classList.remove("normal-style");
-    dialogbox.classList.add("title-style");
+    dialogbox.classList.remove('normal-style');
+    dialogbox.classList.add('title-style');
 }
 
 function normalStyle() {
-    dialogbox.classList.remove("title-style");
-    dialogbox.classList.add("normal-style");
+    dialogbox.classList.remove('title-style');
+    dialogbox.classList.add('normal-style');
 }
 
 function nextMessage() {
@@ -78,19 +51,25 @@ function nextMessage() {
         skipNextPress = false;
         return;
     }
+
     if (messageId >= messageStrings.length) {
         messageId = messageStrings.length - 1;
     }
-
     currMessage = messageStrings[messageId];
     readyToStartRaffle = (messageId === messageStrings.length - 1);
 
-    normalStyle();
+    if (applytitlestyle) {
+        if (messageId == 1 || messageId == messageStrings.length) {
+            titleStyle();
+        } else {
+            normalStyle();
+        }
+    }
     if (!readyToStartRaffle) {
         messageId++;
     }
 
-    loadMessage(currMessage.split(""));
+    loadMessage(currMessage.split(''));
 }
 
 function loadMessage(dialog) {
@@ -102,22 +81,13 @@ function loadMessage(dialog) {
             if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
                 loadingComplete = true;
-                if (readyToStartRaffle) {
-                    arrow.classList.add("raffle-ready");
-                } else {
-                    arrow.classList.remove("raffle-ready");
-                }
             }
         }, timer * i);
     }
 }
 
-document.addEventListener("keydown", function (e) {
-    if (
-        (e.key === "Enter" || e.key === " ") &&
-        !loadingComplete &&
-        !isMessageSkipped
-    ) {
+document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
         clearTimeouts();
         dialogbox.innerHTML = currMessage;
         if (!dialogbox.contains(arrow)) {
@@ -128,8 +98,8 @@ document.addEventListener("keydown", function (e) {
     }
 });
 
-document.addEventListener("keyup", function (e) {
-    if ((e.key === "Enter" || e.key === " ") && loadingComplete) {
+document.addEventListener('keyup', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
         if (!isMessageSkipped) {
             nextMessage();
         }
@@ -143,13 +113,15 @@ function clearTimeouts() {
         clearTimeout(i);
     }
 }
+
 let raffleSystem = null;
+
 function animateRaffle() {
     if (!raffleSystem) {
         raffleSystem = new RaffleSystem({
             playerBoxSelector: '.character-image', // Selector CSS de los elementos
-            totalPlayers: 16,                      // Total de jugadores
-            winnersCount: 8,                       // Cantidad a seleccionar
+            totalPlayers: 4,                       // Total de jugadores
+            winnersCount: 2,                       // Cantidad a seleccionar (ganador final)
             animationDuration: 2000,               // Duración de la animación
             selectedClass: 'selected',             // Clase CSS para seleccionados
             glowColor: 'gold'                      // Color del brillo
@@ -157,7 +129,7 @@ function animateRaffle() {
         raffleSystem.init();
     }
     raffleSystem.start((selectedIndices) => {
-        console.log('Raffle completed. Selected indices:', selectedIndices);
+        console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
         raffleFinished = true;
         isRaffleStarted = false;
         try {
@@ -168,16 +140,16 @@ function animateRaffle() {
                 .map((idx) => state.contestants[idx])
                 .filter(Boolean);
             winners.forEach((w) => {
-                if (w) w.firstTrialCompleted = true;
+                if (w) w.thirdTrialCompleted = true;
             });
             state.contestants = winners;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (e) {
-            console.error('Error actualizando myRegistrationGameState tras el sorteo:', e);
+            console.error('Error actualizando myRegistrationGameState:', e);
         }
         try {
             if (dialogbox) {
-                dialogbox.innerHTML = 'The competition moves forward. Only the determined will stay in the game.';
+                dialogbox.innerHTML = 'And now, only two remain. The final step before one earns the right to ascend.';
                 if (!dialogbox.contains(arrow)) {
                     dialogbox.appendChild(arrow);
                 }
@@ -185,39 +157,37 @@ function animateRaffle() {
                 arrow.classList.remove('raffle-ready');
             }
         } catch (err) {
-            console.warn('Could not update the dialogbox after the raffle:', err);
+            console.warn('Could not update dialogbox after raffle:', err);
         }
     });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const grid = document.getElementById("charactersGrid");
-    let storedData;
+
     try {
-        storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    } catch (error) {
-        console.error("Error leyendo localStorage:", error);
-        storedData = null;
+        const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        const players = storedData?.contestants ?? [];
+
+        if (players.length > 0) {
+            const grid = document.getElementById("charactersGrid");
+            if (grid) {
+                players.forEach((player, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'character-card';
+                    card.innerHTML = `
+                        <div class="character-image" style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};" id="playerBox${index + 1}">
+                            <img class="principal-img" src="${player.imagePath}" alt="${player.name}">
+                        </div>
+                        <div class="character-name">${player.name}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+    } catch (e) {
+        console.error('Error cargando personajes:', e);
     }
-    const players = storedData?.contestants ?? [];
-    if (players.length === 0) {
-        grid.innerHTML = "<p>No hay jugadores guardados.</p>";
-    } else {
-        players.forEach((player, index) => {
-            const card = document.createElement("div");
-            card.classList.add("character-card");
-            card.innerHTML = `
-          <div class="character-image"
-               style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};"
-               id="playerBox${index + 1}">
-            <img class="principal-img" src="${player.imagePath || 'https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png'}"
-                 alt="${player.name}">
-          </div>
-          <div class="character-name">${player.name}</div>
-        `;
-            grid.appendChild(card);
-        });
-    }
+
     dialogbox = document.getElementById("dialogbox");
     var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
 
@@ -255,7 +225,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-
     initAudio('../assets/sounds/MusicForm.mp3');
 
     const musicChoice = localStorage.getItem('musicEnabled');
@@ -281,6 +250,5 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 }, false);
-
 
 

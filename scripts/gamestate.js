@@ -1,138 +1,131 @@
-// gameState.js - Maneja el estado global del juego
+const STORAGE_KEY = 'myRegistrationGameState';
+const MAX_CONTESTANTS = 16;
 
-import { availableSprites, Contestant } from './data.js';
+const CLOUDINARY_IMAGE_URLS = [
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human1_cb8b7k.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human2_xymp1q.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human3_snt7pj.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human4_sw23h1.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human5_u2tkyw.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human6_qqj6c0.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human7_wnbwzt.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human8_cpb8ny.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human9_zhmccs.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human12_vmwigz.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human10_kxw3mj.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human11_fpndst.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human14_yawyal.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449704/human13_vxfblm.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human16_l27dtq.png',
+    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human15_eyc0jx.png',
+];
 
-class GameState {
-  constructor() {
-    this.contestants = [];
-    this.usedSpriteIds = [];
-    this.currentRound = 1;
-  }
-
-  // Añadir contestant (llamado cada vez que se pulsa el botón)
-  addContestant(name) {
-    if (this.contestants.length >= 16) {
-      console.warn('Ya hay 16 contestants');
-      return null;
-    }
-
-    // Obtener siguiente sprite disponible
-    const availableSprite = availableSprites.find(
-      sprite => !this.usedSpriteIds.includes(sprite.id)
-    );
-
-    if (!availableSprite) {
-      console.error('No hay sprites disponibles');
-      return null;
-    }
-
-    // Crear contestant
-    const contestant = new Contestant(availableSprite, name);
-    this.contestants.push(contestant);
-    this.usedSpriteIds.push(availableSprite.id);
-
-    return contestant;
-  }
-
-  // Eliminar contestant
-  removeContestant(id) {
-    const index = this.contestants.findIndex(c => c.id === id);
-    if (index !== -1) {
-      const removed = this.contestants.splice(index, 1)[0];
-      this.usedSpriteIds = this.usedSpriteIds.filter(sid => sid !== removed.id);
-      return true;
-    }
-    return false;
-  }
-
-  // Obtener activos
-  getActive() {
-    return this.contestants.filter(c => c.status === 'active');
-  }
-
-  // Obtener salvados
-  getSaved() {
-    return this.contestants.filter(c => c.status === 'saved');
-  }
-
-  // Obtener eliminados
-  getEliminated() {
-    return this.contestants.filter(c => c.status === 'eliminated');
-  }
-
-  // Selección aleatoria para rondas
-  selectWinners(winnersCount) {
-    const active = this.getActive();
-    const shuffled = [...active].sort(() => Math.random() - 0.5);
-    
-    const winners = shuffled.slice(0, winnersCount);
-    const losers = shuffled.slice(winnersCount);
-
-    // No actualizamos el estado aquí, lo haremos después de las animaciones
-    return { winners, losers };
-  }
-
-  // Aplicar resultados de selección
-  applySelection(winners, losers) {
-    winners.forEach(w => {
-      const contestant = this.contestants.find(c => c.id === w.id);
-      if (contestant) contestant.status = 'saved';
-    });
-
-    losers.forEach(l => {
-      const contestant = this.contestants.find(c => c.id === l.id);
-      if (contestant) contestant.status = 'eliminated';
-    });
-  }
-
-  // Resetear estado de "saved" a "active" para nueva ronda
-  resetSavedToActive() {
-    this.contestants.forEach(c => {
-      if (c.status === 'saved') {
-        c.status = 'active';
-      }
-    });
-  }
-
-  // Obtener ganador final
-  getWinner() {
-    return this.contestants.find(c => c.status === 'saved');
-  }
-
-  // Persistencia
-  save() {
-    const data = {
-      contestants: this.contestants,
-      usedSpriteIds: this.usedSpriteIds,
-      currentRound: this.currentRound
-    };
-    localStorage.setItem('choreomania', JSON.stringify(data));
-  }
-
-  load() {
-    const saved = localStorage.getItem('choreomania');
-    if (saved) {
-      try {
-        const data = JSON.parse(saved);
-        this.contestants = data.contestants || [];
-        this.usedSpriteIds = data.usedSpriteIds || [];
-        this.currentRound = data.currentRound || 1;
-        return true;
-      } catch (e) {
-        console.error('Error loading state:', e);
-        return false;
-      }
-    }
-    return false;
-  }
-
-  reset() {
-    this.contestants = [];
-    this.usedSpriteIds = [];
-    this.currentRound = 1;
-    localStorage.removeItem('choreomania');
-  }
+function generateUniqueId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
-// Exportar instancia única
-export const gameState = new GameState();
+function generateRandomColor() {
+    const hue = Math.floor(Math.random() * 360);
+    const saturation = Math.floor(Math.random() * (70 - 30 + 1) + 30);
+    const lightness = Math.floor(Math.random() * (90 - 70 + 1) + 70);
+    const hslColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+    return hslColor;
+}
+
+const gameState = {
+    contestants: [],
+    usedImageIndices: [],
+
+    load() {
+        try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            if (data) {
+                const loadedState = JSON.parse(data);
+                this.contestants = loadedState.contestants || [];
+                this.usedImageIndices = loadedState.usedImageIndices || [];
+            }
+        } catch (e) {
+            console.error("Error loading status from localStorage", e);
+        }
+    },
+
+    save() {
+        try {
+            const stateToSave = {
+                contestants: this.contestants.map(({ id, name, color, imagePath }) =>
+                    ({ id, name, color, imagePath })
+                ),
+                usedImageIndices: this.usedImageIndices,
+            };
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
+        } catch (e) {
+            console.error("Error saving status to localStorage", e);
+        }
+    },
+
+    addContestant(name) {
+        if (this.contestants.length >= MAX_CONTESTANTS) {
+            return null;
+        }
+
+        const imagePath = this.getNextAvailableImage();
+
+        const newContestant = {
+            id: generateUniqueId(),
+            name: name.trim().toUpperCase(),
+            color: generateRandomColor(),
+            imagePath: imagePath,
+        };
+
+        this.contestants.push(newContestant);
+        return newContestant;
+    },
+
+    getNextAvailableImage() {
+        for (let i = 0; i < CLOUDINARY_IMAGE_URLS.length; i++) {
+            if (!this.usedImageIndices.includes(i)) {
+                this.usedImageIndices.push(i);
+                return CLOUDINARY_IMAGE_URLS[i];
+            }
+        }
+        const index = this.contestants.length % CLOUDINARY_IMAGE_URLS.length;
+        return CLOUDINARY_IMAGE_URLS[index];
+    },
+
+    removeContestant(id) {
+        const contestant = this.contestants.find(c => c.id.toString() === id.toString());
+
+        if (contestant) {
+            const imageIndex = CLOUDINARY_IMAGE_URLS.indexOf(contestant.imagePath);
+            if (imageIndex !== -1) {
+                this.usedImageIndices = this.usedImageIndices.filter(idx => idx !== imageIndex);
+            }
+        }
+
+        const initialLength = this.contestants.length;
+        this.contestants = this.contestants.filter(c => c.id.toString() !== id.toString());
+
+        return this.contestants.length < initialLength;
+    },
+
+    reset() {
+        this.contestants = [];
+        this.usedImageIndices = [];
+    }
+};
+
+if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+    gameState.load();
+}
+
+if (typeof window !== 'undefined') {
+    window.gameState = gameState;
+}
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = { gameState };
+}
+
+if (typeof exports !== 'undefined') {
+    exports.gameState = gameState;
+}

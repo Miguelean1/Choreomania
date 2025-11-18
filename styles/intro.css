@@ -1,0 +1,305 @@
+@font-face {
+    font-family: "Pokemon GB";
+    src: url("https://cdnjs.cloudflare.com/ajax/libs/Press-Start-2P/1.0.0/PressStart2P.woff2") format("woff2");
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+body {
+    font-family: "Pokemon GB", monospace, sans-serif;
+    color: #ffffff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.backgrounds {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: opacity 1s ease-in-out, transform 8s ease-out;
+    transform: scale(1);
+}
+
+.background.active {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+
+.bg-0 {
+    background-image: url('https://res.cloudinary.com/dsy30p7gf/image/upload/v1762187316/INTRO1_voqa7s.png');
+}
+
+.bg-1 {
+    background-image: url('https://res.cloudinary.com/dsy30p7gf/image/upload/v1762191538/INTRO2_jsremk.png');
+}
+
+.bg-2 {
+    background-image: url('https://res.cloudinary.com/dsy30p7gf/image/upload/v1763054545/INTRO3_ckwlc0.png');
+}
+
+.bg-3 {
+    background-image: url('https://res.cloudinary.com/dsy30p7gf/image/upload/v1762338432/INTRO4_a93mez.png');
+}
+
+.bg-4 {
+    background-image: url('https://res.cloudinary.com/dsy30p7gf/image/upload/v1762191719/INTRO4_q10czt.png');
+}
+
+
+
+
+.letterbox-top,
+.letterbox-bottom {
+    position: fixed;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: #000000;
+    z-index: 100;
+}
+
+.letterbox-top {
+    top: 0;
+}
+
+.letterbox-bottom {
+    bottom: 0;
+}
+
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    padding: 0 40px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    z-index: 1000;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+}
+
+.btn {
+    padding: 8px 8px;
+    border: 3px solid #ffffff;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(5px);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn i {
+    color: #ffffff !important;
+    font-size: 18px;
+}
+
+
+.text-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 101;
+    padding: 0 80px;
+    animation: fadeIn 1.5s ease-out 0.5s both;
+}
+
+.text-box {
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #ffffff;
+    max-width: 1000px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.text-box p {
+    margin: 0;
+}
+
+.cursor {
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: #00ffff;
+    margin-left: 3px;
+    animation: blink 0.7s infinite;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+    vertical-align: middle;
+}
+
+@keyframes blink {
+
+    0%,
+    49% {
+        opacity: 1;
+    }
+
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
+
+.button-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 102;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+}
+
+.button-container.show {
+    opacity: 1;
+}
+
+.continue-btn {
+    background: rgb(255, 255, 255);
+    color: #000000;
+    font-weight: 700;
+    border: 4px solid #000000;
+    padding: 15px 50px;
+    font-size: 16px;
+    font-family: "Pokemon GB", monospace, sans-serif;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.continue-btn:hover {
+    transform: scale(1.05);
+}
+
+.continue-btn:active {
+    transform: scale(0.98);
+}
+
+
+#arrow {
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-top-color: white;
+    position: fixed;
+    bottom: 20px;
+    right: 40px;
+    z-index: 102;
+    animation: bounce 0.5s ease-in-out infinite alternate;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#arrow.show {
+    opacity: 1;
+}
+
+.arrow {
+    cursor: pointer;
+}
+
+@keyframes bounce {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(-8px);
+    }
+}
+
+@media (max-width: 768px) {
+
+    .letterbox-top,
+    .letterbox-bottom {
+        height: 140px;
+    }
+
+    .navbar {
+        height: 140px;
+        padding: 0 20px;
+    }
+
+    .text-container {
+        height: 140px;
+        padding: 0 30px;
+    }
+
+    .text-box {
+        font-size: 11px;
+    }
+
+    .continue-btn {
+        padding: 12px 40px;
+        font-size: 14px;
+    }
+
+    .progress-dots {
+        bottom: 150px;
+    }
+
+    #arrow {
+        bottom: 15px;
+        right: 20px;
+        border-width: 6px;
+    }
+}
+
