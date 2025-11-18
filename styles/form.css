@@ -75,7 +75,6 @@ body {
     min-width: 90px;
 }
 
-
 .icon {
     font-size: 20px;
 }
@@ -89,7 +88,6 @@ body {
 .muted {
     opacity: 0.6;
 }
-
 
 .terminal-content {
     position: absolute;
@@ -207,7 +205,6 @@ form {
     gap: 12px
 }
 
-
 input {
     width: 100%;
     padding: 5px;
@@ -265,6 +262,81 @@ input::placeholder {
     transform: translateY(-3px) scale(1.02);
 }
 
+@media (max-width: 600px) {
+    body {
+        overflow-y: auto;
+        align-items: flex-start;
+    }
 
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: row;
+        gap: 15px;
+    }
 
+    .controls {
+        gap: 10px;
+    }
 
+    .left-spacer {
+        display: none;
+    }
+
+    .counter-container {
+        font-size: 1.2rem;
+    }
+
+    .terminal-content {
+        position: fixed;
+        width: 80%;
+        top: 120px;
+        bottom: 160px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 65%;
+        margin: 0;
+        padding: 5px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .characters-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 1rem;
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0 5px;
+    }
+
+    .character-card {
+        width: 100px;
+        height: 110px;
+    }
+
+    .character-image {
+        width: 70px;
+        height: 70px;
+        margin-top: 15px;
+    }
+
+    .character-name {
+        font-size: 15px;
+    }
+
+    .remove-btn {
+        width: 18px;
+        height: 18px;
+        top: 8px;
+        right: 3px;
+    }
+
+    .container_form {
+        width: 90%;
+        padding: 15px;
+        bottom: 20px;
+    }
+}
