@@ -61,6 +61,15 @@ describe('gameState tests', () => {
         expect(gameState.usedImageIndices.length).toBe(0);
     });
 
+    test('getNextAvailableImage returns unique images until they are exhausted.', () => {
+        const images = [];
+        for (let i = 0; i < 16; i++) {
+            const c = gameState.addContestant(`Person ${i}`);
+            images.push(c.imagePath);
+        }
+        const uniqueImages = [...new Set(images)];
+        expect(uniqueImages.length).toBe(16);
+    });
 
 
 });
