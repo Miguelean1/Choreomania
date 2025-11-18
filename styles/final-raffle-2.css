@@ -283,8 +283,8 @@ body {
     
     .navbar {
         
-        height: 140px;
-        padding: 0 20px;
+        padding: 10px 15px;
+        height: auto;
     }
     
     .controls {
@@ -378,26 +378,23 @@ body {
     
     .character-card {
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         align-items: center;
-        justify-content: flex-end;
-        max-width: 140px;
-        flex: 0 0 auto;
-        position: relative;
+        gap: 8px;                          
+        transition: transform 0.2s;
     }
     
     .character-image {
-        width: 100%;
-        max-width: 110px;
-        height: auto;
-        overflow: visible;
+        width: 110px;
+        height: 135px;                      
+        border: 4px solid black;
+        border-radius: 15px;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-color-dark) 100%);
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         justify-content: center;
         position: relative;
-        border: none;
-        margin-top: 50px;
-        margin-bottom: -5px;
     }
     
     .character-image img {
