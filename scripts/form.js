@@ -27,20 +27,17 @@ function createCharacterCard(character) {
     }
 }
 
-
-
-
 function addCharacter() {
     const nameInput = document.getElementById('name');
     if (!nameInput) return;
 
     const name = nameInput.value.trim();
     if (!name) {
-        Swal.fire({
-            title: 'Error',
-            text: 'Please, enter a name!',
-            icon: 'error',
-            confirmButtonText: 'OK'
+        Swal.fire({ 
+            title: 'Error', 
+            text: 'Please, enter a name!', 
+            icon: 'error', 
+            confirmButtonText: 'OK' 
         });
         return;
     }
@@ -97,7 +94,7 @@ function initForm() {
     const restartBtn = document.querySelector('.controls button:nth-child(2)');
 
     if (addBtn) addBtn.addEventListener('click', addCharacter);
-
+    
     if (nameInput) {
         nameInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
@@ -106,11 +103,10 @@ function initForm() {
             }
         });
     }
-
+    
     if (beginBtn) {
         beginBtn.addEventListener('click', (e) => {
             if (window.gameState.contestants.length === MAX_CHARACTERS) {
-                stopMusic();
                 Swal.fire('All set!', 'The ascension ceremony is about to begin....', 'success');
                 window.location.href = '../main/firsttrial.html';
             } else {
@@ -127,7 +123,7 @@ function initForm() {
             }
         });
     }
-
+    
     if (muteBtn) muteBtn.addEventListener('click', muteMusic);
     if (restartBtn) restartBtn.addEventListener('click', returnHome);
 
@@ -138,8 +134,6 @@ function initForm() {
 }
 
 function returnHome() {
-
-    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
@@ -161,36 +155,21 @@ function returnHome() {
     });
 }
 
-
-window.addEventListener('load', () => {
-
-    initForm();
-
-    initAudio('../assets/sounds/MusicForm.mp3');
-
-    const musicChoice = localStorage.getItem('musicEnabled');
+function muteMusic() {
     const icon = document.querySelector('#muteBtn i');
-
-    if (musicChoice === 'true') {
-        isMuted = false;
-        if (icon) {
-            icon.classList.remove('fa-volume-xmark');
-            icon.classList.add('fa-volume-high');
-        }
-        playAudio();
-    } else if (musicChoice === 'false') {
-        isMuted = true;
-        if (icon) {
-            icon.classList.add('fa-volume-xmark');
-            icon.classList.remove('fa-volume-high');
-        }
-    } else {
-        isMuted = true;
-        if (icon) {
-            icon.classList.add('fa-volume-xmark');
-        }
+    if (icon) {
+        icon.classList.toggle('fa-volume-xmark');
+        icon.classList.toggle('fa-volume-high');
     }
-});
+}
+
+if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initForm);
+    } else {
+        initForm();
+    }
+}
 
 if (typeof window !== 'undefined') {
     window.addCharacter = addCharacter;

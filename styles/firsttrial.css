@@ -139,7 +139,7 @@ body {
 }
 
 .principal-img {
-    width: 80%;
+    width: 80%; /* la mitad del ancho del contenedor */
     height: auto;
 }
 

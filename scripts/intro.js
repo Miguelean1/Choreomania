@@ -61,9 +61,11 @@ function typeText() {
         }, speed);
     } else {
         isTyping = false;
+
         if (currentParagraphIndex < paragraphs.length - 1) {
             arrow.classList.add('show');
         }
+
         if (currentParagraphIndex === paragraphs.length - 1) {
             setTimeout(() => {
                 buttonContainer.classList.add('show');
@@ -81,9 +83,11 @@ function nextParagraph() {
         isTyping = false;
         charIndex = currentText.length;
 
+
         if (currentParagraphIndex < paragraphs.length - 1) {
             arrow.classList.add('show');
         }
+
         if (currentParagraphIndex === paragraphs.length - 1) {
             setTimeout(() => {
                 buttonContainer.classList.add('show');
@@ -109,14 +113,13 @@ function startIntro() {
 }
 
 function returnHome() {
-    stopMusic();
-
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: `No`,
+        denyButtonText: `No`
+        ,
         background: '#ffffff',
         color: '#000000'
     }).then((result) => {
@@ -155,8 +158,6 @@ function skipScene() {
 }
 
 function nextScreen() {
-    stopMusic();
-
     document.body.style.transition = 'opacity 0.8s';
     document.body.style.opacity = '0';
 
@@ -165,7 +166,15 @@ function nextScreen() {
     }, 800);
 }
 
+function muteMusic() {
+    const icon = document.querySelector('#muteBtn i');
+    icon.classList.toggle('fa-volume-xmark');
+    icon.classList.toggle('fa-volume-high');
+}
+
+
 document.addEventListener('click', (e) => {
+
     if (e.target.closest('button')) return;
     nextParagraph();
 });
@@ -178,35 +187,5 @@ document.addEventListener('keydown', (e) => {
 });
 
 window.addEventListener('load', () => {
-
     setTimeout(startIntro, 1000);
-
-    initAudio('../assets/sounds/INTRO_SPEECH.mp3', false);
-
-    const musicChoice = localStorage.getItem('musicEnabled');
-    const icon = document.querySelector('#muteBtn i');
-
-    if (musicChoice === 'true') {
-        isMuted = false;
-        if (icon) {
-            icon.classList.remove('fa-volume-xmark');
-            icon.classList.add('fa-volume-high');
-        }
-        playAudio();
-
-    } else if (musicChoice === 'false') {
-
-        isMuted = true;
-        if (icon) {
-            icon.classList.add('fa-volume-xmark');
-            icon.classList.remove('fa-volume-high');
-        }
-
-    } else {
-
-        isMuted = true;
-        if (icon) {
-            icon.classList.add('fa-volume-xmark');
-        }
-    }
 });

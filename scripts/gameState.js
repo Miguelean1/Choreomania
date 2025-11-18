@@ -25,9 +25,9 @@ function generateUniqueId() {
 }
 
 function generateRandomColor() {
-    const hue = Math.floor(Math.random() * 360);
-    const saturation = Math.floor(Math.random() * (70 - 30 + 1) + 30);
-    const lightness = Math.floor(Math.random() * (90 - 70 + 1) + 70);
+    const hue = Math.floor(Math.random() * 360); 
+    const saturation = Math.floor(Math.random() * (70 - 30 + 1) + 30); 
+    const lightness = Math.floor(Math.random() * (90 - 70 + 1) + 70); 
     const hslColor = `hsl(${hue}, ${saturation}%, ${lightness}%)`;
     return hslColor;
 }
@@ -35,7 +35,7 @@ function generateRandomColor() {
 const gameState = {
     contestants: [],
     usedImageIndices: [],
-
+    
     load() {
         try {
             const data = localStorage.getItem(STORAGE_KEY);
@@ -52,7 +52,7 @@ const gameState = {
     save() {
         try {
             const stateToSave = {
-                contestants: this.contestants.map(({ id, name, color, imagePath }) =>
+                contestants: this.contestants.map(({ id, name, color, imagePath }) => 
                     ({ id, name, color, imagePath })
                 ),
                 usedImageIndices: this.usedImageIndices,
@@ -65,11 +65,11 @@ const gameState = {
 
     addContestant(name) {
         if (this.contestants.length >= MAX_CONTESTANTS) {
-            return null;
+            return null; 
         }
-
+        
         const imagePath = this.getNextAvailableImage();
-
+        
         const newContestant = {
             id: generateUniqueId(),
             name: name.trim().toUpperCase(),
@@ -94,20 +94,20 @@ const gameState = {
 
     removeContestant(id) {
         const contestant = this.contestants.find(c => c.id.toString() === id.toString());
-
+        
         if (contestant) {
             const imageIndex = CLOUDINARY_IMAGE_URLS.indexOf(contestant.imagePath);
             if (imageIndex !== -1) {
                 this.usedImageIndices = this.usedImageIndices.filter(idx => idx !== imageIndex);
             }
         }
-
+        
         const initialLength = this.contestants.length;
         this.contestants = this.contestants.filter(c => c.id.toString() !== id.toString());
 
         return this.contestants.length < initialLength;
     },
-
+    
     reset() {
         this.contestants = [];
         this.usedImageIndices = [];
