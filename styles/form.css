@@ -75,7 +75,6 @@ body {
     min-width: 90px;
 }
 
-
 .icon {
     font-size: 20px;
 }
@@ -89,7 +88,6 @@ body {
 .muted {
     opacity: 0.6;
 }
-
 
 .terminal-content {
     position: absolute;
@@ -206,7 +204,6 @@ form {
     align-items: center;
     gap: 12px
 }
-
 
 input {
     width: 100%;
