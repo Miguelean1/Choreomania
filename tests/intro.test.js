@@ -39,7 +39,7 @@ test('updateProgressDots adds the active class to the according dot', () => {
 
     const dots = document.querySelectorAll('.dot');
     let currentParagraphIndex = 2;
-    
+
 
     dots.forEach((dot, index) => {
         if (index === currentParagraphIndex) {
@@ -48,7 +48,7 @@ test('updateProgressDots adds the active class to the according dot', () => {
             dot.classList.remove('active');
         }
     });
-    
+
 
     expect(dots[2].classList.contains('active')).toBe(true);
     expect(dots[0].classList.contains('active')).toBe(false);
@@ -60,7 +60,7 @@ test('updateBackground adds the active class to the proper background', () => {
 
     const backgrounds = document.querySelectorAll('.background');
     let currentParagraphIndex = 1;
-    
+
 
     backgrounds.forEach((bg, index) => {
         if (index === currentParagraphIndex) {
@@ -69,7 +69,7 @@ test('updateBackground adds the active class to the proper background', () => {
             bg.classList.remove('active');
         }
     });
-    
+
 
     expect(backgrounds[1].classList.contains('active')).toBe(true);
     expect(backgrounds[0].classList.contains('active')).toBe(false);
@@ -80,12 +80,12 @@ test('typeText creates a  p element inside the textBox', () => {
 
     const textBox = document.getElementById('textBox');
     const texto = "Hola mundo";
-    
+
 
     const p = document.createElement('p');
     p.textContent = texto;
     textBox.appendChild(p);
-    
+
 
     expect(textBox.querySelector('p')).not.toBeNull();
     expect(textBox.querySelector('p').textContent).toBe("Hola mundo");
@@ -95,10 +95,10 @@ test('typeText creates a  p element inside the textBox', () => {
 test('buttonContainer calls the class show', () => {
 
     const buttonContainer = document.getElementById('buttonContainer');
-    
+
 
     buttonContainer.classList.add('show');
-    
+
 
     expect(buttonContainer.classList.contains('show')).toBe(true);
 });
@@ -113,7 +113,7 @@ test('skipScene calls Swal.fire accordingly', () => {
         confirmButtonText: "Yes",
         denyButtonText: "No"
     });
-    
+
 
     expect(Swal.fire).toHaveBeenCalled();
     expect(Swal.fire).toHaveBeenCalledWith({
@@ -129,10 +129,10 @@ test('skipScene calls Swal.fire accordingly', () => {
 test('localStorage can storage and read musicEnabled', () => {
 
     localStorageMock.getItem.mockReturnValue('true');
-    
+
 
     const musicChoice = localStorage.getItem('musicEnabled');
-    
+
 
     expect(musicChoice).toBe('true');
     expect(localStorage.getItem).toHaveBeenCalledWith('musicEnabled');
