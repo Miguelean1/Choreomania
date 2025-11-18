@@ -93,11 +93,11 @@ body {
 
 .terminal-content {
     position: absolute;
-    top: 48%;
+    top: 47%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 40%;
-    height: 70%;
+    height: 73%;
     margin: 0 auto 300px auto;
     padding: 0 20px;
     background-color: #210b37;
@@ -107,15 +107,15 @@ body {
 }
 
 .characters-grid {
-    padding: 2rem;
+    padding: 1rem;
     position: relative;
     display: grid;
     place-items: center;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    top: 48%;
+    gap: 6px;
+    top: 37%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -40%);
     z-index: 2;
     border: 2px rgba(109, 106, 110, 0.3);
 }
@@ -266,58 +266,5 @@ input::placeholder {
 }
 
 
-@media (max-width: 600px) {
-    .container {
-        padding: 25px;
-    }
-
-    .text-box {
-        font-size: 16px;
-    }
-
-    .title {
-        font-size: 22px;
-    }
-
-    .continue-btn {
-        padding: 12px 35px;
-        font-size: 16px;
-    }
-}
 
 
-@media (max-width: 1300px) {
-    .characters-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    .character-card {
-        width: 90px;
-        height: 110px;
-    }
-
-    .character-image {
-        width: 70px;
-        height: 70px;
-        margin-top: 12px;
-    }
-}
-
-
-
-@media (max-width: 900px) {
-    .characters-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .character-card {
-        width: 95px;
-        height: 110px;
-    }
-
-    .character-image {
-        width: 70px;
-        height: 70px;
-        margin-top: 12px;
-    }
-}
