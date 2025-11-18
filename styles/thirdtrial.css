@@ -230,7 +230,7 @@ body {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .characters-grid {
         grid-template-columns: repeat(2, 1fr);
     }
