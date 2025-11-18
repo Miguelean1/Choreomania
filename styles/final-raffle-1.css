@@ -261,3 +261,156 @@ body {
     }
 
 }
+
+
+@media (max-width: 600px) {
+    
+    body {
+        padding-top: 60px;
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center 0%;
+        background-attachment: scroll;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .navbar {
+        padding: 10px 15px;
+        height: auto;
+    }
+    
+    .controls {
+        gap: 8px;
+    }
+    
+    .btn {
+        padding: 6px 8px;
+        font-size: 12px;
+        border: 3px solid rgb(0, 0, 0);
+    }
+    
+    .main-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 10px;
+        z-index: 10;
+    }
+    
+    .top-section {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .card-container {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .name-tag {
+        font-size: 11px;
+        padding: 3px 8px;
+        top: -8px;
+        left: -8px;
+        border: 2px solid black;
+        letter-spacing: 0.3px;
+    }
+    
+    .image-container {
+        height: 115px;
+        border: 3px solid black;
+        border-radius: 10px;
+    }
+    
+    #dialogbox {
+        font-size: 9px;
+        padding: 8px 12px;
+        border: 2px solid black;
+        border-radius: 8px;
+        margin-top: 6px;
+        line-height: 1.5em;
+    }
+    
+    #dialogbox.title-style {
+        font-size: 10px;
+        line-height: 1.6em;
+        font-weight: 700;
+    }
+    
+    #dialogbox.normal-style {
+        font-size: 9px;
+        line-height: 13px;
+        font-weight: 700;
+    }
+    
+    #arrow {
+        border: 3px solid transparent;
+        border-top-color: black;
+        bottom: 5px;
+        right: 8px;
+    }
+    
+    .characters-stage {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;              
+        gap: 25px;
+        padding: 10px 10px 20px;            
+        margin-top: 32px;                   
+        z-index: 5;
+    }
+    
+    .character-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;                          
+        transition: transform 0.2s;
+    }
+    
+    .character-name {
+        background: white;
+        border: 3px solid black;
+        border-radius: 20px;
+        padding: 4px 12px;
+        font-family: "Pokemon GB", monospace;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+        font-weight: bold;
+    }
+    
+    .character-image {
+        width: 110px;
+        height: 135px;                      
+        border: 4px solid black;
+        border-radius: 15px;
+        overflow: hidden;
+        background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-color-dark) 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+    }
+    
+    .character-image img {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        display: block;
+    }
+    
+    .principal-img {
+        scale: 110%;
+        margin-top: 30%;
+    }
+}
