@@ -16,7 +16,7 @@ beforeEach(() =>{
 });
 
 describe('gameState tests', () => {
-    test('addContestant agregar un concursante correctamente', () => {
+    test('addContestant add a contestant successfully', () => {
         const contestant = gameState.addContestant('Pepe');
 
         expect(contestant).toHaveProperty('id');
@@ -27,7 +27,7 @@ describe('gameState tests', () => {
         expect(gameState.contestants.length).toBe(1);
     });
 
-    test('no se puede agregar más de MAX_CONTESTANTS', () => {
+    test('you cannot add more than MAX_CONTESTANTS', () => {
         for(let i = 0; i < 16; i++) {
             gameState.addContestant(`Person ${i}`);
         }
@@ -37,6 +37,10 @@ describe('gameState tests', () => {
         expect(gameState.contestants.length).toBe(16);
     });
 
+    test('removeContestant returns false if it does not exist', () => {
+        const removed = gameState.removeContestant('nonexistent-id');
+        expect(removed).toBe(false);
+    });
 
 
 
