@@ -119,6 +119,8 @@ body {
 @media (max-width: 768px) {
     body {
         background-attachment: scroll;
+        background-size: 99% auto, 69% auto, cover;
+        
     }
     
     .navbar {
