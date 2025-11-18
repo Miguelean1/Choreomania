@@ -27,6 +27,16 @@ describe('gameState tests', () => {
         expect(gameState.contestants.length).toBe(1);
     });
 
+    test('no se puede agregar más de MAX_CONTESTANTS', () => {
+        for(let i = 0; i < 16; i++) {
+            gameState.addContestant(`Person ${i}`);
+        }
+        const extra = gameState.addContestant('Extra');
+
+        expect(extra).toBeNull();
+        expect(gameState.contestants.length).toBe(16);
+    });
+
 
 
 
