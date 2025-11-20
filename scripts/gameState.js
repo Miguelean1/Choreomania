@@ -1,23 +1,23 @@
-const STORAGE_KEY = 'myRegistrationGameState';
+const STORAGE_KEY = "myRegistrationGameState";
 const MAX_CONTESTANTS = 16;
 
 const CLOUDINARY_IMAGE_URLS = [
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human1_cb8b7k.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human2_xymp1q.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human3_snt7pj.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human4_sw23h1.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human5_u2tkyw.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human6_qqj6c0.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human7_wnbwzt.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human8_cpb8ny.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human9_zhmccs.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human12_vmwigz.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human10_kxw3mj.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human11_fpndst.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human14_yawyal.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449704/human13_vxfblm.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human16_l27dtq.png',
-    'https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human15_eyc0jx.png',
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human1_cb8b7k.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human2_xymp1q.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human3_snt7pj.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human4_sw23h1.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human5_u2tkyw.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human6_qqj6c0.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human7_wnbwzt.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417864/human8_cpb8ny.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762417863/human9_zhmccs.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human12_vmwigz.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human10_kxw3mj.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human11_fpndst.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human14_yawyal.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449704/human13_vxfblm.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human16_l27dtq.png",
+    "https://res.cloudinary.com/dc4u0bzgh/image/upload/v1762449703/human15_eyc0jx.png",
 ];
 
 function generateUniqueId() {
@@ -52,9 +52,12 @@ const gameState = {
     save() {
         try {
             const stateToSave = {
-                contestants: this.contestants.map(({ id, name, color, imagePath }) =>
-                    ({ id, name, color, imagePath })
-                ),
+                contestants: this.contestants.map(({ id, name, color, imagePath }) => ({
+                    id,
+                    name,
+                    color,
+                    imagePath,
+                })),
                 usedImageIndices: this.usedImageIndices,
             };
             localStorage.setItem(STORAGE_KEY, JSON.stringify(stateToSave));
@@ -93,17 +96,23 @@ const gameState = {
     },
 
     removeContestant(id) {
-        const contestant = this.contestants.find(c => c.id.toString() === id.toString());
+        const contestant = this.contestants.find(
+            (c) => c.id.toString() === id.toString()
+        );
 
         if (contestant) {
             const imageIndex = CLOUDINARY_IMAGE_URLS.indexOf(contestant.imagePath);
             if (imageIndex !== -1) {
-                this.usedImageIndices = this.usedImageIndices.filter(idx => idx !== imageIndex);
+                this.usedImageIndices = this.usedImageIndices.filter(
+                    (idx) => idx !== imageIndex
+                );
             }
         }
 
         const initialLength = this.contestants.length;
-        this.contestants = this.contestants.filter(c => c.id.toString() !== id.toString());
+        this.contestants = this.contestants.filter(
+            (c) => c.id.toString() !== id.toString()
+        );
 
         return this.contestants.length < initialLength;
     },
@@ -111,21 +120,21 @@ const gameState = {
     reset() {
         this.contestants = [];
         this.usedImageIndices = [];
-    }
+    },
 };
 
-if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
+if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
     gameState.load();
 }
 
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
     window.gameState = gameState;
 }
 
-if (typeof module !== 'undefined' && module.exports) {
+if (typeof module !== "undefined" && module.exports) {
     module.exports = { gameState };
 }
 
-if (typeof exports !== 'undefined') {
+if (typeof exports !== "undefined") {
     exports.gameState = gameState;
 }

@@ -3,17 +3,17 @@ const paragraphs = [
     "Obsessed with disco music and flashy attires, cities became their stages. Humans were forced to dance for them, day and night, trapped in an endless rhythm under their glowing eyes. Those who stopped… disappeared.",
     "But once a year, the music pauses. The mysterious Benefactor interrupts every broadcast, offering a single escape: one ticket aboard the New Esperanza, a ship bound for Saturn and freedom from the rabbits' reign.",
     "Sixteen are chosen. Four deadly trials await. Only one will earn the right to ascend.",
-    "Now, the world watches. The Ceremony of Ascension begins. Will you rise to the stars… or keep dancing for their pleasure?"
+    "Now, the world watches. The Ceremony of Ascension begins. Will you rise to the stars… or keep dancing for their pleasure?",
 ];
 
-const textBox = document.getElementById('textBox');
-const buttonContainer = document.getElementById('buttonContainer');
-const progressDots = document.querySelectorAll('.dot');
-const backgrounds = document.querySelectorAll('.background');
-const arrow = document.getElementById('arrow');
+const textBox = document.getElementById("textBox");
+const buttonContainer = document.getElementById("buttonContainer");
+const progressDots = document.querySelectorAll(".dot");
+const backgrounds = document.querySelectorAll(".background");
+const arrow = document.getElementById("arrow");
 
 let currentParagraphIndex = 0;
-let currentText = '';
+let currentText = "";
 let charIndex = 0;
 const speed = 50;
 let isTyping = false;
@@ -21,9 +21,9 @@ let isTyping = false;
 function updateProgressDots() {
     progressDots.forEach((dot, index) => {
         if (index === currentParagraphIndex) {
-            dot.classList.add('active');
+            dot.classList.add("active");
         } else {
-            dot.classList.remove('active');
+            dot.classList.remove("active");
         }
     });
 }
@@ -31,9 +31,9 @@ function updateProgressDots() {
 function updateBackground() {
     backgrounds.forEach((bg, index) => {
         if (index === currentParagraphIndex) {
-            bg.classList.add('active');
+            bg.classList.add("active");
         } else {
-            bg.classList.remove('active');
+            bg.classList.remove("active");
         }
     });
 }
@@ -41,16 +41,16 @@ function updateBackground() {
 function typeText() {
     if (charIndex < currentText.length) {
         isTyping = true;
-        arrow.classList.remove('show');
-        const p = textBox.querySelector('p') || document.createElement('p');
-        if (!textBox.querySelector('p')) {
+        arrow.classList.remove("show");
+        const p = textBox.querySelector("p") || document.createElement("p");
+        if (!textBox.querySelector("p")) {
             textBox.appendChild(p);
         }
 
         p.textContent = currentText.substring(0, charIndex + 1);
 
-        const cursor = document.createElement('span');
-        cursor.className = 'cursor';
+        const cursor = document.createElement("span");
+        cursor.className = "cursor";
         p.appendChild(cursor);
 
         charIndex++;
@@ -62,11 +62,11 @@ function typeText() {
     } else {
         isTyping = false;
         if (currentParagraphIndex < paragraphs.length - 1) {
-            arrow.classList.add('show');
+            arrow.classList.add("show");
         }
         if (currentParagraphIndex === paragraphs.length - 1) {
             setTimeout(() => {
-                buttonContainer.classList.add('show');
+                buttonContainer.classList.add("show");
             }, 500);
         }
     }
@@ -74,7 +74,7 @@ function typeText() {
 
 function nextParagraph() {
     if (isTyping) {
-        const p = textBox.querySelector('p');
+        const p = textBox.querySelector("p");
         if (p) {
             p.textContent = currentText;
         }
@@ -82,19 +82,19 @@ function nextParagraph() {
         charIndex = currentText.length;
 
         if (currentParagraphIndex < paragraphs.length - 1) {
-            arrow.classList.add('show');
+            arrow.classList.add("show");
         }
         if (currentParagraphIndex === paragraphs.length - 1) {
             setTimeout(() => {
-                buttonContainer.classList.add('show');
+                buttonContainer.classList.add("show");
             }, 300);
         }
     } else if (currentParagraphIndex < paragraphs.length - 1) {
-        arrow.classList.remove('show');
+        arrow.classList.remove("show");
         currentParagraphIndex++;
         currentText = paragraphs[currentParagraphIndex];
         charIndex = 0;
-        textBox.innerHTML = '';
+        textBox.innerHTML = "";
         updateProgressDots();
         updateBackground();
         typeText();
@@ -117,8 +117,8 @@ function returnHome() {
         showCancelButton: true,
         confirmButtonText: "Yes",
         denyButtonText: `No`,
-        background: '#ffffff',
-        color: '#000000'
+        background: "#ffffff",
+        color: "#000000",
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
@@ -126,13 +126,13 @@ function returnHome() {
                 timer: 1000,
                 showConfirmButton: false,
                 allowOutsideClick: false,
-                background: '#ffffff',
-                color: '#000000',
+                background: "#ffffff",
+                color: "#000000",
                 didOpen: () => {
                     Swal.showLoading();
-                }
+                },
             }).then(() => {
-                window.location.href = 'welcome.html';
+                window.location.href = "welcome.html";
             });
         }
     });
@@ -145,8 +145,8 @@ function skipScene() {
         showCancelButton: true,
         confirmButtonText: "Yes",
         denyButtonText: "No",
-        background: '#ffffffff',
-        color: '#000000ff'
+        background: "#ffffffff",
+        color: "#000000ff",
     }).then((result) => {
         if (result.isConfirmed) {
             nextScreen();
@@ -157,56 +157,51 @@ function skipScene() {
 function nextScreen() {
     stopMusic();
 
-    document.body.style.transition = 'opacity 0.8s';
-    document.body.style.opacity = '0';
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
 
     setTimeout(() => {
-        window.location.href = 'form.html';
+        window.location.href = "form.html";
     }, 800);
 }
 
-document.addEventListener('click', (e) => {
-    if (e.target.closest('button')) return;
+document.addEventListener("click", (e) => {
+    if (e.target.closest("button")) return;
     nextParagraph();
 });
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === ' ' || e.key === 'Enter') {
+document.addEventListener("keydown", (e) => {
+    if (e.key === " " || e.key === "Enter") {
         e.preventDefault();
         nextParagraph();
     }
 });
 
-window.addEventListener('load', () => {
-
+window.addEventListener("load", () => {
     setTimeout(startIntro, 1000);
 
-    initAudio('../assets/sounds/INTRO_SPEECH.mp3', false);
+    initAudio("../assets/sounds/INTRO_SPEECH.mp3", false);
 
-    const musicChoice = localStorage.getItem('musicEnabled');
-    const icon = document.querySelector('#muteBtn i');
+    const musicChoice = localStorage.getItem("musicEnabled");
+    const icon = document.querySelector("#muteBtn i");
 
-    if (musicChoice === 'true') {
+    if (musicChoice === "true") {
         isMuted = false;
         if (icon) {
-            icon.classList.remove('fa-volume-xmark');
-            icon.classList.add('fa-volume-high');
+            icon.classList.remove("fa-volume-xmark");
+            icon.classList.add("fa-volume-high");
         }
         playAudio();
-
-    } else if (musicChoice === 'false') {
-
+    } else if (musicChoice === "false") {
         isMuted = true;
         if (icon) {
-            icon.classList.add('fa-volume-xmark');
-            icon.classList.remove('fa-volume-high');
+            icon.classList.add("fa-volume-xmark");
+            icon.classList.remove("fa-volume-high");
         }
-
     } else {
-
         isMuted = true;
         if (icon) {
-            icon.classList.add('fa-volume-xmark');
+            icon.classList.add("fa-volume-xmark");
         }
     }
 });

@@ -12,43 +12,45 @@ let lastMessage = false;
 let arrow = document.createElement("div");
 arrow.id = "arrow";
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        initAudio("../assets/sounds/WelcomeMusic.mp3");
 
-    initAudio('../assets/sounds/WelcomeMusic.mp3');
+        const musicChoice = localStorage.getItem("musicEnabled");
+        const icon = document.querySelector("#muteBtn i");
 
-    const musicChoice = localStorage.getItem('musicEnabled');
-    const icon = document.querySelector('#muteBtn i');
-
-    if (musicChoice === 'true') {
-        isMuted = false;
-        if (icon) {
-            icon.classList.remove('fa-volume-xmark');
-            icon.classList.add('fa-volume-high');
+        if (musicChoice === "true") {
+            isMuted = false;
+            if (icon) {
+                icon.classList.remove("fa-volume-xmark");
+                icon.classList.add("fa-volume-high");
+            }
+            playAudio();
+        } else if (musicChoice === "false") {
+            isMuted = true;
+            if (icon) {
+                icon.classList.add("fa-volume-xmark");
+                icon.classList.remove("fa-volume-high");
+            }
+        } else {
+            isMuted = true;
+            if (icon) {
+                icon.classList.add("fa-volume-xmark");
+            }
         }
-        playAudio();
-    } else if (musicChoice === 'false') {
-        isMuted = true;
-        if (icon) {
-            icon.classList.add('fa-volume-xmark');
-            icon.classList.remove('fa-volume-high');
-        }
-    } else {
-        isMuted = true;
-        if (icon) {
-            icon.classList.add('fa-volume-xmark');
-        }
-    }
-}, false);
+    },
+    false
+);
 
 function returnHome() {
-
     stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: "No"
+        denyButtonText: "No",
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
@@ -56,23 +58,22 @@ function returnHome() {
                 timer: 1000,
                 showConfirmButton: false,
                 allowOutsideClick: false,
-                didOpen: () => Swal.showLoading()
+                didOpen: () => Swal.showLoading(),
             }).then(() => {
-                window.location.href = 'welcome.html';
+                window.location.href = "welcome.html";
             });
         }
     });
 }
 
 function nextScreen() {
-
     stopMusic();
 
-    document.body.style.transition = 'opacity 0.8s';
-    document.body.style.opacity = '0';
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
 
     setTimeout(() => {
-        window.location.href = 'welcome.html';
+        window.location.href = "welcome.html";
     }, 800);
 }
 
@@ -83,23 +84,23 @@ function clearTimeouts() {
     }
 }
 
-
 (function () {
-    const btnContainer = document.querySelector('.button-container');
-    const playBtn = document.getElementById('playAgainBtn');
+    const btnContainer = document.querySelector(".button-container");
+    const playBtn = document.getElementById("playAgainBtn");
 
     if (!btnContainer || !playBtn) return;
 
-    const marquee = document.querySelector('marquee');
+    const marquee = document.querySelector("marquee");
 
     function showButton() {
-        btnContainer.classList.add('show');
-        btnContainer.setAttribute('aria-hidden', 'false');
+        btnContainer.classList.add("show");
+        btnContainer.setAttribute("aria-hidden", "false");
     }
 
     if (marquee) {
-
-        const children = Array.from(marquee.children).filter(n => n.nodeType === 1);
+        const children = Array.from(marquee.children).filter(
+            (n) => n.nodeType === 1
+        );
         const lastChild = children.length ? children[children.length - 1] : marquee;
         let rafId = null;
         const marqueeRect = () => marquee.getBoundingClientRect();
@@ -119,26 +120,25 @@ function clearTimeouts() {
             showButton();
             if (rafId) cancelAnimationFrame(rafId);
         }, 30000);
-
     } else {
-
         function checkScrollToEnd() {
-            const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2);
+            const scrolledToBottom =
+                window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
             if (scrolledToBottom) {
                 showButton();
-                window.removeEventListener('scroll', onScroll);
+                window.removeEventListener("scroll", onScroll);
             }
         }
-        function onScroll() { checkScrollToEnd(); }
+        function onScroll() {
+            checkScrollToEnd();
+        }
         checkScrollToEnd();
-        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener("scroll", onScroll, { passive: true });
     }
 
-    playBtn.addEventListener('click', function (e) {
+    playBtn.addEventListener("click", function (e) {
         e.stopImmediatePropagation();
-        btnContainer.classList.remove('show');
+        btnContainer.classList.remove("show");
         nextScreen();
     });
-
 })();
-

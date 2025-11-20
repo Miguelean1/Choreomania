@@ -1,13 +1,12 @@
 class RaffleSystem {
     constructor(config = {}) {
-
         this.config = {
-            playerBoxSelector: '.character-image',
+            playerBoxSelector: ".character-image",
             totalPlayers: 16,
             winnersCount: 8,
             animationDuration: 2000,
-            selectedClass: 'selected',
-            glowColor: 'gold',
+            selectedClass: "selected",
+            glowColor: "gold",
             shadowColors: [
                 "rgba(255, 107, 157, 0.7)",
                 "rgba(254, 202, 87, 0.7)",
@@ -19,7 +18,7 @@ class RaffleSystem {
                 "rgba(76, 201, 240, 0.7)",
             ],
             blinkInterval: 150,
-            ...config
+            ...config,
         };
 
         this.playerBoxes = [];
@@ -34,13 +33,10 @@ class RaffleSystem {
     init() {
         this.playerBoxes = [];
 
-
         const elements = document.querySelectorAll(this.config.playerBoxSelector);
         if (elements.length > 0) {
             this.playerBoxes = Array.from(elements);
-        }
-
-        else {
+        } else {
             for (let i = 1; i <= this.config.totalPlayers; i++) {
                 const box = document.getElementById(`playerBox${i}`);
                 if (box) {
@@ -50,7 +46,7 @@ class RaffleSystem {
         }
 
         if (this.playerBoxes.length === 0) {
-            console.warn('RaffleSystem: No se encontraron elementos para el sorteo.');
+            console.warn("RaffleSystem: No se encontraron elementos para el sorteo.");
         }
 
         return this;
@@ -71,12 +67,14 @@ class RaffleSystem {
     start(onComplete) {
         return new Promise((resolve) => {
             if (this.isRunning) {
-                console.warn('RaffleSystem: El sorteo ya está en ejecución.');
+                console.warn("RaffleSystem: El sorteo ya está en ejecución.");
                 return;
             }
 
             if (this.playerBoxes.length === 0) {
-                console.error('RaffleSystem: No hay elementos cargados. Llama a init() primero.');
+                console.error(
+                    "RaffleSystem: No hay elementos cargados. Llama a init() primero."
+                );
                 return;
             }
 
@@ -84,33 +82,28 @@ class RaffleSystem {
 
             playRaffleSound();
 
-
             this.playerBoxes.forEach((box) => (box.style.boxShadow = ""));
-
 
             this.animationInterval = setInterval(() => {
                 this.playerBoxes.forEach((box) => {
-                    const color = this.config.shadowColors[
+                    const color =
+                        this.config.shadowColors[
                         this.getRandomInt(0, this.config.shadowColors.length - 1)
-                    ];
+                        ];
                     box.style.boxShadow = `0 0 25px 6px ${color}`;
                 });
             }, this.config.blinkInterval);
-
 
             setTimeout(() => {
                 clearInterval(this.animationInterval);
                 this.animationInterval = null;
 
-
                 this.playerBoxes.forEach((box) => (box.style.boxShadow = ""));
-
 
                 const selectedIndices = this.selectRandomIndices(
                     this.playerBoxes.length,
                     this.config.winnersCount
                 );
-
 
                 this.playerBoxes.forEach((box, idx) => {
                     if (selectedIndices.includes(idx)) {
@@ -124,11 +117,9 @@ class RaffleSystem {
 
                 this.isRunning = false;
 
-
-                if (typeof onComplete === 'function') {
+                if (typeof onComplete === "function") {
                     onComplete(selectedIndices);
                 }
-
 
                 resolve(selectedIndices);
             }, this.config.animationDuration);
@@ -147,7 +138,7 @@ class RaffleSystem {
     }
 
     getSelectedElements() {
-        return this.playerBoxes.filter(box =>
+        return this.playerBoxes.filter((box) =>
             box.classList.contains(this.config.selectedClass)
         );
     }
@@ -163,7 +154,6 @@ class RaffleSystem {
     }
 }
 
-
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
     window.RaffleSystem = RaffleSystem;
 }

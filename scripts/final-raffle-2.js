@@ -16,7 +16,7 @@ let arrow = document.createElement("div");
 arrow.id = "arrow";
 
 function clearAllTimeouts() {
-    activeTimeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    activeTimeouts.forEach((timeoutId) => clearTimeout(timeoutId));
     activeTimeouts = [];
 }
 
@@ -27,7 +27,7 @@ function returnHome() {
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: "No"
+        denyButtonText: "No",
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({
@@ -35,22 +35,22 @@ function returnHome() {
                 timer: 1000,
                 showConfirmButton: false,
                 allowOutsideClick: false,
-                didOpen: () => Swal.showLoading()
+                didOpen: () => Swal.showLoading(),
             }).then(() => {
-                window.location.href = 'welcome.html';
+                window.location.href = "welcome.html";
             });
         }
     });
 }
 
 function titleStyle() {
-    dialogbox.classList.remove('normal-style');
-    dialogbox.classList.add('title-style');
+    dialogbox.classList.remove("normal-style");
+    dialogbox.classList.add("title-style");
 }
 
 function normalStyle() {
-    dialogbox.classList.remove('title-style');
-    dialogbox.classList.add('normal-style');
+    dialogbox.classList.remove("title-style");
+    dialogbox.classList.add("normal-style");
 }
 
 function loadMessage(dialog) {
@@ -78,8 +78,7 @@ function nextMessage() {
     }
     currMessage = messageStrings[messageId];
 
-
-    readyToStartRaffle = (messageId === messageStrings.length - 1);
+    readyToStartRaffle = messageId === messageStrings.length - 1;
 
     if (applytitlestyle) {
         if (messageId == 1 || messageId == messageStrings.length) {
@@ -89,16 +88,19 @@ function nextMessage() {
         }
     }
 
-
     if (!readyToStartRaffle) {
         messageId++;
     }
 
-    loadMessage(currMessage.split(''));
+    loadMessage(currMessage.split(""));
 }
 
-document.addEventListener('keydown', function (e) {
-    if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
+document.addEventListener("keydown", function (e) {
+    if (
+        (e.key === "Enter" || e.key === " ") &&
+        !loadingComplete &&
+        !isMessageSkipped
+    ) {
         clearAllTimeouts();
         dialogbox.innerHTML = currMessage;
         if (!dialogbox.contains(arrow)) {
@@ -109,8 +111,8 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-document.addEventListener('keyup', function (e) {
-    if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
+document.addEventListener("keyup", function (e) {
+    if ((e.key === "Enter" || e.key === " ") && loadingComplete) {
         if (!isMessageSkipped) {
             nextMessage();
         }
@@ -118,29 +120,26 @@ document.addEventListener('keyup', function (e) {
     }
 });
 
-
-
-
-
 let raffleSystem = null;
 
 function animateRaffle() {
     if (!raffleSystem) {
-
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: '.character-image',
+            playerBoxSelector: ".character-image",
             totalPlayers: 2,
             winnersCount: 1,
             animationDuration: 2000,
-            selectedClass: 'selected',
-            glowColor: 'gold'
+            selectedClass: "selected",
+            glowColor: "gold",
         });
         raffleSystem.init();
     }
 
-
     raffleSystem.start((selectedIndices) => {
-        console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
+        console.log(
+            "Sorteo final completado. Índice del ganador:",
+            selectedIndices
+        );
         raffleFinished = true;
         isRaffleStarted = false;
 
@@ -157,139 +156,143 @@ function animateRaffle() {
             state.contestants = winners;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (e) {
-            console.error('Error actualizando myRegistrationGameState:', e);
+            console.error("Error actualizando myRegistrationGameState:", e);
         }
         try {
             if (dialogbox) {
-                dialogbox.innerHTML = 'The ascension is complete. Your name will be forever inscribed in our records.';
+                dialogbox.innerHTML =
+                    "The ascension is complete. Your name will be forever inscribed in our records.";
                 if (!dialogbox.contains(arrow)) {
                     dialogbox.appendChild(arrow);
                 }
                 loadingComplete = true;
-                arrow.classList.remove('raffle-ready');
+                arrow.classList.remove("raffle-ready");
             }
         } catch (err) {
-            console.warn('Could not update dialogbox after raffle:', err);
+            console.warn("Could not update dialogbox after raffle:", err);
         }
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        try {
+            const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+            const players = storedData?.contestants ?? [];
 
-    try {
-        const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        const players = storedData?.contestants ?? [];
-
-        if (players.length > 0) {
-            const grid = document.getElementById("characters-stage");
-            if (grid) {
-                players.forEach((player, index) => {
-                    const card = document.createElement('div');
-                    card.className = 'character-card';
-                    card.innerHTML = `
+            if (players.length > 0) {
+                const grid = document.getElementById("characters-stage");
+                if (grid) {
+                    players.forEach((player, index) => {
+                        const card = document.createElement("div");
+                        card.className = "character-card";
+                        card.innerHTML = `
                     <div class="character-name">${player.name}</div>
-                        <div class="character-image" style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};" id="playerBox${index + 1}">
-                            <img class="principal-img" src="${player.imagePath}" alt="${player.name}">
+                        <div class="character-image" style="--bg-color: ${player.color
+                            }; --bg-color-dark: ${player.color};" id="playerBox${index + 1
+                            }">
+                            <img class="principal-img" src="${player.imagePath
+                            }" alt="${player.name}">
                         </div>
                         
                     `;
-                    grid.appendChild(card);
-                });
+                        grid.appendChild(card);
+                    });
+                }
             }
+        } catch (e) {
+            console.error("Error cargando personajes:", e);
         }
-    } catch (e) {
-        console.error('Error cargando personajes:', e);
-    }
 
-    dialogbox = document.getElementById("dialogbox");
-    let messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+        dialogbox = document.getElementById("dialogbox");
+        let messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
 
-    messageStrings = messageString.split("|").map((msg) => msg.trim());
-    dialogbox.innerHTML = "";
-    messageId = 0;
-    currMessage = messageStrings[messageId];
-    nextMessage();
+        messageStrings = messageString.split("|").map((msg) => msg.trim());
+        dialogbox.innerHTML = "";
+        messageId = 0;
+        currMessage = messageStrings[messageId];
+        nextMessage();
 
-    document.getElementById("dialogbox").addEventListener("click", function (e) {
-        if (isRaffleStarted) {
-            e.stopPropagation();
-            return;
-        }
-        if (raffleFinished) {
-            stopMusic();
+        document
+            .getElementById("dialogbox")
+            .addEventListener("click", function (e) {
+                if (isRaffleStarted) {
+                    e.stopPropagation();
+                    return;
+                }
+                if (raffleFinished) {
+                    stopMusic();
 
+                    if (document.getElementById("fade-overlay")) return;
 
-            if (document.getElementById('fade-overlay')) return;
+                    const overlay = document.createElement("div");
+                    overlay.id = "fade-overlay";
+                    Object.assign(overlay.style, {
+                        position: "fixed",
+                        top: "0",
+                        left: "0",
+                        width: "100%",
+                        height: "100%",
+                        backgroundColor: "#000",
+                        opacity: "0",
+                        transition: "opacity 2000ms ease",
+                        zIndex: "9999",
+                        pointerEvents: "none",
+                    });
+                    document.body.appendChild(overlay);
 
+                    overlay.offsetHeight;
+                    overlay.style.opacity = "1";
 
-            const overlay = document.createElement('div');
-            overlay.id = 'fade-overlay';
-            Object.assign(overlay.style, {
-                position: 'fixed',
-                top: '0',
-                left: '0',
-                width: '100%',
-                height: '100%',
-                backgroundColor: '#000',
-                opacity: '0',
-                transition: 'opacity 2000ms ease',
-                zIndex: '9999',
-                pointerEvents: 'none'
+                    setTimeout(() => {
+                        window.location.href = "../main/blackout.html";
+                    }, 2000);
+
+                    return;
+                }
+                if (!loadingComplete) {
+                    clearAllTimeouts();
+                    dialogbox.innerHTML = currMessage;
+                    if (!dialogbox.contains(arrow)) {
+                        dialogbox.appendChild(arrow);
+                    }
+                    loadingComplete = true;
+                } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
+                    isRaffleStarted = true;
+                    e.stopPropagation();
+                    animateRaffle();
+                } else if (!skipNextPress) {
+                    nextMessage();
+                } else {
+                    skipNextPress = false;
+                }
             });
-            document.body.appendChild(overlay);
 
+        initAudio("../assets/sounds/ScaryTechno.mp3");
 
-            overlay.offsetHeight;
-            overlay.style.opacity = '1';
+        const musicChoice = localStorage.getItem("musicEnabled");
+        const icon = document.querySelector("#muteBtn i");
 
-
-            setTimeout(() => {
-                window.location.href = '../main/blackout.html';
-            }, 2000);
-
-            return;
-        }
-        if (!loadingComplete) {
-            clearAllTimeouts();
-            dialogbox.innerHTML = currMessage;
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
+        if (musicChoice === "true") {
+            isMuted = false;
+            if (icon) {
+                icon.classList.remove("fa-volume-xmark");
+                icon.classList.add("fa-volume-high");
             }
-            loadingComplete = true;
-        } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
-            isRaffleStarted = true;
-            e.stopPropagation();
-            animateRaffle();
-        } else if (!skipNextPress) {
-            nextMessage();
+            playAudio();
+        } else if (musicChoice === "false") {
+            isMuted = true;
+            if (icon) {
+                icon.classList.add("fa-volume-xmark");
+                icon.classList.remove("fa-volume-high");
+            }
         } else {
-            skipNextPress = false;
+            isMuted = true;
+            if (icon) {
+                icon.classList.add("fa-volume-xmark");
+            }
         }
-    });
-
-    initAudio('../assets/sounds/ScaryTechno.mp3');
-
-    const musicChoice = localStorage.getItem('musicEnabled');
-    const icon = document.querySelector('#muteBtn i');
-
-    if (musicChoice === 'true') {
-        isMuted = false;
-        if (icon) {
-            icon.classList.remove('fa-volume-xmark');
-            icon.classList.add('fa-volume-high');
-        }
-        playAudio();
-    } else if (musicChoice === 'false') {
-        isMuted = true;
-        if (icon) {
-            icon.classList.add('fa-volume-xmark');
-            icon.classList.remove('fa-volume-high');
-        }
-    } else {
-        isMuted = true;
-        if (icon) {
-            icon.classList.add('fa-volume-xmark');
-        }
-    }
-}, false);
-
+    },
+    false
+);

@@ -13,22 +13,24 @@ function playAudio() {
     if (!backgroundMusic) return;
 
     isMuted = false;
-    const icon = document.querySelector('#muteBtn i');
+    const icon = document.querySelector("#muteBtn i");
     if (icon) {
-        icon.classList.remove('fa-volume-xmark');
-        icon.classList.add('fa-volume-high');
+        icon.classList.remove("fa-volume-xmark");
+        icon.classList.add("fa-volume-high");
     }
-    localStorage.setItem('musicEnabled', 'true');
+    localStorage.setItem("musicEnabled", "true");
     console.log('UI en "ON". Guardado: true');
 
     const playPromise = backgroundMusic.play();
 
     if (playPromise !== undefined) {
-        playPromise.then(() => {
-            console.log('Audio reproduciéndose con éxito.');
-        }).catch(error => {
-            console.warn('Autoplay bloqueado, pero la UI se mantiene en "ON".');
-        });
+        playPromise
+            .then(() => {
+                console.log("Audio reproduciéndose con éxito.");
+            })
+            .catch((error) => {
+                console.warn('Autoplay bloqueado, pero la UI se mantiene en "ON".');
+            });
     }
 }
 
@@ -38,17 +40,17 @@ function pauseAudio() {
     backgroundMusic.pause();
 
     isMuted = true;
-    const icon = document.querySelector('#muteBtn i');
+    const icon = document.querySelector("#muteBtn i");
     if (icon) {
-        icon.classList.add('fa-volume-xmark');
-        icon.classList.remove('fa-volume-high');
+        icon.classList.add("fa-volume-xmark");
+        icon.classList.remove("fa-volume-high");
     }
 
-    localStorage.setItem('musicEnabled', 'false');
+    localStorage.setItem("musicEnabled", "false");
 }
 
 function muteMusic() {
-    console.log('Botón Mute pulsado.');
+    console.log("Botón Mute pulsado.");
     if (isMuted) {
         playAudio();
     } else {
@@ -66,11 +68,11 @@ function stopMusic() {
 let rafflePlayed = false;
 function playRaffleSound() {
     try {
-        const raffleAudio = new Audio('../assets/sounds/raffleSound.mp3');
-        raffleAudio.play().catch(err => {
-            console.warn('No se pudo reproducir raffle:', err);
+        const raffleAudio = new Audio("../assets/sounds/raffleSound.mp3");
+        raffleAudio.play().catch((err) => {
+            console.warn("No se pudo reproducir raffle:", err);
         });
     } catch (e) {
-        console.warn('Error creando audio de raffle:', e);
+        console.warn("Error creando audio de raffle:", e);
     }
 }

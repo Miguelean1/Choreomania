@@ -13,53 +13,56 @@ let arrow = document.createElement("div");
 arrow.id = "arrow";
 let bgAudioPlayed = false;
 
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        dialogbox = document.getElementById("dialogbox");
+        let messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+        messageStrings = messageString.split("|");
+        dialogbox.innerHTML = "";
+        messageId = 0;
+        currMessage = messageStrings[messageId];
+        nextMessage();
+        const bgAudio = document.getElementById("bg-audio");
 
-document.addEventListener("DOMContentLoaded", function () {
-    dialogbox = document.getElementById("dialogbox");
-    let messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
-    messageStrings = messageString.split('|');
-    dialogbox.innerHTML = "";
-    messageId = 0;
-    currMessage = messageStrings[messageId];
-    nextMessage();
-    const bgAudio = document.getElementById('bg-audio');
-
-    document.getElementById("dialogbox").addEventListener("click", function () {
-        if (bgAudio && !bgAudioPlayed) {
-            bgAudio.play().then(() => {
-                bgAudioPlayed = true;
-            }).catch(err => {
-                console.warn('Reproducción de audio bloqueada o fallida:', err);
-            });
-        }
-
-        if (!loadingComplete) {
-            clearTimeouts();
-            dialogbox.innerHTML = currMessage;
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
+        document.getElementById("dialogbox").addEventListener("click", function () {
+            if (bgAudio && !bgAudioPlayed) {
+                bgAudio
+                    .play()
+                    .then(() => {
+                        bgAudioPlayed = true;
+                    })
+                    .catch((err) => {
+                        console.warn("Reproducción de audio bloqueada o fallida:", err);
+                    });
             }
-            loadingComplete = true;
-        } else if (!skipNextPress) {
 
-            if (lastMessage) {
-                nextScreen();
+            if (!loadingComplete) {
+                clearTimeouts();
+                dialogbox.innerHTML = currMessage;
+                if (!dialogbox.contains(arrow)) {
+                    dialogbox.appendChild(arrow);
+                }
+                loadingComplete = true;
+            } else if (!skipNextPress) {
+                if (lastMessage) {
+                    nextScreen();
+                } else {
+                    nextMessage();
+                }
             } else {
-                nextMessage();
+                skipNextPress = false;
             }
-        } else {
-            skipNextPress = false;
-        }
-    });
-}, false);
-
+        });
+    },
+    false
+);
 
 function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
+    const icon = document.querySelector("#muteBtn i");
+    icon.classList.toggle("fa-volume-xmark");
+    icon.classList.toggle("fa-volume-high");
 }
-
 
 function returnHome() {
     Swal.fire({
@@ -68,27 +71,35 @@ function returnHome() {
         showCancelButton: true,
         confirmButtonText: "Yes",
         denyButtonText: `No`,
-        background: '#ffffff',
-        color: '#000000'
+        background: "#ffffff",
+        color: "#000000",
     }).then((result) => {
-
         if (result.isConfirmed) {
-            Swal.fire({ title: "Saved!", icon: "success", background: '#ffffff', color: '#000000' });
+            Swal.fire({
+                title: "Saved!",
+                icon: "success",
+                background: "#ffffff",
+                color: "#000000",
+            });
         } else if (result.isDenied) {
-            Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
+            Swal.fire({
+                title: "Changes are not saved",
+                icon: "info",
+                background: "#ffffff",
+                color: "#000000",
+            });
         }
     });
 }
 
-
 function titleStyle() {
-    dialogbox.classList.remove('normal-style');
-    dialogbox.classList.add('title-style');
+    dialogbox.classList.remove("normal-style");
+    dialogbox.classList.add("title-style");
 }
 
 function normalStyle() {
-    dialogbox.classList.remove('title-style');
-    dialogbox.classList.add('normal-style');
+    dialogbox.classList.remove("title-style");
+    dialogbox.classList.add("normal-style");
 }
 
 function nextMessage() {
@@ -101,7 +112,7 @@ function nextMessage() {
         messageId = 0;
     }
 
-    lastMessage = (messageId === messageStrings.length - 1);
+    lastMessage = messageId === messageStrings.length - 1;
     currMessage = messageStrings[messageId];
     messageId++;
 
@@ -112,7 +123,7 @@ function nextMessage() {
             normalStyle();
         }
     }
-    loadMessage(currMessage.split(''));
+    loadMessage(currMessage.split(""));
 }
 
 function loadMessage(dialog) {
@@ -129,8 +140,12 @@ function loadMessage(dialog) {
     }
 }
 
-document.addEventListener('keydown', function (e) {
-    if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
+document.addEventListener("keydown", function (e) {
+    if (
+        (e.key === "Enter" || e.key === " ") &&
+        !loadingComplete &&
+        !isMessageSkipped
+    ) {
         clearTimeouts();
         dialogbox.innerHTML = currMessage;
         if (!dialogbox.contains(arrow)) {
@@ -141,11 +156,10 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-document.addEventListener('keyup', function (e) {
-    if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
+document.addEventListener("keyup", function (e) {
+    if ((e.key === "Enter" || e.key === " ") && loadingComplete) {
         if (!isMessageSkipped) {
             if (lastMessage) {
-
                 nextScreen();
             } else {
                 nextMessage();
@@ -155,20 +169,14 @@ document.addEventListener('keyup', function (e) {
     }
 });
 
-
 function nextScreen() {
-    document.body.style.transition = 'opacity 0.8s';
-    document.body.style.opacity = '0';
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
 
     setTimeout(() => {
-        window.location.href = 'plot-twist.html';
+        window.location.href = "plot-twist.html";
     }, 800);
 }
-
-
-
-
-
 
 function clearTimeouts() {
     let highestTimeoutId = setTimeout(";");
