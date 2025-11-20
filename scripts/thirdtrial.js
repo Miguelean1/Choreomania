@@ -1,19 +1,19 @@
 const timer = 30;
 const STORAGE_KEY = 'myRegistrationGameState';
-var messageStrings;
-var dialogbox;
-var currMessage;
-var messageId;
-var applytitlestyle = true;
-var loadingComplete = true;
-var skipNextPress = false;
+let messageStrings;
+let dialogbox;
+let currMessage;
+let messageId;
+let applytitlestyle = true;
+let loadingComplete = true;
+let skipNextPress = false;
 let isMessageSkipped = false;
-var readyToStartRaffle = false;
-var isRaffleStarted = false;
-var raffleFinished = false;
+let readyToStartRaffle = false;
+let isRaffleStarted = false;
+let raffleFinished = false;
 const POST_RAFFLE_REDIRECT = '../main/final-raffle-1.html';
 
-var arrow = document.createElement("div");
+let arrow = document.createElement("div");
 arrow.id = "arrow";
 
 function returnHome() {
@@ -111,8 +111,8 @@ document.addEventListener('keyup', function (e) {
 });
 
 function clearTimeouts() {
-    var highestTimeoutId = setTimeout(";");
-    for (var i = 0; i < highestTimeoutId; i++) {
+    let highestTimeoutId = setTimeout(";");
+    for (let i = 0; i < highestTimeoutId; i++) {
         clearTimeout(i);
     }
 }
@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+    let messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
 
     messageStrings = messageString.split("||").map((msg) => msg.trim());
     dialogbox.innerHTML = "";

@@ -1,14 +1,14 @@
 const timer = 30;
 const STORAGE_KEY = 'myRegistrationGameState';
-var messageStrings;
-var dialogbox;
-var currMessage;
-var messageId;
-var applytitlestyle = false;
-var loadingComplete = true;
-var activeTimeouts = [];
+let messageStrings;
+let dialogbox;
+let currMessage;
+let messageId;
+let applytitlestyle = false;
+let loadingComplete = true;
+let activeTimeouts = [];
 
-var arrow = document.createElement("div");
+let arrow = document.createElement("div");
 arrow.id = "arrow";
 let thunderPlayed = false;
 
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
+    let messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
     messageStrings = messageString.split('|');
 
     messageId = 0;

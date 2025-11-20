@@ -1,18 +1,18 @@
 const timer = 30;
-var messageStrings;
-var dialogbox;
-var currMessage;
-var messageId;
-var applytitlestyle = true;
-var loadingComplete = true;
-var skipNextPress = false;
+let messageStrings;
+let dialogbox;
+let currMessage;
+let messageId;
+let applytitlestyle = true;
+let loadingComplete = true;
+let skipNextPress = false;
 let isMessageSkipped = false;
-var readyToStartRaffle = false;
-var isRaffleStarted = false;
-var raffleFinished = false;
-var activeTimeouts = [];
+let readyToStartRaffle = false;
+let isRaffleStarted = false;
+let raffleFinished = false;
+let activeTimeouts = [];
 
-var arrow = document.createElement("div");
+let arrow = document.createElement("div");
 arrow.id = "arrow";
 
 function clearAllTimeouts() {
@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+    let messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
 
     messageStrings = messageString.split("|").map((msg) => msg.trim());
     dialogbox.innerHTML = "";

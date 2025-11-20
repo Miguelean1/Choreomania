@@ -1,15 +1,15 @@
 const timer = 30;
-var messageStrings;
-var dialogbox;
-var currMessage;
-var messageId;
-var applytitlestyle = true;
-var loadingComplete = true;
-var skipNextPress = false;
+let messageStrings;
+let dialogbox;
+let currMessage;
+let messageId;
+let applytitlestyle = true;
+let loadingComplete = true;
+let skipNextPress = false;
 let isMessageSkipped = false;
-var lastMessage = false;
+let lastMessage = false;
 
-var arrow = document.createElement("div");
+let arrow = document.createElement("div");
 arrow.id = "arrow";
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -77,8 +77,8 @@ function nextScreen() {
 }
 
 function clearTimeouts() {
-    var highestTimeoutId = setTimeout(";");
-    for (var i = 0; i < highestTimeoutId; i++) {
+    let highestTimeoutId = setTimeout(";");
+    for (let i = 0; i < highestTimeoutId; i++) {
         clearTimeout(i);
     }
 }
