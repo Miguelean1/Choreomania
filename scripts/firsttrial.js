@@ -47,18 +47,25 @@ arrow.addEventListener("click", function (e) {
 });
 
 function returnHome() {
+
     stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: `No`,
+        denyButtonText: "No"
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire("Saved!", "", "success");
-        } else if (result.isDenied) {
-            Swal.fire("Changes are not saved", "", "info");
+            Swal.fire({
+                title: "Returning to the homepage",
+                timer: 1000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            }).then(() => {
+                window.location.href = 'welcome.html';
+            });
         }
     });
 }

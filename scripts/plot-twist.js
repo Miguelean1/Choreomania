@@ -114,21 +114,24 @@ function nextScreen() {
 }
 
 function returnHome() {
-    ç
     stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: "No",
-        background: '#ffffff',
-        color: '#000000'
+        denyButtonText: "No"
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire({ title: "Saved!", icon: "success", background: '#ffffff', color: '#000000' });
-        } else if (result.isDenied) {
-            Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
+            Swal.fire({
+                title: "Returning to the homepage",
+                timer: 1000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            }).then(() => {
+                window.location.href = 'welcome.html';
+            });
         }
     });
 }
