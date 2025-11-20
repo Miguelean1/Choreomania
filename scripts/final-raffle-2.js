@@ -20,64 +20,36 @@ function clearAllTimeouts() {
     activeTimeouts = [];
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-	// Cargar personajes desde localStorage
-	try {
-		const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
-		const players = storedData?.contestants ?? [];
-		
-		if (players.length > 0) {
-			const grid = document.getElementById("characters-stage");
-			if (grid) {
-				players.forEach((player, index) => {
-					const card = document.createElement('div');
-					card.className = 'character-card';
-					card.innerHTML = `
-						<div class="character-name">${player.name}</div>
-						<div class="character-image">
-							<img src="${player.imagePath}" alt="${player.name}">
-						</div>
-					`;
-					grid.appendChild(card);
-				});
-			}
-		}
-	} catch (e) {
-		console.error('Error cargando personajes:', e);
-	}
-}, false);
-
-
 function returnHome() {
+
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: "No",
-        background: '#ffffff',
-        color: '#000000'
+        denyButtonText: "No"
     }).then((result) => {
         if (result.isConfirmed) {
-            Swal.fire({ title: "Saved!", icon: "success", background: '#ffffff', color: '#000000' });
-        } else if (result.isDenied) {
-            Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
+            Swal.fire({
+                title: "Returning to the homepage",
+                timer: 1000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            }).then(() => {
+                window.location.href = 'welcome.html';
+            });
         }
     });
 }
 
-function muteMusic() {
-    const icon = document.querySelector('#muteBtn i');
-    icon.classList.toggle('fa-volume-xmark');
-    icon.classList.toggle('fa-volume-high');
-}
-
-function titleStyle(){
+function titleStyle() {
     dialogbox.classList.remove('normal-style');
     dialogbox.classList.add('title-style');
 }
 
-function normalStyle(){
+function normalStyle() {
     dialogbox.classList.remove('title-style');
     dialogbox.classList.add('normal-style');
 }
@@ -86,7 +58,7 @@ function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
     for (let i = 0; i < dialog.length; i++) {
-        setTimeout(function() {
+        setTimeout(function () {
             dialogbox.innerHTML += dialog[i];
             if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
@@ -106,76 +78,27 @@ function nextMessage() {
         messageId = messageStrings.length - 1;
     }
     currMessage = messageStrings[messageId];
-    
-    // Determinar si estamos en el último mensaje (preparado para sorteo)
+
+
     readyToStartRaffle = (messageId === messageStrings.length - 1);
-	
-	if (applytitlestyle) {
-		if (messageId == 1 || messageId == messageStrings.length) {
-			titleStyle();
-		} else {
-			normalStyle();
-		}
-	}
-	
-	// Solo incrementamos si NO estamos en el último mensaje
-	if (!readyToStartRaffle) {
-		messageId++;
-	}
-	
+
+    if (applytitlestyle) {
+        if (messageId == 1 || messageId == messageStrings.length) {
+            titleStyle();
+        } else {
+            normalStyle();
+        }
+    }
+
+
+    if (!readyToStartRaffle) {
+        messageId++;
+    }
+
     loadMessage(currMessage.split(''));
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-    dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
-
-    messageStrings = messageString.split("|").map((msg) => msg.trim());
-    dialogbox.innerHTML = "";
-    messageId = 0;
-    currMessage = messageStrings[messageId];
-    nextMessage();
-
-    document.getElementById("dialogbox").addEventListener("click", function (e) {
-
-        // Si el sorteo está en marcha, bloquear cualquier clic en el dialogbox
-        if (isRaffleStarted) {
-            e.stopPropagation();
-            return;
-        }
-
-        // Si el sorteo ya terminó, permitir clic que redirige al componente destino
-        if (raffleFinished) {
-            // redirige a la ruta configurada
-            window.location.href = '../main/blackout.html';
-            return;
-        }
-
-        if (!loadingComplete) {
-            clearAllTimeouts();
-            dialogbox.innerHTML = currMessage;
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
-            }
-            loadingComplete = true;
-        } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
-
-            isRaffleStarted = true;
-
-            e.stopPropagation();
-            animateRaffle();
-        } else if (!skipNextPress) {
-
-            nextMessage();
-        } else {
-            skipNextPress = false;
-        }
-    });
-},
-false
-);
-
-document.addEventListener('keydown', function(e) {
+document.addEventListener('keydown', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
         clearAllTimeouts();
         dialogbox.innerHTML = currMessage;
@@ -187,7 +110,7 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
         if (!isMessageSkipped) {
             nextMessage();
@@ -196,37 +119,32 @@ document.addEventListener('keyup', function(e) {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-  // typeDialog no es necesario aquí
-});
 
 
-// ============================================
-// SISTEMA DE SORTEO (usando módulo raffle.js)
-// ============================================
+
 
 let raffleSystem = null;
 
 function animateRaffle() {
     if (!raffleSystem) {
-        // Inicializar el sistema de sorteo con la configuración actual
+
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: '.character-image', // Selector CSS de los elementos
-            totalPlayers: 2,                       // Total de jugadores
-            winnersCount: 1,                       // Cantidad a seleccionar (ganador final)
-            animationDuration: 2000,               // Duración de la animación
-            selectedClass: 'selected',             // Clase CSS para seleccionados
-            glowColor: 'gold'                      // Color del brillo
+            playerBoxSelector: '.character-image',
+            totalPlayers: 2,
+            winnersCount: 1,
+            animationDuration: 2000,
+            selectedClass: 'selected',
+            glowColor: 'gold'
         });
         raffleSystem.init();
     }
 
-    // Ejecutar el sorteo
+
     raffleSystem.start((selectedIndices) => {
         console.log('Sorteo final completado. Índice del ganador:', selectedIndices);
         raffleFinished = true;
         isRaffleStarted = false;
-        // Actualizar `myRegistrationGameState` para conservar solo a los ganador
+
         try {
             const raw = localStorage.getItem(STORAGE_KEY);
             const state = raw ? JSON.parse(raw) : { contestants: [] };
@@ -256,4 +174,123 @@ function animateRaffle() {
         }
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    try {
+        const storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        const players = storedData?.contestants ?? [];
+
+        if (players.length > 0) {
+            const grid = document.getElementById("characters-stage");
+            if (grid) {
+                players.forEach((player, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'character-card';
+                    card.innerHTML = `
+                    <div class="character-name">${player.name}</div>
+                        <div class="character-image" style="--bg-color: ${player.color}; --bg-color-dark: ${player.color};" id="playerBox${index + 1}">
+                            <img class="principal-img" src="${player.imagePath}" alt="${player.name}">
+                        </div>
+                        
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+    } catch (e) {
+        console.error('Error cargando personajes:', e);
+    }
+
+    dialogbox = document.getElementById("dialogbox");
+    var messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+
+    messageStrings = messageString.split("|").map((msg) => msg.trim());
+    dialogbox.innerHTML = "";
+    messageId = 0;
+    currMessage = messageStrings[messageId];
+    nextMessage();
+
+    document.getElementById("dialogbox").addEventListener("click", function (e) {
+        if (isRaffleStarted) {
+            e.stopPropagation();
+            return;
+        }
+        if (raffleFinished) {
+            stopMusic();
+
+
+            if (document.getElementById('fade-overlay')) return;
+
+
+            const overlay = document.createElement('div');
+            overlay.id = 'fade-overlay';
+            Object.assign(overlay.style, {
+                position: 'fixed',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                backgroundColor: '#000',
+                opacity: '0',
+                transition: 'opacity 2000ms ease',
+                zIndex: '9999',
+                pointerEvents: 'none'
+            });
+            document.body.appendChild(overlay);
+
+
+            overlay.offsetHeight;
+            overlay.style.opacity = '1';
+
+
+            setTimeout(() => {
+                window.location.href = '../main/blackout.html';
+            }, 2000);
+
+            return;
+        }
+        if (!loadingComplete) {
+            clearAllTimeouts();
+            dialogbox.innerHTML = currMessage;
+            if (!dialogbox.contains(arrow)) {
+                dialogbox.appendChild(arrow);
+            }
+            loadingComplete = true;
+        } else if (readyToStartRaffle && loadingComplete && !isRaffleStarted) {
+            isRaffleStarted = true;
+            e.stopPropagation();
+            animateRaffle();
+        } else if (!skipNextPress) {
+            nextMessage();
+        } else {
+            skipNextPress = false;
+        }
+    });
+
+    initAudio('../assets/sounds/ScaryTechno.mp3');
+
+    const musicChoice = localStorage.getItem('musicEnabled');
+    const icon = document.querySelector('#muteBtn i');
+
+    if (musicChoice === 'true') {
+        isMuted = false;
+        if (icon) {
+            icon.classList.remove('fa-volume-xmark');
+            icon.classList.add('fa-volume-high');
+        }
+        playAudio();
+    } else if (musicChoice === 'false') {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+            icon.classList.remove('fa-volume-high');
+        }
+    } else {
+        isMuted = true;
+        if (icon) {
+            icon.classList.add('fa-volume-xmark');
+        }
+    }
+}, false);
 

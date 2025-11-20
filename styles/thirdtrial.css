@@ -286,4 +286,10 @@ body {
         justify-items: center;
         align-items: center;
     }
+    
+    .navbar {
+        height: 140px;
+        padding: 0 20px;
+    }
+
 }

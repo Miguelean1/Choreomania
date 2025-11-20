@@ -7,6 +7,8 @@
     box-sizing: border-box;
 }
 
+
+
 body {
     margin: 0;
     padding: 0;
@@ -94,7 +96,7 @@ body {
 
 .name-tag {
     position: absolute;
-    top: -30px;
+    top: -35px;
     left: -15px;
     background: white;
     color: black;
@@ -131,12 +133,23 @@ body {
     line-height: 1.9em;
 }
 
-
 #dialogbox.normal-style {
     text-align: center;
-    font-size: 12px;
+    font-size: 18px;
     font-weight: 700;
-    line-height: 16px;
+    line-height: 25px;
+}
+
+#dialogbox.final-style {
+    text-align: center;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 25px;
+    color: #EE553D;
+    transform-origin: center center;
+    will-change: transform;
+
+    animation: shake-horizontal-tilt 0.28s cubic-bezier(.25, .1, .25, 1) infinite;
 }
 
 #arrow {
@@ -152,11 +165,71 @@ body {
 
 @keyframes bounce {
     0% {
-        transform: translateY(0);
+        transform: translateY();
     }
 
     100% {
-        transform: translateY(-8px);
+        transform: translateY(-3px);
+    }
+}
+
+@keyframes tilt-shaking {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    25% {
+        transform: rotate(1deg);
+    }
+
+    50% {
+        transform: rotate(0deg);
+    }
+
+    75% {
+        transform: rotate(-1deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes shake-horizontal-tilt {
+    0% {
+        transform: translateX(0) rotate(0deg);
+    }
+
+    12% {
+        transform: translateX(-6px) rotate(-1deg);
+    }
+
+    25% {
+        transform: translateX(6px) rotate(1deg);
+    }
+
+    38% {
+        transform: translateX(-4px) rotate(-0.6deg);
+    }
+
+    50% {
+        transform: translateX(4px) rotate(0.6deg);
+    }
+
+    62% {
+        transform: translateX(-2px) rotate(-0.3deg);
+    }
+
+    75% {
+        transform: translateX(2px) rotate(0.3deg);
+    }
+
+    88% {
+        transform: translateX(-1px) rotate(-0.15deg);
+    }
+
+    100% {
+        transform: translateX(0) rotate(0deg);
     }
 }
 
@@ -201,4 +274,109 @@ body {
         font-size: 10px;
         line-height: 15px;
     }
+
+    .navbar {
+        height: 140px;
+        padding: 0 20px;
+    }
 }
+
+@media (max-width: 600px) {
+    
+    body {
+        padding-top: 60px;
+        min-height: 100vh;
+        background-size: cover;
+        background-position: center 50%;
+        background-attachment: scroll;
+        background-repeat: no-repeat;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+    }
+    
+    .navbar {
+        padding: 10px 15px;
+        height: auto;
+    }
+    
+    .controls {
+        gap: 8px;
+    }
+    
+    .btn {
+        padding: 6px 8px;
+        font-size: 12px;
+        border: 3px solid rgb(0, 0, 0);
+    }
+    
+    .main-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
+        padding: 0 10px;
+        z-index: 10;
+    }
+    
+    .top-section {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .card-container {
+        width: 100%;
+        max-width: 100%;
+    }
+    
+    .name-tag {
+        font-size: 11px;
+        padding: 3px 8px;
+        top: -20px;
+        left: -8px;
+        border: 2px solid black;
+        letter-spacing: 0.3px;
+    }
+    
+    #dialogbox {
+        font-size: 9px;
+        padding: 10px 20px 10px 15px;
+        border: 2px solid black;
+        border-radius: 8px;
+        line-height: 1.5em;
+    }
+    
+    #dialogbox.title-style {
+        font-size: 10px;
+        line-height: 1.6em;
+        font-weight: 700;
+    }
+    
+    #dialogbox.normal-style {
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 17px;
+    }
+    
+    #dialogbox.final-style {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        color: #EE553D;
+    }
+    
+    #arrow {
+        border: 3px solid transparent;
+        border-top-color: black;
+        bottom: 5px;
+        right: 8px;
+    }
+    
+    .sound-waves {
+        display: none;
+    }
+}
+
+
