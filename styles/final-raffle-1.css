@@ -247,20 +247,7 @@ body {
     margin-top: 30%;
 }
 
-@media (max-width: 1024px) {
-    .characters-stage {
-        gap: 18px;
-        padding-bottom: 24px;
-    }
 
-
-
-    #dialogbox {
-        position: relative;
-        z-index: 10;
-    }
-
-}
 
 @media (max-width: 1024px) {
     body {
@@ -269,6 +256,7 @@ body {
         height: auto;
         overflow: auto;
         background-attachment: scroll;
+        padding-top: 0;
     }
 
     .main-layout {

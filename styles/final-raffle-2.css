@@ -248,6 +248,10 @@ body {
     margin-top: 30%;
 }
 
+
+
+
+
 @media (max-width: 1024px) {
     body {
         display: block;
@@ -255,6 +259,7 @@ body {
         height: auto;
         overflow: auto;
         background-attachment: scroll;
+        padding-top: 0;
     }
 
     .main-layout {
@@ -284,7 +289,7 @@ body {
         justify-content: flex-start;
     }
 
-    .characters-stage {
+    .characters-section {
         width: 100vw;
         max-width: 100vw;
         height: auto;
@@ -294,98 +299,21 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-wrap: wrap;
-        gap: 18px;
-        padding-bottom: 24px;
+    }
+
+    .characters-stage {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px 4px;
+        width: 98vw;
+        margin: 0 auto 12px auto;
+        justify-items: center;
+        align-items: center;
     }
     
     .navbar {
         height: 140px;
         padding: 0 20px;
     }
-    
-    .name-tag {
-        font-size: 11px;
-        padding: 3px 8px;
-        top: -8px;
-        left: -8px;
-        border: 2px solid black;
-        letter-spacing: 0.3px;
-    }
-    
-    .image-container {
-        height: 115px;
-        border: 3px solid black;
-        border-radius: 10px;
-    }
-    
-    #dialogbox {
-        font-size: 9px;
-        padding: 8px 12px;
-        border: 2px solid black;
-        border-radius: 8px;
-        margin-top: 6px;
-        line-height: 1.5em;
-    }
-    
-    #dialogbox.title-style {
-        font-size: 10px;
-        line-height: 1.6em;
-        font-weight: 700;
-    }
-    
-    #dialogbox.normal-style {
-        font-size: 9px;
-        line-height: 13px;
-        font-weight: 700;
-    }
-    
-    #arrow {
-        border: 3px solid transparent;
-        border-top-color: black;
-        bottom: 5px;
-        right: 8px;
-    }
-    
-    .character-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        transition: transform 0.2s;
-    }
-    
-    .character-image {
-        width: 110px;
-        height: 135px;
-        border: 4px solid black;
-        border-radius: 15px;
-        overflow: hidden;
-        background: linear-gradient(135deg, var(--bg-color) 0%, var(--bg-color-dark) 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        position: relative;
-    }
-    
-    .character-image img {
-        width: auto;
-        height: auto;
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
-        display: block;
-    }
-    
-    .character-name {
-        font-size: 11px;
-        padding: 4px 12px;
-        border: 3px solid black;
-        border-radius: 20px;
-    }
-    
-    .principal-img {
-        scale: 110%;
-        margin-top: 30%;
-    }
 }
+
