@@ -254,6 +254,7 @@ body {
 
 @media (max-width: 1024px) {
     body {
+        
         display: block;
         min-height: 100vh;
         height: auto;

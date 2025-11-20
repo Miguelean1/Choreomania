@@ -188,14 +188,13 @@ document.addEventListener(
                         const card = document.createElement("div");
                         card.className = "character-card";
                         card.innerHTML = `
-                    <div class="character-name">${player.name}</div>
-                        <div class="character-image" style="--bg-color: ${player.color
+                  <div class="character-image" style="--bg-color: ${player.color
                             }; --bg-color-dark: ${player.color};" id="playerBox${index + 1
                             }">
                             <img class="principal-img" src="${player.imagePath
                             }" alt="${player.name}">
                         </div>
-                        
+                        <div class="character-name">${player.name}</div>
                     `;
                         grid.appendChild(card);
                     });
