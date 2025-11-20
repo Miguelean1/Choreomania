@@ -230,6 +230,9 @@ body {
 }
 
 
+
+
+
 @media (max-width: 1024px) {
     body {
         display: block;
@@ -277,7 +280,7 @@ body {
         justify-content: center;
     }
 
-    .characters-grid {
+    .characters-stage {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 8px 4px;
@@ -291,5 +294,4 @@ body {
         height: 140px;
         padding: 0 20px;
     }
-
 }
