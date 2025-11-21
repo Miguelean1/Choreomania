@@ -75,7 +75,6 @@ body {
     min-width: 90px;
 }
 
-
 .icon {
     font-size: 20px;
 }
@@ -90,14 +89,13 @@ body {
     opacity: 0.6;
 }
 
-
 .terminal-content {
     position: absolute;
-    top: 48%;
+    top: 47%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 40%;
-    height: 70%;
+    height: 73%;
     margin: 0 auto 300px auto;
     padding: 0 20px;
     background-color: #210b37;
@@ -107,15 +105,15 @@ body {
 }
 
 .characters-grid {
-    padding: 2rem;
+    padding: 1rem;
     position: relative;
     display: grid;
     place-items: center;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    top: 48%;
+    gap: 6px;
+    top: 37%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -40%);
     z-index: 2;
     border: 2px rgba(109, 106, 110, 0.3);
 }
@@ -207,11 +205,10 @@ form {
     gap: 12px
 }
 
-
 input {
     width: 100%;
     padding: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 0;
     font-size: 16px;
     color: rgb(7, 7, 7);
     font-weight: bold;
@@ -225,7 +222,66 @@ input::placeholder {
     color: rgb(3, 3, 3);
 }
 
-button {
+.tooltip-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.tooltip-icon {
+    position: absolute;
+    right: 6px;
+    top: 25%;
+    transform: translate(-50%);
+    width: 16px;
+    height: 16px;
+    background: #e9d252;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: help;
+    font-weight: bold;
+    pointer-events: all;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 220px;
+    background-color: rgba(51, 61, 109, 0.9); 
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+    padding: 12px;
+    position: absolute;
+    z-index: 1;
+    bottom: 170%;
+    right: -20px;
+    font-size: 14px;
+    transition: opacity 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: rgba(51, 61, 109, 0.9) transparent transparent transparent;
+}
+
+.tooltip-icon:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.begin {
     font-weight: bold;
     font-size: 16px;
     font-family: 'Press Start 2P', monospace;
@@ -265,59 +321,81 @@ button {
     transform: translateY(-3px) scale(1.02);
 }
 
-
 @media (max-width: 600px) {
-    .container {
-        padding: 25px;
+    body {
+        overflow-y: auto;
+        align-items: flex-start;
     }
 
-    .text-box {
-        font-size: 16px;
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: row;
+        gap: 15px;
     }
 
-    .title {
-        font-size: 22px;
+    .controls {
+        gap: 10px;
     }
 
-    .continue-btn {
-        padding: 12px 35px;
-        font-size: 16px;
-    }
-}
-
-
-@media (max-width: 1300px) {
-    .characters-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .left-spacer {
+        display: none;
     }
 
-    .character-card {
-        width: 90px;
-        height: 110px;
+    .counter-container {
+        font-size: 1.2rem;
     }
 
-    .character-image {
-        width: 70px;
-        height: 70px;
-        margin-top: 12px;
+    .terminal-content {
+        position: fixed;
+        width: 80%;
+        top: 120px;
+        bottom: 160px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 65%;
+        margin: 0;
+        padding: 5px;
+        overflow-y: auto;
+        overflow-x: hidden;
     }
-}
 
-
-
-@media (max-width: 900px) {
     .characters-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 1rem;
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0 5px;
     }
 
     .character-card {
-        width: 95px;
+        width: 100px;
         height: 110px;
     }
 
     .character-image {
         width: 70px;
         height: 70px;
-        margin-top: 12px;
+        margin-top: 15px;
+    }
+
+    .character-name {
+        font-size: 15px;
+    }
+
+    .remove-btn {
+        width: 18px;
+        height: 18px;
+        top: 8px;
+        right: 3px;
+    }
+
+    .container_form {
+        width: 90%;
+        padding: 15px;
+        bottom: 20px;
     }
 }
