@@ -1,6 +1,6 @@
 const { checkMusicPreference, nextScreen } = require('../scripts/welcome.js');
 
-// Mocks globales
+
 global.playAudio = jest.fn();
 global.pauseAudio = jest.fn();
 global.stopMusic = jest.fn();
@@ -20,7 +20,7 @@ describe('checkMusicPreference', () => {
     jest.clearAllMocks();
   });
 
-  test('Swal.fire es llamado y pausa el audio cuando se deniega', async () => {
+  test('Swal.fire is called and can stop music', async () => {
     const resultDenied = { isConfirmed: false };
     swalFireMock.mockResolvedValueOnce(resultDenied);
     
@@ -30,7 +30,7 @@ describe('checkMusicPreference', () => {
     expect(pauseAudio).toHaveBeenCalledTimes(1);
   });
 
-  test('reproduce el audio cuando se confirma', async () => {
+  test('init audio when confirmed', async () => {
     const resultConfirmed = { isConfirmed: true };
     swalFireMock.mockResolvedValueOnce(resultConfirmed);
     
@@ -59,7 +59,7 @@ describe('nextScreen', () => {
     document.body.style.opacity = '1';
   });
 
-  test('detiene la música y cambia la opacidad del body', () => {
+  test('opacity body to 0', () => {
     jest.useFakeTimers();
     
     nextScreen();
