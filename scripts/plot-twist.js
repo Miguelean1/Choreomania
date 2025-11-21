@@ -282,3 +282,10 @@ document.addEventListener("keyup", function (e) {
         }
     }
 });
+
+if (typeof module !== "undefined") {
+    module.exports = {
+        returnHome,
+        nextMessage,
+    };
+}

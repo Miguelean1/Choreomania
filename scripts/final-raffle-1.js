@@ -273,3 +273,10 @@ document.addEventListener(
     },
     false
 );
+
+if (typeof module !== "undefined") {
+    module.exports = {
+        returnHome,
+        nextMessage,
+    };
+}
