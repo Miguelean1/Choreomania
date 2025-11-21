@@ -26,6 +26,7 @@ global.console = {
     warn: jest.fn()
 };
 
+const audioModule = require('../scripts/audio-manager.js');
 const { 
     initAudio, 
     playAudio, 
@@ -33,7 +34,7 @@ const {
     muteMusic, 
     stopMusic, 
     playRaffleSound 
-} = require('../scripts/audio-manager.js');
+} = audioModule;
 
 describe('audio manager tests', () => {
     beforeEach(() => {
@@ -50,15 +51,20 @@ describe('audio manager tests', () => {
                 add: jest.fn()
             }
         });
+        jest.resetModules();
+        delete require.cache[require.resolve('../scripts/audio-manager.js')];
+        const freshModule = require('../scripts/audio-manager.js');
+        Object.assign(audioModule, freshModule);
+    });
     });
 
     test('initAudio creates Audio object with correct config', () => {
-        initAudio('test.mp3');
+        audioModule.initAudio('test.mp3');
         
-        expect(Audio).toHaveBeenCalledWith('test.mp3');
-        expect(backgroundMusic).not.toBeNull();
-        expect(backgroundMusic.loop).toBe(true);
-        expect(backgroundMusic.volume).toBe(0.3);
+        expect(global.Audio).toHaveBeenCalledWith('test.mp3');
+        const audioInstance = global.Audio.mock.results[0].value;
+        expect(audioInstance.loop).toBe(true);
+        expect(audioInstance.volume).toBe(0.3);
     });
 
 
@@ -130,4 +136,3 @@ describe('audio manager tests', () => {
         
         expect(Audio).toHaveBeenCalledWith('../assets/sounds/raffleSound.mp3');
     });
-});
