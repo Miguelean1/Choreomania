@@ -34,6 +34,8 @@ arrow.id = "arrow";
 let readyToStartRaffle = false;
 let isRaffleStarted = false;
 let raffleFinished = false;
+let clickTarget = null;
+let firstMessageShown = false;
 const POST_RAFFLE_REDIRECT = "../main/secondtrial.html";
 
 arrow.addEventListener("click", function (e) {
@@ -110,8 +112,18 @@ function loadMessage(dialog) {
                 loadingComplete = true;
                 if (readyToStartRaffle) {
                     arrow.classList.add("raffle-ready");
+                    if (clickTarget) {
+                        clickTarget.remove();
+                        clickTarget = null;
+                    }
                 } else {
                     arrow.classList.remove("raffle-ready");
+                    if (!firstMessageShown) {
+                        clickTarget = document.createElement("div");
+                        clickTarget.className = "click-target";
+                        dialogbox.appendChild(clickTarget);
+                        firstMessageShown = true;
+                    }
                 }
             }
         }, timer * i);
@@ -153,12 +165,12 @@ let raffleSystem = null;
 function animateRaffle() {
     if (!raffleSystem) {
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: ".character-image", // Selector CSS de los elementos
-            totalPlayers: 16, // Total de jugadores
-            winnersCount: 8, // Cantidad a seleccionar
-            animationDuration: 2000, // Duración de la animación
-            selectedClass: "selected", // Clase CSS para seleccionados
-            glowColor: "gold", // Color del brillo
+            playerBoxSelector: ".character-image",
+            totalPlayers: 16,
+            winnersCount: 8, 
+            animationDuration: 2000,
+            selectedClass: "selected",
+            glowColor: "gold",
         });
         raffleSystem.init();
     }
@@ -240,11 +252,27 @@ document.addEventListener(
         dialogbox.innerHTML = "";
         messageId = 0;
         currMessage = messageStrings[messageId];
-        nextMessage();
+
+        if (typeof Swal !== "undefined") {
+            Swal.fire({
+                title: "How to play CHOREOMANIA: The last ascent",
+                html: '<div style="font-size:40px;color:#ffd400;margin-bottom:8px;"><i class="fa-solid fa-hand-pointer" aria-hidden="true"></i></div><div style="font-size:14px;color:#222;line-height:1.4;font-family: "PokemonGB";">Playing Choreomania is simple: just click the <strong>dialog boxes</strong> to advance. <strong>The Ceremony of Ascension will proceed as you click</strong>. <br> Keep an eye on the <strong>glowing arrow</strong> when it first appears!</div>',
+                showConfirmButton: true,
+                confirmButtonText: "Got it",
+                allowOutsideClick: false,
+                customClass: { popup: "swal-custom-popup" },
+            }).then(() => {
+                nextMessage();
+            });
+        } else {
+            nextMessage();
+        }
 
         document
             .getElementById("dialogbox")
             .addEventListener("click", function (e) {
+                const existingCt = document.querySelector(".click-target");
+                if (existingCt) existingCt.remove();
                 if (isRaffleStarted) {
                     e.stopPropagation();
                     return;

@@ -137,12 +137,12 @@ let raffleSystem = null;
 function animateRaffle() {
     if (!raffleSystem) {
         raffleSystem = new RaffleSystem({
-            playerBoxSelector: ".character-image", // Selector CSS de los elementos
-            totalPlayers: 8, // Total de jugadores
-            winnersCount: 4, // Cantidad a seleccionar
-            animationDuration: 2000, // Duración de la animación
-            selectedClass: "selected", // Clase CSS para seleccionados
-            glowColor: "gold", // Color del brillo
+            playerBoxSelector: ".character-image",  
+            totalPlayers: 8,  
+            winnersCount: 4,  
+            animationDuration: 2000,  
+            selectedClass: "selected",  
+            glowColor: "gold",  
         });
         raffleSystem.init();
     }

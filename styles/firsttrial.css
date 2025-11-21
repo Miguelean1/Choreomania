@@ -3,6 +3,12 @@
     src: url("https://cdnjs.cloudflare.com/ajax/libs/Press-Start-2P/1.0.0/PressStart2P.woff2") format("woff2");
 }
 
+
+@font-face {
+    font-family: "PokemonGB";
+    src: url("https://cdnjs.cloudflare.com/ajax/libs/Press-Start-2P/1.0.0/PressStart2P.woff2") format("woff2");
+}
+
 * {
     box-sizing: border-box;
 }
@@ -193,6 +199,29 @@ body {
     100% {
         transform: translateY(-8px);
     }
+}
+
+
+.click-target {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    right: -17px;
+    bottom: -15px;
+    background: rgba(255, 214, 64, 0.63);
+    border: 2px solid rgba(255,215,64,0.55);
+    box-shadow: 0 0 30px rgba(255, 215, 64, 0.95), inset 0 0 12px rgba(255,215,200,0.25);
+    pointer-events: none;
+    transform-origin: center;
+    z-index: 99999;
+    animation: clickPulse 1.0s ease-in-out infinite;
+}
+
+@keyframes clickPulse {
+    0% { transform: scale(0.88); opacity: 0.9; }
+    50% { transform: scale(1.08); opacity: 1; }
+    100% { transform: scale(0.88); opacity: 0.9; }
 }
 
 
