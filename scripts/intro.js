@@ -12,11 +12,15 @@ const progressDots = document.querySelectorAll(".dot");
 const backgrounds = document.querySelectorAll(".background");
 const arrow = document.getElementById("arrow");
 
+
+if (arrow) arrow.style.display = "none";
+
 let currentParagraphIndex = 0;
 let currentText = "";
 let charIndex = 0;
-const speed = 50;
+let speed = 50;
 let isTyping = false;
+let autoTimers = [];
 
 function updateProgressDots() {
     progressDots.forEach((dot, index) => {
@@ -62,7 +66,7 @@ function typeText() {
     } else {
         isTyping = false;
         if (currentParagraphIndex < paragraphs.length - 1) {
-            arrow.classList.add("show");
+
         }
         if (currentParagraphIndex === paragraphs.length - 1) {
             setTimeout(() => {
@@ -82,7 +86,7 @@ function nextParagraph() {
         charIndex = currentText.length;
 
         if (currentParagraphIndex < paragraphs.length - 1) {
-            arrow.classList.add("show");
+
         }
         if (currentParagraphIndex === paragraphs.length - 1) {
             setTimeout(() => {
@@ -101,8 +105,28 @@ function nextParagraph() {
     }
 }
 
+function clearAutoTimers() {
+    autoTimers.forEach((t) => clearTimeout(t));
+    autoTimers = [];
+}
+
 function startIntro() {
+
+    speed = 80;
     currentText = paragraphs[0];
+    updateProgressDots();
+    updateBackground();
+    typeText();
+}
+
+function showParagraph(index) {
+
+    currentParagraphIndex = index;
+    currentText = paragraphs[index];
+    charIndex = 0;
+    textBox.innerHTML = "";
+
+    speed = index === 0 ? 80 : 50;
     updateProgressDots();
     updateBackground();
     typeText();
@@ -205,3 +229,90 @@ window.addEventListener("load", () => {
         }
     }
 });
+
+
+function scheduleAutoProgression() {
+    if (!backgroundMusic) {
+
+        const per = 2500;
+        let acc = 0;
+        for (let i = 0; i < paragraphs.length; i++) {
+            const t = setTimeout(() => showParagraph(i), acc);
+            autoTimers.push(t);
+            acc += per;
+        }
+
+        autoTimers.push(setTimeout(() => buttonContainer.classList.add("show"), acc + 300));
+        return;
+    }
+
+    function startScheduling() {
+        const duration = backgroundMusic.duration * 1000; // ms
+        if (!isFinite(duration) || duration <= 0) {
+
+            scheduleAutoProgression();
+            return;
+        }
+
+        const lengths = paragraphs.map((p) => p.length);
+        const total = lengths.reduce((a, b) => a + b, 0) || paragraphs.length;
+
+        let acc = 0;
+        for (let i = 0; i < paragraphs.length; i++) {
+            const weight = lengths[i] || 1;
+            const part = (weight / total) * duration;
+
+
+            const t = setTimeout(() => showParagraph(i), acc);
+            autoTimers.push(t);
+
+            acc += part;
+        }
+
+
+        autoTimers.push(setTimeout(() => {
+            buttonContainer.classList.add("show");
+        }, duration + 300));
+    }
+
+    if (backgroundMusic.readyState >= 1 && isFinite(backgroundMusic.duration)) {
+        startScheduling();
+    } else {
+
+        backgroundMusic.addEventListener("loadedmetadata", startScheduling, { once: true });
+    }
+}
+
+
+setTimeout(() => {
+    scheduleAutoProgression();
+}, 1200);
+
+
+document.removeEventListener && document.removeEventListener("click", () => {});
+document.removeEventListener && document.removeEventListener("keydown", () => {});
+
+
+function stopIntroAndCleanup() {
+    clearAutoTimers();
+    stopMusic();
+}
+
+const originalSkip = skipScene;
+skipScene = function () {
+    clearAutoTimers();
+    originalSkip();
+};
+
+const originalReturn = returnHome;
+returnHome = function () {
+    clearAutoTimers();
+    originalReturn();
+};
+
+
+const originalNextScreen = nextScreen;
+nextScreen = function () {
+    clearAutoTimers();
+    originalNextScreen();
+};

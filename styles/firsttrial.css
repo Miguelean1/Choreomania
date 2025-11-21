@@ -131,7 +131,7 @@ body {
 
 .image-container {
     width: 100%;
-    height: 120px;
+    height: 200px;
     border-radius: 15px;
     overflow: hidden;
     border: 4px solid black;
@@ -305,7 +305,7 @@ body {
     text-transform: uppercase;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 800px) {
     body {
         display: block;
         min-height: 100vh;
@@ -351,6 +351,8 @@ body {
         align-items: center;
         justify-content: center;
     }
+
+    
 
     .characters-grid {
         display: grid;
