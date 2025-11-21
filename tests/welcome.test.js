@@ -2,6 +2,7 @@ global.Swal = {
     fire: jest.fn().mockResolvedValue({ isConfirmed: true })
 };
 
+const { muteMusic, returnHome, nextScreen } = require('../scripts/welcome.js'); 
 
 describe('muteMusic', () => {
     let mockIcon;
