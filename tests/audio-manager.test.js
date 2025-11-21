@@ -50,16 +50,7 @@ describe('audio manager tests', () => {
     
     beforeEach(() => {
         
-        mockAudio.mockClear();
-        mockSetItem.mockClear();
-        mockGetItem.mockClear();
-        mockRemoveItem.mockClear();
-        mockClear.mockClear();
-        mockQuerySelector.mockClear();
-        mockClassListRemove.mockClear();
-        mockClassListAdd.mockClear();
-        mockConsoleLog.mockClear();
-        mockConsoleWarn.mockClear();
+        
         jest.spyOn(Storage.prototype, 'setItem');
         
         window.Audio = mockAudio;
@@ -74,6 +65,16 @@ describe('audio manager tests', () => {
             log: mockConsoleLog,
             warn: mockConsoleWarn
         };
+        mockAudio.mockClear();
+        mockSetItem.mockClear();
+        mockGetItem.mockClear();
+        mockRemoveItem.mockClear();
+        mockClear.mockClear();
+        mockQuerySelector.mockClear();
+        mockClassListRemove.mockClear();
+        mockClassListAdd.mockClear();
+        mockConsoleLog.mockClear();
+        mockConsoleWarn.mockClear();
 
         
         jest.resetModules();
@@ -112,7 +113,7 @@ describe('audio manager tests', () => {
         audioModule.pauseAudio();
         
         expect(audioInstance.pause).toHaveBeenCalled();
-        expect(mockSetItem).toHaveBeenCalledWith('musicEnabled', 'false');
+        expect(localStorage.setItem).toHaveBeenCalledWith('musicEnabled', 'false');
     });
     
     test('pauseAudio does nothing when backgroundMusic is null', () => {
@@ -126,7 +127,7 @@ describe('audio manager tests', () => {
         
         audioModule.muteMusic();
         
-        expect(mockSetItem).toHaveBeenCalledWith('musicEnabled', 'true');
+        expect(localStorage.setItem).toHaveBeenCalledWith('musicEnabled', 'true');
     });
     
     test('muteMusic toggles from playing to muted', () => {
@@ -136,7 +137,7 @@ describe('audio manager tests', () => {
         
         audioModule.muteMusic();
         
-        expect(mockSetItem).toHaveBeenCalledWith('musicEnabled', 'false');
+        expect(localStorage.setItem).toHaveBeenCalledWith('musicEnabled', 'false');
     });
     
     test('stopMusic pauses and resets currentTime', () => {
