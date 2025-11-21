@@ -287,11 +287,18 @@ body {
 
 @media (max-width: 1024px) {
     body {
+        background-image: url('https://res.cloudinary.com/dwldyiruu/image/upload/v1763724850/View_-_Plot_Twist_umb9w7.png');
+
         display: block;
         min-height: 100vh;
         height: auto;
         overflow: auto;
         background-attachment: scroll;
+        padding-top: 0;  
+        
+        background-size: 100% 100vh;
+        background-position: center bottom;    
+        background-repeat: no-repeat;        
     }
 
     .main-layout {
@@ -338,5 +345,9 @@ body {
     .navbar {
         height: 140px;
         padding: 0 20px;
+    }
+
+    .sound-waves {
+        display: none;
     }
 }
