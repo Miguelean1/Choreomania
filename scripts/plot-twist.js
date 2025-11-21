@@ -286,6 +286,12 @@ document.addEventListener("keyup", function (e) {
 if (typeof module !== "undefined") {
     module.exports = {
         returnHome,
-        nextMessage,
+        nextScreen, 
+        playThunderOnce, 
+        titleStyle,
+        normalStyle,
+        finalStyle, 
+        setDialogbox: (val) => { dialogbox = val; },
+        resetThunder: () => { thunderPlayed = false; }
     };
 }

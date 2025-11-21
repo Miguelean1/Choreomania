@@ -277,6 +277,12 @@ document.addEventListener(
 if (typeof module !== "undefined") {
     module.exports = {
         returnHome,
-        nextMessage,
+        playThunderOnce,
+        nextScreen,
+        titleStyle,
+        normalStyle,
+
+        setDialogbox: (val) => { dialogbox = val; }, 
+        resetThunder: () => { thunderPlayed = false; } 
     };
 }
