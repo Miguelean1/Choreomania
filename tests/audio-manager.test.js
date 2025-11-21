@@ -44,7 +44,7 @@ describe('audio manager tests', () => {
         jest.clearAllMocks();
         
         global.Audio.mockClear();
-        global.document.querySelector.mockReturnValue({
+        global.document.querySelector = jest.fn().mockReturnValue({
             classList: {
                 remove: jest.fn(),
                 add: jest.fn()

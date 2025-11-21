@@ -76,3 +76,11 @@ function playRaffleSound() {
         console.warn("Error creando audio de raffle:", e);
     }
 }
+module.exports = {
+  initAudio,
+  playAudio,
+  pauseAudio,
+  muteMusic,
+  stopMusic,
+  playRaffleSound
+};
