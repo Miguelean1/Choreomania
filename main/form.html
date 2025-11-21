@@ -46,7 +46,12 @@
     <div class="container_form">
         <form id="form">
             <div class="form-group">
-                <input type="text" id="name" placeholder="NAME..." required>
+                <div class="tooltip-wrapper">
+                    <input type="text" id="name" placeholder="NAME..." required>
+                    <span class="tooltip-icon">?
+                        <span class="tooltip-text">Enter the names of the 16 participants one by one</span>
+                    </span>
+                </div>
                 <button type="button" class="add" id="addBtn"><i class="fa-solid fa-plus"
                         style="color:#000000"></i></button>
                 <button type="button" class="begin">GO!</button>
