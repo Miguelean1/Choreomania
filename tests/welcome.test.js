@@ -1,127 +1,92 @@
-global.Swal = {
-    fire: jest.fn().mockResolvedValue({ isConfirmed: true })
+
+const { checkMusicPreference, nextScreen } = require('./welcome.js');
+
+
+global.playAudio = jest.fn();
+global.pauseAudio = jest.fn();
+global.stopMusic = jest.fn();
+
+const swalFireMock = jest.fn(() => Promise.resolve({}));
+global.Swal = { fire: swalFireMock };
+
+
+const localStorageMock = {
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+  clear: jest.fn()
 };
 
+Object.defineProperty(global, 'localStorage', {
+  value: localStorageMock,
+  configurable: true
+});
 
-describe('muteMusic', () => {
-    let mockIcon;
-    let muteMusic;
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
+
+describe('checkMusicPreference', () => {
+  test('calls playAudio if localStorage is "true"', () => {
+    localStorageMock.getItem.mockReturnValue('true');
+    checkMusicPreference();
+    expect(playAudio).toHaveBeenCalled();
+    expect(pauseAudio).not.toHaveBeenCalled();
+    expect(Swal.fire).not.toHaveBeenCalled();
+  });
+
+  test('calls pauseAudio if localStorage is "false"', () => {
+    localStorageMock.getItem.mockReturnValue('false');
+    checkMusicPreference();
+    expect(pauseAudio).toHaveBeenCalled();
+    expect(playAudio).not.toHaveBeenCalled();
+    expect(Swal.fire).not.toHaveBeenCalled();
+  });
+
+  test('shows Swal and acts on confirmation if localStorage is null', async () => {
+    localStorageMock.getItem.mockReturnValue(null);
+
+    const resultConfirmed = { isConfirmed: true };
+    const resultDenied = { isConfirmed: false };
+
+   
+    swalFireMock.mockResolvedValueOnce(resultConfirmed);
+    await checkMusicPreference();
+    expect(Swal.fire).toHaveBeenCalled();
+    expect(playAudio).toHaveBeenCalled();
+    expect(pauseAudio).not.toHaveBeenCalled();
+
     
-    beforeEach(() => {
-        document.body.innerHTML = `
-            <button id="muteBtn">
-                <i class="fa-volume-high"></i>
-            </button>
-        `;
-        
-        mockIcon = document.querySelector('#muteBtn i');
-        
-        muteMusic = function() {
-            const icon = document.querySelector('#muteBtn i');
-            icon.classList.toggle('fa-volume-xmark');
-            icon.classList.toggle('fa-volume-high');
-        };
-    });
-
-    afterEach(() => {
-        document.body.innerHTML = '';
-    });
-
-    test('should change between sound icons', () => {
-        expect(mockIcon.classList.contains('fa-volume-high')).toBe(true);
-        muteMusic();
-        expect(mockIcon.classList.contains('fa-volume-xmark')).toBe(true);
-    });
-    test('should toggle back to volume high', () => {
-        muteMusic(); 
-        muteMusic(); 
-        expect(mockIcon.classList.contains('fa-volume-high')).toBe(true);
-});
-});
-
-
-describe('returnHome', () => {
-    let returnHome;
-    let mockSwal;
-
-    beforeEach(() => {
-        mockSwal = {
-            fire: jest.fn().mockResolvedValue({ isConfirmed: false })
-        };
-        global.Swal = mockSwal;
-
-        returnHome = function() {
-            Swal.fire({
-                title: "Do you want to go to the homepage?",
-                showDenyButton: true,
-                showCancelButton: true,
-                confirmButtonText: "Yes",
-                denyButtonText: "No",
-                background: '#ffffff',
-                color: '#000000'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    Swal.fire({
-                        title: "Redirecting...",
-                        icon: "success",
-                        background: '#ffffff',
-                        color: '#000000'
-                    });
-                }
-            });
-        };
-    });
-
-    afterEach(() => {
-        jest.clearAllMocks();
-    });
-
-    test('should show confirm box', () => {
-        returnHome();
-
-        expect(mockSwal.fire).toHaveBeenCalled();
-        expect(mockSwal.fire).toHaveBeenCalledWith(
-            expect.objectContaining({
-                title: "Do you want to go to the homepage?",
-                confirmButtonText: "Yes"
-            })
-        );
-    });
+    swalFireMock.mockResolvedValueOnce(resultDenied);
+    await checkMusicPreference();
+    expect(Swal.fire).toHaveBeenCalled();
+    expect(pauseAudio).toHaveBeenCalled();
+  });
 });
 
 
 describe('nextScreen', () => {
-    let nextScreen;
+  beforeEach(() => {
+   
+    document.body.style.transition = '';
+    document.body.style.opacity = '1';
+  });
 
-    beforeEach(() => {
-        jest.useFakeTimers();
-        delete window.location;
-        window.location = { href: '' };
-        document.body.style.transition = '';
-        document.body.style.opacity = '';
+  test('calls stopMusic and sets opacity and transition', () => {
+    jest.useFakeTimers();
+    nextScreen();
+    expect(stopMusic).toHaveBeenCalled();
+    expect(document.body.style.transition).toBe('opacity 0.8s');
+    expect(document.body.style.opacity).toBe('0');
+    jest.useRealTimers();
+  });
 
-        nextScreen = function() {
-            document.body.style.transition = 'opacity 0.8s';
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                window.location.href = 'intro.html';
-            }, 800);
-        };
-    });
-
-    afterEach(() => {
-        jest.runOnlyPendingTimers();
-        jest.useRealTimers();
-    });
-
-    test('should apply opacicty 0', () => {
-        nextScreen();
-        expect(document.body.style.opacity).toBe('0');
-    });
-    test('should redirect after 800ms', () => {
-        nextScreen();
-        jest.advanceTimersByTime(800);
-        expect(window.location.href).toBe('intro.html');
-    
-});
+  test('redirects to intro.html after 800ms', () => {
+    jest.useFakeTimers();
+    nextScreen();
+    jest.advanceTimersByTime(800);
+    expect(window.location.href).toBe("intro.html");
+    jest.useRealTimers();
+  });
 });
