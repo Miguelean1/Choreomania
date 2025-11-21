@@ -14,11 +14,16 @@ const mockClear = jest.fn();
 const mockClassListRemove = jest.fn();
 const mockClassListAdd = jest.fn();
 
-const mockQuerySelector = jest.fn().mockReturnValue({
-    classList: {
+const mockQuerySelector = jest.fn(selector => {
+  if (selector === '#muteBtn i') {
+    return {
+      classList: {
         remove: mockClassListRemove,
         add: mockClassListAdd
-    }
+      }
+    };
+  }
+  return null;
 });
 
 const mockConsoleLog = jest.fn();
@@ -55,34 +60,26 @@ describe('audio manager tests', () => {
         mockClassListAdd.mockClear();
         mockConsoleLog.mockClear();
         mockConsoleWarn.mockClear();
+        jest.spyOn(Storage.prototype, 'setItem');
         
-        
-        mockQuerySelector.mockReturnValue({
-            classList: {
-                remove: mockClassListRemove,
-                add: mockClassListAdd
-            }
-        });
-        
-        jest.resetModules();
-        
-        global.Audio = mockAudio;
-        global.localStorage = {
-            setItem: mockSetItem,
-            getItem: mockGetItem,
-            removeItem: mockRemoveItem,
-            clear: mockClear
+        window.Audio = mockAudio;
+        window.localStorage = {
+        setItem: mockSetItem,
+        getItem: mockGetItem,
+        removeItem: mockRemoveItem,
+        clear: mockClear
         };
-        global.document = {
-            querySelector: mockQuerySelector
-        };
-        global.console = {
+        window.document.querySelector = mockQuerySelector;
+        window.console = {
             log: mockConsoleLog,
             warn: mockConsoleWarn
         };
+
         
+        jest.resetModules();
         audioModule = require('../scripts/audio-manager.js');
-    });
+            });
+   
     
     test('initAudio creates Audio object with correct config', () => {
         audioModule.initAudio('test.mp3');
@@ -97,7 +94,7 @@ describe('audio manager tests', () => {
         audioModule.initAudio('test.mp3');
         audioModule.playAudio();
         
-        expect(mockSetItem).toHaveBeenCalledWith('musicEnabled', 'true');
+        expect(localStorage.setItem).toHaveBeenCalledWith('musicEnabled', 'true');
         expect(mockQuerySelector).toHaveBeenCalledWith('#muteBtn i');
     });
     
