@@ -1,7 +1,7 @@
 describe('muteMusic', () => {
     let mockIcon;
     let muteMusic;
-
+    
     beforeEach(() => {
         document.body.innerHTML = `
             <button id="muteBtn">
@@ -22,7 +22,7 @@ describe('muteMusic', () => {
         document.body.innerHTML = '';
     });
 
-    test('debería alternar las clases de icono al llamarse', () => {
+    test('should change between sound icons', () => {
         expect(mockIcon.classList.contains('fa-volume-high')).toBe(true);
         
         muteMusic();
@@ -68,7 +68,7 @@ describe('returnHome', () => {
         jest.clearAllMocks();
     });
 
-    test('debería mostrar el diálogo de confirmación', () => {
+    test('should show confirm box', () => {
         returnHome();
 
         expect(mockSwal.fire).toHaveBeenCalled();
@@ -108,7 +108,7 @@ describe('nextScreen', () => {
         jest.useRealTimers();
     });
 
-    test('debería aplicar opacidad 0 al body', () => {
+    test('should apply opacicty 0', () => {
         nextScreen();
 
         expect(document.body.style.opacity).toBe('0');
