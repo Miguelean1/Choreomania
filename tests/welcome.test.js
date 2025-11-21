@@ -1,3 +1,8 @@
+global.Swal = {
+    fire: jest.fn().mockResolvedValue({ isConfirmed: true })
+};
+
+
 describe('muteMusic', () => {
     let mockIcon;
     let muteMusic;
@@ -24,11 +29,14 @@ describe('muteMusic', () => {
 
     test('should change between sound icons', () => {
         expect(mockIcon.classList.contains('fa-volume-high')).toBe(true);
-        
         muteMusic();
-
         expect(mockIcon.classList.contains('fa-volume-xmark')).toBe(true);
     });
+    test('should toggle back to volume high', () => {
+        muteMusic(); 
+        muteMusic(); 
+        expect(mockIcon.classList.contains('fa-volume-high')).toBe(true);
+});
 });
 
 
@@ -87,10 +95,8 @@ describe('nextScreen', () => {
 
     beforeEach(() => {
         jest.useFakeTimers();
-        
         delete window.location;
         window.location = { href: '' };
-
         document.body.style.transition = '';
         document.body.style.opacity = '';
 
@@ -110,7 +116,12 @@ describe('nextScreen', () => {
 
     test('should apply opacicty 0', () => {
         nextScreen();
-
         expect(document.body.style.opacity).toBe('0');
     });
+    test('should redirect after 800ms', () => {
+        nextScreen();
+        jest.advanceTimersByTime(800);
+        expect(window.location.href).toBe('intro.html');
+    
+});
 });
