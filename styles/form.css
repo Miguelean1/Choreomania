@@ -1,8 +1,5 @@
-
 * {
     box-sizing: border-box;
-    font-family: 'Press Start 2P', monospace;
-
 }
 
 body {
@@ -36,35 +33,22 @@ body {
     background: transparent;
     z-index: 1000;
 }
-.counter-container {
-    text-align: center; 
-    font-size: 2rem; 
-    color: #154985;
-}
 
-.left-spacer {
-    width: auto;
-    min-width: 90px; 
-}
-
-.controls {
-    display: flex;
-    gap: 15px;
-}
 .controls {
     display: flex;
     gap: 15px;
 }
 
 .btn {
-    padding: 12px 12px;
+    padding: 5px 5px;
     border: 4px solid rgb(0, 0, 0);
+    box-shadow: 2px 2px 2px 2px bl;
     background: rgb(255, 255, 255);
     color: white;
     font-size: 16px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease, color 0.15s ease, filter 0.15s ease;
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
@@ -76,7 +60,19 @@ body {
 }
 
 .btn:active {
-    transform: scale(0.95);
+    transform: scale(0.995);
+}
+
+.counter-container {
+    text-align: center;
+    font-size: 2rem;
+    color: #ffffff;
+    font-family: 'Press Start 2P', monospace;
+}
+
+.left-spacer {
+    width: auto;
+    min-width: 90px;
 }
 
 .icon {
@@ -93,13 +89,13 @@ body {
     opacity: 0.6;
 }
 
-marquee {
+.terminal-content {
     position: absolute;
-    top: 48%;
+    top: 47%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 40%;
-    height: 70%;
+    height: 73%;
     margin: 0 auto 300px auto;
     padding: 0 20px;
     background-color: #210b37;
@@ -109,18 +105,17 @@ marquee {
 }
 
 .characters-grid {
-    position: absolute;
+    padding: 1rem;
+    position: relative;
     display: grid;
     place-items: center;
     grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-    width: 40%;      
-    height: 70%;     
-    top: 48%;
+    gap: 6px;
+    top: 37%;
     left: 50%;
-    transform: translate(-50%, -50%); 
+    transform: translate(-50%, -40%);
     z-index: 2;
-    border: 2px rgba(109, 106, 110, 0.3); 
+    border: 2px rgba(109, 106, 110, 0.3);
 }
 
 .character-card {
@@ -138,14 +133,14 @@ marquee {
 
 .remove-btn {
     position: absolute;
-    top: 2px;
+    top: 10px;
     right: 5px;
     background: rgba(213, 90, 90, 1);
     border-radius: 50%;
     border: none;
     width: 20px;
     height: 20px;
-    color:#000;
+    color: #000;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -166,7 +161,7 @@ marquee {
     align-items: center;
     justify-content: center;
     margin-top: 20px;
-    background-color:rgba(221, 128, 193, 1);
+    background-color: rgba(221, 128, 193, 1);
 }
 
 .character-image img {
@@ -182,7 +177,7 @@ marquee {
     height: 25%;
     text-align: center;
     font-weight: bold;
-    padding: 4px 0;
+    font-family: "Pokemon GB", monospace;
 }
 
 .container_form {
@@ -210,26 +205,88 @@ form {
     gap: 12px
 }
 
-
 input {
     width: 100%;
     padding: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 0;
     font-size: 16px;
     color: rgb(7, 7, 7);
     font-weight: bold;
     border: 1px solid #ddd;
     box-sizing: border-box;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    font-family: 'Press Start 2P', monospace;
 }
+
 input::placeholder {
     color: rgb(3, 3, 3);
 }
 
-button {
+.tooltip-wrapper {
+    position: relative;
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.tooltip-icon {
+    position: absolute;
+    right: 6px;
+    top: 25%;
+    transform: translate(-50%);
+    width: 16px;
+    height: 16px;
+    background: #e9d252;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    cursor: help;
+    font-weight: bold;
+    pointer-events: all;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    opacity: 0;
+    width: 220px;
+    background-color: rgba(51, 61, 109, 0.9); 
+    color: white;
+    text-align: center;
+    border-radius: 15px;
+    padding: 12px;
+    position: absolute;
+    z-index: 1;
+    bottom: 170%;
+    right: -20px;
+    font-size: 14px;
+    transition: opacity 0.3s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: rgba(51, 61, 109, 0.9) transparent transparent transparent;
+}
+
+.tooltip-icon:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.begin {
     font-weight: bold;
     font-size: 16px;
+    font-family: 'Press Start 2P', monospace;
 }
+
 .add {
     background-color: #8BC15B;
     border: 1.5px solid #222;
@@ -240,6 +297,7 @@ button {
     width: 11%;
     transition: all 0.3s ease;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+
 }
 
 .begin {
@@ -263,27 +321,84 @@ button {
     transform: translateY(-3px) scale(1.02);
 }
 
-
 @media (max-width: 600px) {
-    .container {
-        padding: 25px;
+    body {
+        overflow-y: auto;
+        align-items: flex-start;
     }
 
-    .text-box {
-        font-size: 16px;
+    .navbar {
+        padding: 15px 20px;
+        flex-direction: row;
+        gap: 15px;
     }
 
-    .title {
-        font-size: 22px;
+    .controls {
+        gap: 10px;
     }
 
-    .continue-btn {
-        padding: 12px 35px;
-        font-size: 16px;
+    .left-spacer {
+        display: none;
+    }
+
+    .counter-container {
+        font-size: 1.2rem;
+    }
+
+    .terminal-content {
+        position: fixed;
+        width: 80%;
+        top: 120px;
+        bottom: 160px;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 65%;
+        margin: 0;
+        padding: 5px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .characters-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 1rem;
+        width: 100%;
+        position: relative;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0 5px;
+    }
+
+    .character-card {
+        width: 100px;
+        height: 110px;
+    }
+
+    .character-image {
+        width: 70px;
+        height: 70px;
+        margin-top: 15px;
+    }
+
+    .character-name {
+        font-size: 15px;
+    }
+
+    .remove-btn {
+        width: 18px;
+        height: 18px;
+        top: 8px;
+        right: 3px;
+    }
+
+    .container_form {
+        width: 90%;
+        padding: 15px;
+        bottom: 20px;
     }
 }
-
-
 
 
 
