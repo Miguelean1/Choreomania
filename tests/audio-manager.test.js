@@ -1,4 +1,4 @@
-global.Audio = jest.fn().mockImplementation((src) => ({
+const mockAudio = jest.fn().mockImplementation((src) => ({
     src,
     loop: false,
     volume: 1,
@@ -7,132 +7,155 @@ global.Audio = jest.fn().mockImplementation((src) => ({
     pause: jest.fn()
 }));
 
-global.document = {
-    querySelector: jest.fn().mockReturnValue({
-        classList: {
-            remove: jest.fn(),
-            add: jest.fn()
-        }
-    })
-};
+const mockSetItem = jest.fn();
+const mockGetItem = jest.fn();
+const mockRemoveItem = jest.fn();
+const mockClear = jest.fn();
+const mockClassListRemove = jest.fn();
+const mockClassListAdd = jest.fn();
 
+const mockQuerySelector = jest.fn().mockReturnValue({
+    classList: {
+        remove: mockClassListRemove,
+        add: mockClassListAdd
+    }
+});
+
+const mockConsoleLog = jest.fn();
+const mockConsoleWarn = jest.fn();
+
+
+global.Audio = mockAudio;
 global.localStorage = {
-    setItem: jest.fn(),
-    getItem: jest.fn()
+    setItem: mockSetItem,
+    getItem: mockGetItem,
+    removeItem: mockRemoveItem,
+    clear: mockClear
 };
-
+global.document = {
+    querySelector: mockQuerySelector
+};
 global.console = {
-    log: jest.fn(),
-    warn: jest.fn()
+    log: mockConsoleLog,
+    warn: mockConsoleWarn
 };
-
-const audioModule = require('../scripts/audio-manager.js');
-const { 
-    initAudio, 
-    playAudio, 
-    pauseAudio, 
-    muteMusic, 
-    stopMusic, 
-    playRaffleSound 
-} = audioModule;
 
 describe('audio manager tests', () => {
+    let audioModule;
+    
     beforeEach(() => {
-        backgroundMusic = null;
-        isMuted = true;
-        rafflePlayed = false;
         
-        jest.clearAllMocks();
+        mockAudio.mockClear();
+        mockSetItem.mockClear();
+        mockGetItem.mockClear();
+        mockRemoveItem.mockClear();
+        mockClear.mockClear();
+        mockQuerySelector.mockClear();
+        mockClassListRemove.mockClear();
+        mockClassListAdd.mockClear();
+        mockConsoleLog.mockClear();
+        mockConsoleWarn.mockClear();
         
-        global.Audio.mockClear();
-        global.document.querySelector = jest.fn().mockReturnValue({
+        
+        mockQuerySelector.mockReturnValue({
             classList: {
-                remove: jest.fn(),
-                add: jest.fn()
+                remove: mockClassListRemove,
+                add: mockClassListAdd
             }
         });
+        
         jest.resetModules();
-        delete require.cache[require.resolve('../scripts/audio-manager.js')];
-        const freshModule = require('../scripts/audio-manager.js');
-        Object.assign(audioModule, freshModule);
+        
+        global.Audio = mockAudio;
+        global.localStorage = {
+            setItem: mockSetItem,
+            getItem: mockGetItem,
+            removeItem: mockRemoveItem,
+            clear: mockClear
+        };
+        global.document = {
+            querySelector: mockQuerySelector
+        };
+        global.console = {
+            log: mockConsoleLog,
+            warn: mockConsoleWarn
+        };
+        
+        audioModule = require('../scripts/audio-manager.js');
     });
-    });
-
+    
     test('initAudio creates Audio object with correct config', () => {
         audioModule.initAudio('test.mp3');
         
-        expect(global.Audio).toHaveBeenCalledWith('test.mp3');
-        const audioInstance = global.Audio.mock.results[0].value;
+        expect(mockAudio).toHaveBeenCalledWith('test.mp3');
+        const audioInstance = mockAudio.mock.results[0].value;
         expect(audioInstance.loop).toBe(true);
         expect(audioInstance.volume).toBe(0.3);
     });
-
-
+    
     test('playAudio changes isMuted to false and saves to localStorage', () => {
-        initAudio('test.mp3');
+        audioModule.initAudio('test.mp3');
+        audioModule.playAudio();
         
-        playAudio();
-        
-        expect(isMuted).toBe(false);
-        expect(localStorage.setItem).toHaveBeenCalledWith('musicEnabled', 'true');
+        expect(mockSetItem).toHaveBeenCalledWith('musicEnabled', 'true');
+        expect(mockQuerySelector).toHaveBeenCalledWith('#muteBtn i');
     });
-
+    
     test('playAudio does nothing when backgroundMusic is null', () => {
-        playAudio();
+        audioModule.playAudio();
         
-        expect(localStorage.setItem).not.toHaveBeenCalled();
-        expect(document.querySelector).not.toHaveBeenCalled();
+        expect(mockSetItem).not.toHaveBeenCalled();
+        expect(mockQuerySelector).not.toHaveBeenCalled();
     });
-
+    
     test('pauseAudio changes isMuted to true and pauses audio', () => {
-        initAudio('test.mp3');
-        isMuted = false;
+        audioModule.initAudio('test.mp3');
+        const audioInstance = mockAudio.mock.results[0].value;
         
-        pauseAudio();
+        audioModule.pauseAudio();
         
-        expect(isMuted).toBe(true);
-        expect(backgroundMusic.pause).toHaveBeenCalled();
-        expect(localStorage.setItem).toHaveBeenCalledWith('musicEnabled', 'false');
+        expect(audioInstance.pause).toHaveBeenCalled();
+        expect(mockSetItem).toHaveBeenCalledWith('musicEnabled', 'false');
     });
-
+    
     test('pauseAudio does nothing when backgroundMusic is null', () => {
-        pauseAudio();
+        audioModule.pauseAudio();
         
-        expect(localStorage.setItem).not.toHaveBeenCalled();
+        expect(mockSetItem).not.toHaveBeenCalled();
     });
-
+    
     test('muteMusic toggles from muted to playing', () => {
-        initAudio('test.mp3');
-        isMuted = true;
+        audioModule.initAudio('test.mp3');
         
-        muteMusic();
+        audioModule.muteMusic();
         
-        expect(isMuted).toBe(false);
-        expect(localStorage.setItem).toHaveBeenCalledWith('musicEnabled', 'true');
+        expect(mockSetItem).toHaveBeenCalledWith('musicEnabled', 'true');
     });
-
+    
     test('muteMusic toggles from playing to muted', () => {
-        initAudio('test.mp3');
-        isMuted = false;
+        audioModule.initAudio('test.mp3');
+        audioModule.playAudio();
+        mockSetItem.mockClear();
         
-        muteMusic();
+        audioModule.muteMusic();
         
-        expect(isMuted).toBe(true);
-        expect(localStorage.setItem).toHaveBeenCalledWith('musicEnabled', 'false');
+        expect(mockSetItem).toHaveBeenCalledWith('musicEnabled', 'false');
     });
-
+    
     test('stopMusic pauses and resets currentTime', () => {
-        initAudio('test.mp3');
-        backgroundMusic.currentTime = 50;
+        audioModule.initAudio('test.mp3');
+        const audioInstance = mockAudio.mock.results[0].value;
+        audioInstance.currentTime = 50;
         
-        stopMusic();
+        audioModule.stopMusic();
         
-        expect(backgroundMusic.pause).toHaveBeenCalled();
-        expect(backgroundMusic.currentTime).toBe(0);
+        expect(audioInstance.pause).toHaveBeenCalled();
+        expect(audioInstance.currentTime).toBe(0);
     });
-
+    
     test('playRaffleSound creates new Audio instance', () => {
-        playRaffleSound();
+        audioModule.playRaffleSound();
         
-        expect(Audio).toHaveBeenCalledWith('../assets/sounds/raffleSound.mp3');
+        expect(mockAudio).toHaveBeenCalledWith('../assets/sounds/raffleSound.mp3');
     });
+});
