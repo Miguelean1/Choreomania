@@ -254,7 +254,7 @@ body {
 
 @media (max-width: 1024px) {
     body {
-        
+        background-image: url('https://res.cloudinary.com/dhhxrrgut/image/upload/v1763689324/raffleMobile_accivk.png');
         display: block;
         min-height: 100vh;
         height: auto;
