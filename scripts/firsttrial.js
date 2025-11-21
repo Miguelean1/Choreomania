@@ -231,17 +231,17 @@ document.addEventListener(
                 const card = document.createElement("div");
                 card.classList.add("character-card");
                 card.innerHTML = `
-          <div class="character-image"
-               style="--bg-color: ${player.color}; --bg-color-dark: ${player.color
-                    };"
-               id="playerBox${index + 1}">
-            <img class="principal-img" src="${player.imagePath ||
-                    "https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png"
-                    }"
-                 alt="${player.name}">
-          </div>
-          <div class="character-name">${player.name}</div>
-        `;
+            <div class="character-image"
+                style="--bg-color: ${player.color}; --bg-color-dark: ${player.color
+                        };"
+                id="playerBox${index + 1}">
+                <img class="principal-img" src="${player.imagePath ||
+                        "https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png"
+                        }"
+                    alt="${player.name}">
+            </div>
+            <div class="character-name">${player.name}</div>
+            `;
                 grid.appendChild(card);
             });
         }
