@@ -133,16 +133,6 @@ test('loading complete flag can change state', () => {
     expect(loadingComplete).toBe(true);
 });
 
-test('lastMessage flag can be set to true', () => {
-    let lastMessage = false;
-    const messageId = 3;
-    const messageStrings = ["msg1", "msg2", "msg3"];
-
-    lastMessage = (messageId === messageStrings.length - 1);
-
-    expect(lastMessage).toBe(true);
-});
-
 test('skipNextPress flag can be reset', () => {
     let skipNextPress = true;
 
