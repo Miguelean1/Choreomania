@@ -119,7 +119,7 @@ function startIntro() {
     typeText();
 }
 
-function showParagraph(index) {
+function showParagraph(index, durationMs = 2500) {
 
     currentParagraphIndex = index;
     currentText = paragraphs[index];
@@ -127,6 +127,19 @@ function showParagraph(index) {
     textBox.innerHTML = "";
 
     speed = index === 0 ? 80 : 50;
+
+
+    try {
+        const bg = backgrounds[index];
+        if (bg) {
+            const transformDur = Math.max(300, Math.round(durationMs));
+            const opacityDur = Math.min(800, transformDur);
+            bg.style.transition = `opacity ${opacityDur}ms ease-in-out, transform ${transformDur}ms ease-out`;
+        }
+    } catch (e) {
+        console.warn("Error applying background transition:", e);
+    }
+
     updateProgressDots();
     updateBackground();
     typeText();
@@ -227,7 +240,7 @@ function scheduleAutoProgression() {
         const per = 2500;
         let acc = 0;
         for (let i = 0; i < paragraphs.length; i++) {
-            const t = setTimeout(() => showParagraph(i), acc);
+            const t = setTimeout(() => showParagraph(i, per), acc);
             autoTimers.push(t);
             acc += per;
         }
@@ -252,8 +265,7 @@ function scheduleAutoProgression() {
             const weight = lengths[i] || 1;
             const part = (weight / total) * duration;
 
-
-            const t = setTimeout(() => showParagraph(i), acc);
+            const t = setTimeout(() => showParagraph(i, part), acc);
             autoTimers.push(t);
 
             acc += part;
