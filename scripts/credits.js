@@ -1,122 +1,113 @@
 const timer = 30;
-var messageStrings;
-var dialogbox;
-var currMessage;
-var messageId;
-var applytitlestyle = true;
-var loadingComplete = true;
-var skipNextPress = false;
+let messageStrings;
+let dialogbox;
+let currMessage;
+let messageId;
+let applytitlestyle = true;
+let loadingComplete = true;
+let skipNextPress = false;
 let isMessageSkipped = false;
-var lastMessage = false;
+let lastMessage = false;
 
-var arrow = document.createElement("div");
+let arrow = document.createElement("div");
 arrow.id = "arrow";
 
-document.addEventListener("DOMContentLoaded", function(){
-	dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
-    messageStrings = messageString.split('|');
-	dialogbox.innerHTML = "";
-    messageId = 0;
-	currMessage = messageStrings[messageId];
-	nextMessage();
-	
-	document.getElementById("dialogbox").addEventListener("click", function() {
-        if (!loadingComplete) {
-            clearTimeouts();
-            dialogbox.innerHTML = currMessage;
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
-            }
-            loadingComplete = true;
-        } else if (!skipNextPress) {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        initAudio("../assets/sounds/WelcomeMusic.mp3");
 
-            if (lastMessage) {
-                nextScreen();
-            } else {
-                nextMessage();
+        const musicChoice = localStorage.getItem("musicEnabled");
+        const icon = document.querySelector("#muteBtn i");
+
+        if (musicChoice === "true") {
+            isMuted = false;
+            if (icon) {
+                icon.classList.remove("fa-volume-xmark");
+                icon.classList.add("fa-volume-high");
+            }
+            playAudio();
+        } else if (musicChoice === "false") {
+            isMuted = true;
+            if (icon) {
+                icon.classList.add("fa-volume-xmark");
+                icon.classList.remove("fa-volume-high");
             }
         } else {
-            skipNextPress = false;
+            isMuted = true;
+            if (icon) {
+                icon.classList.add("fa-volume-xmark");
+            }
         }
-    });
-}, false);
-
-
-function muteMusic() {
-            const icon = document.querySelector('#muteBtn i');
-            icon.classList.toggle('fa-volume-xmark');
-            icon.classList.toggle('fa-volume-high');
-        }
-
+    },
+    false
+);
 
 function returnHome() {
+    stopMusic();
     Swal.fire({
         title: "Do you want to go to the homepage?",
         showDenyButton: true,
         showCancelButton: true,
         confirmButtonText: "Yes",
-        denyButtonText: `No`,
-        background: '#ffffff',
-        color: '#000000'
+        denyButtonText: "No",
     }).then((result) => {
-
         if (result.isConfirmed) {
-            Swal.fire({ title: "Saved!", icon: "success", background: '#ffffff', color: '#000000' });
-        } else if (result.isDenied) {
-            Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
+            Swal.fire({
+                title: "Returning to the homepage",
+                timer: 1000,
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading(),
+            }).then(() => {
+                window.location.href = "welcome.html";
+            });
         }
     });
 }
 
-
-
 function nextScreen() {
-    document.body.style.transition = 'opacity 0.8s';
-    document.body.style.opacity = '0';
+    stopMusic();
+
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
 
     setTimeout(() => {
-        alert('Loading next screen...');
-        document.body.style.opacity = '1';
+        window.location.href = "welcome.html";
     }, 800);
 }
 
 function clearTimeouts() {
-    var highestTimeoutId = setTimeout(";");
-    for (var i = 0; i < highestTimeoutId; i++) {
+    let highestTimeoutId = setTimeout(";");
+    for (let i = 0; i < highestTimeoutId; i++) {
         clearTimeout(i);
     }
 }
 
-// --- Mostrar botón "PLAY AGAIN?" cuando el <marquee> termine ---
-(function() {
-    const btnContainer = document.querySelector('.button-container');
-    const playBtn = document.getElementById('playAgainBtn');
+(function () {
+    const btnContainer = document.querySelector(".button-container");
+    const playBtn = document.getElementById("playAgainBtn");
 
     if (!btnContainer || !playBtn) return;
 
-    const marquee = document.querySelector('marquee');
+    const marquee = document.querySelector("marquee");
 
     function showButton() {
-        btnContainer.classList.add('show');
-        btnContainer.setAttribute('aria-hidden', 'false');
+        btnContainer.classList.add("show");
+        btnContainer.setAttribute("aria-hidden", "false");
     }
 
     if (marquee) {
-        // Elegimos el último elemento dentro del marquee para detectar cuando pasa fuera
-        const children = Array.from(marquee.children).filter(n => n.nodeType === 1);
+        const children = Array.from(marquee.children).filter(
+            (n) => n.nodeType === 1
+        );
         const lastChild = children.length ? children[children.length - 1] : marquee;
-
         let rafId = null;
         const marqueeRect = () => marquee.getBoundingClientRect();
-
         function checkMarqueeEnd() {
             if (!lastChild) return;
             const lastRect = lastChild.getBoundingClientRect();
             const mRect = marqueeRect();
-
-            // Para marquee con direction="up": consideramos terminado cuando la parte inferior
-            // del último elemento pasa por encima de la parte superior del marquee.
             if (lastRect.bottom <= mRect.top + 2) {
                 showButton();
                 if (rafId) cancelAnimationFrame(rafId);
@@ -124,34 +115,30 @@ function clearTimeouts() {
             }
             rafId = requestAnimationFrame(checkMarqueeEnd);
         }
-
-        // Iniciar comprobación. También agregamos un fallback por si algo falla.
         checkMarqueeEnd();
         const fallback = setTimeout(() => {
             showButton();
             if (rafId) cancelAnimationFrame(rafId);
-        }, 30000); // 30s fallback
-
+        }, 30000);
     } else {
-        // Fallback: si no hay <marquee>, mostramos el botón al llegar al bottom (comportamiento antiguo)
         function checkScrollToEnd() {
-            const scrolledToBottom = (window.innerHeight + window.scrollY) >= (document.body.offsetHeight - 2);
+            const scrolledToBottom =
+                window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
             if (scrolledToBottom) {
                 showButton();
-                window.removeEventListener('scroll', onScroll);
+                window.removeEventListener("scroll", onScroll);
             }
         }
-        function onScroll() { checkScrollToEnd(); }
+        function onScroll() {
+            checkScrollToEnd();
+        }
         checkScrollToEnd();
-        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener("scroll", onScroll, { passive: true });
     }
 
-    // Acción del botón: recargar la página para "play again" (se puede cambiar a otra ruta)
-    playBtn.addEventListener('click', function() {
-        btnContainer.classList.remove('show');
-        setTimeout(function() {
-            window.location.reload();
-        }, 120);
+    playBtn.addEventListener("click", function (e) {
+        e.stopImmediatePropagation();
+        btnContainer.classList.remove("show");
+        nextScreen();
     });
-
 })();

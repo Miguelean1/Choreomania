@@ -1,54 +1,68 @@
 const timer = 30;
-var messageStrings;
-var dialogbox;
-var currMessage;
-var messageId;
-var applytitlestyle = true;
-var loadingComplete = true;
-var skipNextPress = false;
+let messageStrings;
+let dialogbox;
+let currMessage;
+let messageId;
+let applytitlestyle = true;
+let loadingComplete = true;
+let skipNextPress = false;
 let isMessageSkipped = false;
-var lastMessage = false;
+let lastMessage = false;
 
-var arrow = document.createElement("div");
+let arrow = document.createElement("div");
 arrow.id = "arrow";
+let bgAudioPlayed = false;
 
-document.addEventListener("DOMContentLoaded", function(){
-	dialogbox = document.getElementById("dialogbox");
-    var messageString = dialogbox.innerHTML.replace(/\s+/g, ' ').trim();
-    messageStrings = messageString.split('|');
-	dialogbox.innerHTML = "";
-    messageId = 0;
-	currMessage = messageStrings[messageId];
-	nextMessage();
-	
-	document.getElementById("dialogbox").addEventListener("click", function() {
-        if (!loadingComplete) {
-            clearTimeouts();
-            dialogbox.innerHTML = currMessage;
-            if (!dialogbox.contains(arrow)) {
-                dialogbox.appendChild(arrow);
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+        dialogbox = document.getElementById("dialogbox");
+        let messageString = dialogbox.innerHTML.replace(/\s+/g, " ").trim();
+        messageStrings = messageString.split("|");
+        dialogbox.innerHTML = "";
+        messageId = 0;
+        currMessage = messageStrings[messageId];
+        nextMessage();
+        const bgAudio = document.getElementById("bg-audio");
+
+        document.getElementById("dialogbox").addEventListener("click", function () {
+            if (bgAudio && !bgAudioPlayed) {
+                bgAudio
+                    .play()
+                    .then(() => {
+                        bgAudioPlayed = true;
+                    })
+                    .catch((err) => {
+                        console.warn("Reproducción de audio bloqueada o fallida:", err);
+                    });
             }
-            loadingComplete = true;
-        } else if (!skipNextPress) {
 
-            if (lastMessage) {
-                nextScreen();
+            if (!loadingComplete) {
+                clearTimeouts();
+                dialogbox.innerHTML = currMessage;
+                if (!dialogbox.contains(arrow)) {
+                    dialogbox.appendChild(arrow);
+                }
+                loadingComplete = true;
+            } else if (!skipNextPress) {
+                if (lastMessage) {
+                    nextScreen();
+                } else {
+                    nextMessage();
+                }
             } else {
-                nextMessage();
+                skipNextPress = false;
             }
-        } else {
-            skipNextPress = false;
-        }
-    });
-}, false);
-
+        });
+    },
+    false
+);
 
 function muteMusic() {
-            const icon = document.querySelector('#muteBtn i');
-            icon.classList.toggle('fa-volume-xmark');
-            icon.classList.toggle('fa-volume-high');
-        }
-
+    const icon = document.querySelector("#muteBtn i");
+    icon.classList.toggle("fa-volume-xmark");
+    icon.classList.toggle("fa-volume-high");
+}
 
 function returnHome() {
     Swal.fire({
@@ -57,27 +71,35 @@ function returnHome() {
         showCancelButton: true,
         confirmButtonText: "Yes",
         denyButtonText: `No`,
-        background: '#ffffff',
-        color: '#000000'
+        background: "#ffffff",
+        color: "#000000",
     }).then((result) => {
-
         if (result.isConfirmed) {
-            Swal.fire({ title: "Saved!", icon: "success", background: '#ffffff', color: '#000000' });
+            Swal.fire({
+                title: "Saved!",
+                icon: "success",
+                background: "#ffffff",
+                color: "#000000",
+            });
         } else if (result.isDenied) {
-            Swal.fire({ title: "Changes are not saved", icon: "info", background: '#ffffff', color: '#000000' });
+            Swal.fire({
+                title: "Changes are not saved",
+                icon: "info",
+                background: "#ffffff",
+                color: "#000000",
+            });
         }
     });
 }
 
-
-function titleStyle(){
-	dialogbox.classList.remove('normal-style');
-	dialogbox.classList.add('title-style');
+function titleStyle() {
+    dialogbox.classList.remove("normal-style");
+    dialogbox.classList.add("title-style");
 }
 
-function normalStyle(){
-	dialogbox.classList.remove('title-style');
-	dialogbox.classList.add('normal-style');
+function normalStyle() {
+    dialogbox.classList.remove("title-style");
+    dialogbox.classList.add("normal-style");
 }
 
 function nextMessage() {
@@ -90,25 +112,25 @@ function nextMessage() {
         messageId = 0;
     }
 
-    lastMessage = (messageId === messageStrings.length - 1);
+    lastMessage = messageId === messageStrings.length - 1;
     currMessage = messageStrings[messageId];
     messageId++;
-	
-	if (applytitlestyle) {
-		if (messageId == 1 || messageId == messageStrings.length) {
-			titleStyle();
-		} else {
-			normalStyle();
-		}
-	}
-    loadMessage(currMessage.split(''));
+
+    if (applytitlestyle) {
+        if (messageId == 1 || messageId == messageStrings.length) {
+            titleStyle();
+        } else {
+            normalStyle();
+        }
+    }
+    loadMessage(currMessage.split(""));
 }
 
 function loadMessage(dialog) {
     loadingComplete = false;
     dialogbox.innerHTML = "";
     for (let i = 0; i < dialog.length; i++) {
-        setTimeout(function() {
+        setTimeout(function () {
             dialogbox.innerHTML += dialog[i];
             if (i === dialog.length - 1) {
                 dialogbox.appendChild(arrow);
@@ -118,8 +140,12 @@ function loadMessage(dialog) {
     }
 }
 
-document.addEventListener('keydown', function(e) {
-    if ((e.key === 'Enter' || e.key === ' ') && !loadingComplete && !isMessageSkipped) {
+document.addEventListener("keydown", function (e) {
+    if (
+        (e.key === "Enter" || e.key === " ") &&
+        !loadingComplete &&
+        !isMessageSkipped
+    ) {
         clearTimeouts();
         dialogbox.innerHTML = currMessage;
         if (!dialogbox.contains(arrow)) {
@@ -130,11 +156,10 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
-document.addEventListener('keyup', function(e) {
-    if ((e.key === 'Enter' || e.key === ' ') && loadingComplete) {
+document.addEventListener("keyup", function (e) {
+    if ((e.key === "Enter" || e.key === " ") && loadingComplete) {
         if (!isMessageSkipped) {
             if (lastMessage) {
-
                 nextScreen();
             } else {
                 nextMessage();
@@ -144,20 +169,18 @@ document.addEventListener('keyup', function(e) {
     }
 });
 
-
 function nextScreen() {
-    document.body.style.transition = 'opacity 0.8s';
-    document.body.style.opacity = '0';
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
 
     setTimeout(() => {
-        alert('Loading next screen...');
-        document.body.style.opacity = '1';
+        window.location.href = "plot-twist.html";
     }, 800);
 }
 
 function clearTimeouts() {
-    var highestTimeoutId = setTimeout(";");
-    for (var i = 0; i < highestTimeoutId; i++) {
+    let highestTimeoutId = setTimeout(";");
+    for (let i = 0; i < highestTimeoutId; i++) {
         clearTimeout(i);
     }
 }
