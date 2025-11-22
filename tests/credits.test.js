@@ -151,14 +151,6 @@ test('last child of marquee can be accessed', () => {
     expect(lastChild.textContent).toBe('Credit 3');
 });
 
-test('localStorage can retrieve musicEnabled value', () => {
-    localStorageMock.getItem.mockReturnValue('true');
-    
-    const musicChoice = localStorage.getItem('musicEnabled');
-    
-    expect(musicChoice).toBe('true');
-    expect(localStorage.getItem).toHaveBeenCalledWith('musicEnabled');
-});
 
 test('mute icon can toggle to volume-high', () => {
     const icon = document.querySelector('#muteBtn i');

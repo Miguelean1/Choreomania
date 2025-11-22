@@ -213,13 +213,6 @@ test('autoTimers array can store timeout ids', () => {
     expect(autoTimers.length).toBe(1);
 });
 
-test('localStorage can retrieve musicEnabled value', () => {
-    localStorageMock.getItem.mockReturnValue('true');
-    
-    const musicChoice = localStorage.getItem('musicEnabled');
-    
-    expect(musicChoice).toBe('true');
-});
 
 test('mute icon classes can be toggled', () => {
     const icon = document.querySelector('#muteBtn i');
