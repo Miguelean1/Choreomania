@@ -189,17 +189,7 @@ function nextScreen() {
     }, 800);
 }
 
-document.addEventListener("click", (e) => {
-    if (e.target.closest("button")) return;
-    nextParagraph();
-});
-
-document.addEventListener("keydown", (e) => {
-    if (e.key === " " || e.key === "Enter") {
-        e.preventDefault();
-        nextParagraph();
-    }
-});
+// Manual advance handlers removed: progression is automatic only.
 
 window.addEventListener("load", () => {
     setTimeout(startIntro, 1000);
@@ -287,10 +277,6 @@ function scheduleAutoProgression() {
 setTimeout(() => {
     scheduleAutoProgression();
 }, 1200);
-
-
-document.removeEventListener && document.removeEventListener("click", () => {});
-document.removeEventListener && document.removeEventListener("keydown", () => {});
 
 
 function stopIntroAndCleanup() {
