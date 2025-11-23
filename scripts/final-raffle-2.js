@@ -295,3 +295,9 @@ document.addEventListener(
     },
     false
 );
+module.exports = {
+  returnHome, 
+  normalStyle,
+  titleStyle,
+  nextMessage
+};
