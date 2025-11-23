@@ -12,14 +12,14 @@ beforeEach(() => {
     jest.clearAllMocks()
 })
 
-test('Carga tarjetas de jugadores en el grid', () => {
+test('Loads player cards in the grid', () => {
     const mockState = {
         contestants: [
             { name: "A", color: "#00f", imagePath: "urlA" },
             { name: "B", color: "#f00", imagePath: "urlB" }
         ]
     }
-    // Crear las tarjetas manualmente para hacer el test autónomo
+    // Manually create cards to make the test standalone
     const grid = document.getElementById("charactersGrid")
     mockState.contestants.forEach((player, i) => {
         const card = document.createElement('div')
@@ -35,11 +35,11 @@ test('Carga tarjetas de jugadores en el grid', () => {
     expect(grid.innerHTML).toContain("character-card")
 })
 
-test('Muestra mensaje de sin jugadores en grid', () => {
-    // Simular estado sin jugadores y comprobar mensaje mostrado
+test('Shows no players message in grid', () => {
+    // Simulate no players state and verify message is shown
     const grid = document.getElementById("charactersGrid")
-    grid.innerHTML = '<div class="no-players">No hay jugadores guardados</div>'
-    expect(grid.innerHTML).toContain("No hay jugadores guardados")
+    grid.innerHTML = '<div class="no-players">No saved players</div>'
+    expect(grid.innerHTML).toContain("No saved players")
 })
 
 function muteMusic() {
@@ -47,7 +47,7 @@ function muteMusic() {
     icon.classList.toggle('fa-volume-high')
     icon.classList.toggle('fa-volume-xmark')
 }
-test('muteMusic alterna iconos', () => {
+test('muteMusic toggles icons', () => {
     const icon = document.querySelector('#muteBtn i')
     icon.className = 'fa-solid fa-volume-xmark'
     muteMusic()
@@ -68,7 +68,7 @@ async function returnHome() {
     })
     if (result.isConfirmed) window.location.href = '../main/menu.html'
 }
-test('returnHome invoca Swal.fire', async () => {
+test('returnHome invokes Swal.fire', async () => {
     await returnHome()
     expect(Swal.fire).toHaveBeenCalledWith({
         title: "Do you want to go to the homepage?",
@@ -83,7 +83,7 @@ function titleStyle(dialogbox) {
     dialogbox.classList.remove('normal-style')
     dialogbox.classList.add('title-style')
 }
-test('titleStyle añade clase title-style', () => {
+test('titleStyle adds title-style class', () => {
     const dlg = document.getElementById('dialogbox')
     titleStyle(dlg)
     expect(dlg.classList.contains('title-style')).toBe(true)
@@ -94,14 +94,14 @@ function normalStyle(dialogbox) {
     dialogbox.classList.remove('title-style')
     dialogbox.classList.add('normal-style')
 }
-test('normalStyle añade clase normal-style', () => {
+test('normalStyle adds normal-style class', () => {
     const dlg = document.getElementById('dialogbox')
     normalStyle(dlg)
     expect(dlg.classList.contains('normal-style')).toBe(true)
     expect(dlg.classList.contains('title-style')).toBe(false)
 })
 
-test('Separa mensajes con split y trim', () => {
+test('Separates messages with split and trim', () => {
     const messageString = "M1 || M2 || M3"
     const messageStrings = messageString.split("||").map(m => m.trim())
     expect(messageStrings).toEqual(["M1", "M2", "M3"])
@@ -111,7 +111,7 @@ function nextMessage(messages, id) {
     if (id >= messages.length) id = messages.length - 1
     return { curr: messages[id], nextId: id + 1 }
 }
-test('nextMessage gestiona índices y retorna mensaje correcto', () => {
+test('nextMessage manages indices and returns correct message', () => {
     const arr = ["A", "B", "C"]
     let r = nextMessage(arr, 1)
     expect(r.curr).toBe("B")
@@ -132,16 +132,16 @@ function loadMessage(dialog, cb) {
     }
     next()
 }
-test('loadMessage recorre todos los mensajes invocando callback', async () => {
-    const dialog = ["uno", "dos", "tres"]
-    let respuestas = []
+test('loadMessage iterates through all messages invoking callback', async () => {
+    const dialog = ["one", "two", "three"]
+    let answers = []
     await new Promise(resolve => {
-        loadMessage(dialog, d => { respuestas.push(d); if (respuestas.length === 3) resolve() })
+        loadMessage(dialog, d => { answers.push(d); if (answers.length === 3) resolve() })
     })
-    expect(respuestas).toEqual(dialog)
+    expect(answers).toEqual(dialog)
 })
 
-test('clearTimeouts limpia timeouts correctamente', () => {
+test('clearTimeouts clears timeouts correctly', () => {
     let cleared = []
     global.clearTimeout = id => cleared.push(id)
     function clearTimeouts() {
@@ -156,33 +156,33 @@ class MockRaffleSystem {
     init() { return true }
     start() { return [2, 4, 6, 8, 10, 12, 14, 16] }
 }
-test('RaffleSystem ejecuta sorteo e inicia correctamente', () => {
+test('RaffleSystem executes raffle and initializes correctly', () => {
     const config = { totalPlayers: 16, winnersCount: 8 }
     const rs = new MockRaffleSystem(config)
     expect(rs.init()).toBe(true)
     expect(rs.start().length).toBe(8)
 })
 
-test('Storage guarda y recupera ganadores', () => {
+test('Storage saves and retrieves winners', () => {
     const preState = {
         contestants: Array(16).fill(0).map((_, i) => ({ name: "X" + i }))
     }
-    // Usar directamente el estado predefinido en lugar de depender del mock de localStorage
+    // Use the predefined state directly instead of depending on localStorage mock
     function afterRaffle(indices) {
         const raw = JSON.stringify(preState)
         const state = JSON.parse(raw)
         const winners = indices.map(idx => state.contestants[idx]).filter(Boolean)
         winners.forEach(w => { w.firstTrialCompleted = true })
         state.contestants = winners
-        // Simular que se guarda en localStorage
+        // Simulate saving to localStorage
         localStorage.setItem('myRegistrationGameState', JSON.stringify(state))
         return state.contestants.length
     }
     expect(afterRaffle([1, 3, 5])).toBe(3)
 })
 
-test('Redirige correctamente tras acabar sorteo', () => {
-    // Simular la redirección sin invocar la navegación de jsdom
+test('Redirects correctly after raffle finishes', () => {
+    // Simulate redirection without invoking jsdom navigation
     const POST_RAFFLE_REDIRECT = '../main/secondtrial.html'
     function finishRaffle() {
         return POST_RAFFLE_REDIRECT
@@ -190,7 +190,7 @@ test('Redirige correctamente tras acabar sorteo', () => {
     expect(finishRaffle()).toBe(POST_RAFFLE_REDIRECT)
 })
 
-test('Crear elemento arrow correctamente', () => {
+test('Creates arrow element correctly', () => {
     const arrow = document.createElement("div")
     arrow.id = "arrow"
     expect(arrow.id).toBe("arrow")

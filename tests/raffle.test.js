@@ -5,8 +5,6 @@ global.TextDecoder = TextDecoder
 const { JSDOM } = require('jsdom')
 global.document = new JSDOM('<!doctype html><html><body></body></html>').window.document
 global.window = document.defaultView
-// Cargar la implementación del raffle (usa window.RaffleSystem si el script lo define)
-// Mockear función de sonido usada por RaffleSystem para evitar ReferenceError
 global.playRaffleSound = jest.fn()
 require('../scripts/raffle.js')
 global.RaffleSystem = global.window.RaffleSystem
@@ -27,7 +25,7 @@ beforeEach(() => {
     document.body.innerHTML = ''
 })
 
-test('init carga correctamente los elementos por selector', () => {
+test('init loads elements correctly by selector', () => {
     createMockBoxes(5)
     const rs = new RaffleSystem({ playerBoxSelector: '.character-image', totalPlayers: 5 })
     rs.init()
@@ -45,7 +43,7 @@ test('init carga correctamente los elementos por ID', () => {
     expect(rs.playerBoxes.length).toBe(3)
 })
 
-test('reset elimina estilos y clases a jugadores', () => {
+test('reset removes styles and classes from players', () => {
     const boxes = createMockBoxes(2)
     const rs = new RaffleSystem({ playerBoxSelector: '.character-image', totalPlayers: 2, selectedClass: 'selected' })
     rs.init()
@@ -57,13 +55,13 @@ test('reset elimina estilos y clases a jugadores', () => {
     expect(boxes.every(box => box.style.boxShadow === '' && !box.classList.contains('selected'))).toBe(true)
 })
 
-test('getRandomInt genera valores en el rango inclusivo', () => {
+test('getRandomInt generates values in inclusive range', () => {
     const rs = new RaffleSystem({})
     const vals = Array(100).fill(0).map(() => rs.getRandomInt(2, 7))
     expect(vals.every(v => v >= 2 && v <= 7)).toBe(true)
 })
 
-test('selectRandomIndices selecciona índices únicos validos', () => {
+test('selectRandomIndices selects unique valid indices', () => {
     const rs = new RaffleSystem({})
     const selected = rs.selectRandomIndices(8, 5)
     expect(selected.length).toBe(5)
@@ -71,7 +69,7 @@ test('selectRandomIndices selecciona índices únicos validos', () => {
     expect(selected.every(i => i >= 0 && i < 8)).toBe(true)
 })
 
-test('start selecciona ganadores y aplica estilos', async () => {
+test('start selects winners and applies styles', async () => {
     createMockBoxes(7)
     const rs = new RaffleSystem({ playerBoxSelector: '.character-image', totalPlayers: 7, winnersCount: 3, selectedClass: 'selected', animationDuration: 10, glowColor: 'gold', shadowColors: ['#fff'], blinkInterval: 1 })
     rs.init()
@@ -81,7 +79,7 @@ test('start selecciona ganadores y aplica estilos', async () => {
     expect(selected.every(box => box.classList.contains('selected'))).toBe(true)
 })
 
-test('getSelectedElements y getSelectedIndices devuelven seleccionados correctos', async () => {
+test('getSelectedElements and getSelectedIndices return correct selections', async () => {
     createMockBoxes(4)
     const rs = new RaffleSystem({ playerBoxSelector: '.character-image', totalPlayers: 4, winnersCount: 2, selectedClass: 'selected', animationDuration: 10, glowColor: 'gold', shadowColors: ['#fff'], blinkInterval: 1 })
     rs.init()
@@ -94,7 +92,7 @@ test('getSelectedElements y getSelectedIndices devuelven seleccionados correctos
     expect(idxs.every(i => typeof i === 'number')).toBe(true)
 })
 
-test('reset detiene animación y limpia el flag isRunning', async () => {
+test('reset stops animation and clears isRunning flag', async () => {
     createMockBoxes(3)
     const rs = new RaffleSystem({ playerBoxSelector: '.character-image', totalPlayers: 3, winnersCount: 1, selectedClass: 'selected', animationDuration: 10, glowColor: 'gold', shadowColors: ['#fff'], blinkInterval: 1 })
     rs.init()
@@ -104,7 +102,7 @@ test('reset detiene animación y limpia el flag isRunning', async () => {
     expect(rs.animationInterval).toBeNull()
 })
 
-test('start no ejecuta si raffle ya está corriendo', async () => {
+test('start does not execute if raffle is already running', async () => {
     createMockBoxes(2)
     const rs = new RaffleSystem({ playerBoxSelector: '.character-image', totalPlayers: 2, winnersCount: 1, selectedClass: 'selected', animationDuration: 10, shadowColors: ['#fff'], blinkInterval: 1 })
     rs.init()
@@ -113,17 +111,17 @@ test('start no ejecuta si raffle ya está corriendo', async () => {
     expect(rs.isRunning).toBe(true)
 })
 
-test('start maneja error si no hay elementos cargados', async () => {
+test('start handles error if no elements are loaded', async () => {
     const rs = new RaffleSystem({ playerBoxSelector: '.character-image', totalPlayers: 2, winnersCount: 1 })
     expect(() => rs.start()).not.toThrow()
 })
 
-test('reset sin jugadores ni animación no lanza error', () => {
+test('reset without players or animation does not throw error', () => {
     const rs = new RaffleSystem({})
     expect(() => rs.reset()).not.toThrow()
 })
 
-test('start llama callback onComplete si se pasa', async () => {
+test('start calls onComplete callback if provided', async () => {
     createMockBoxes(3)
     const rs = new RaffleSystem({ playerBoxSelector: '.character-image', totalPlayers: 3, winnersCount: 1, selectedClass: 'selected', animationDuration: 10, shadowColors: ['#fff'], blinkInterval: 1 })
     rs.init()

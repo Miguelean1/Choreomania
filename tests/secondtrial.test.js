@@ -12,14 +12,14 @@ beforeEach(() => {
     jest.clearAllMocks()
 })
 
-test('Cargar tarjetas de jugadores en DOMContentLoaded', () => {
+test('Loads player cards on DOMContentLoaded', () => {
     const mockState = {
         contestants: [
             { name: "Player1", color: "#ff0000", imagePath: "url1" },
             { name: "Player2", color: "#00ff00", imagePath: "url2" }
         ]
     }
-    // Crear las tarjetas manualmente para hacer el test independiente
+    // Manually create cards to make the test independent
     const grid = document.getElementById("charactersGrid")
     mockState.contestants.forEach((player, i) => {
         const card = document.createElement('div')
@@ -35,11 +35,11 @@ test('Cargar tarjetas de jugadores en DOMContentLoaded', () => {
     expect(grid.innerHTML).toContain("character-card")
 })
 
-test('Manejar caso sin jugadores', () => {
-    // Simular el mensaje cuando no hay jugadores
+test('Handle case with no players', () => {
+    // Simulate message when no players exist
     const grid = document.getElementById("charactersGrid")
-    grid.innerHTML = '<div class="no-players">No hay jugadores guardados</div>'
-    expect(grid.innerHTML).toContain("No hay jugadores guardados")
+    grid.innerHTML = '<div class="no-players">No saved players</div>'
+    expect(grid.innerHTML).toContain("No saved players")
 })
 
 function muteMusic() {
@@ -47,7 +47,7 @@ function muteMusic() {
     icon.classList.toggle('fa-volume-high')
     icon.classList.toggle('fa-volume-xmark')
 }
-test('muteMusic alterna iconos', () => {
+test('muteMusic toggles icons', () => {
     const icon = document.querySelector('#muteBtn i')
     icon.className = 'fa-solid fa-volume-xmark'
     muteMusic()
@@ -60,37 +60,37 @@ test('muteMusic alterna iconos', () => {
 
 async function returnHome() {
     const result = await Swal.fire({
-        title: "¿Volver al inicio?",
+        title: "Return to home?",
         showDenyButton: true,
         showCancelButton: true,
-        confirmButtonText: "Sí",
+        confirmButtonText: "Yes",
         denyButtonText: "No",
         background: '#ffffff',
         color: '#000000'
     })
     if (result.isConfirmed) window.location.href = '../main/menu.html'
 }
-test('returnHome invoca Swal.fire', async () => {
+test('returnHome invokes Swal.fire', async () => {
     await returnHome()
     expect(Swal.fire).toHaveBeenCalledWith({
-        title: "¿Volver al inicio?",
+        title: "Return to home?",
         showDenyButton: true,
         showCancelButton: true,
-        confirmButtonText: "Sí",
+        confirmButtonText: "Yes",
         denyButtonText: "No",
         background: '#ffffff',
         color: '#000000'
     })
 })
 
-test('Crear flecha correctamente', () => {
+test('Creates arrow correctly', () => {
     const arrow = document.createElement("div")
     arrow.id = "arrow"
     expect(arrow.id).toBe("arrow")
     expect(arrow.tagName).toBe("DIV")
 })
 
-test('Agregar y quitar clase title-style', () => {
+test('Adds and removes title-style class', () => {
     const dialogbox = document.getElementById('dialogbox')
     dialogbox.classList.remove('normal-style')
     dialogbox.classList.add('title-style')
@@ -98,7 +98,7 @@ test('Agregar y quitar clase title-style', () => {
     expect(dialogbox.classList.contains('normal-style')).toBe(false)
 })
 
-test('Agregar y quitar clase normal-style', () => {
+test('Adds and removes normal-style class', () => {
     const dialogbox = document.getElementById('dialogbox')
     dialogbox.classList.remove('title-style')
     dialogbox.classList.add('normal-style')
@@ -106,23 +106,23 @@ test('Agregar y quitar clase normal-style', () => {
     expect(dialogbox.classList.contains('title-style')).toBe(false)
 })
 
-test('Separación de mensajes con ||', () => {
-    const messageString = "Uno || Dos || Tres"
+test('Message separation with ||', () => {
+    const messageString = "One || Two || Three"
     const messageStrings = messageString.split("||").map(msg => msg.trim())
     expect(messageStrings.length).toBe(3)
-    expect(messageStrings[0]).toBe("Uno")
-    expect(messageStrings[1]).toBe("Dos")
-    expect(messageStrings[2]).toBe("Tres")
+    expect(messageStrings[0]).toBe("One")
+    expect(messageStrings[1]).toBe("Two")
+    expect(messageStrings[2]).toBe("Three")
 })
 
-test('Storage recupera y guarda correctamente estado de jugadores', () => {
-    const mockState = { contestants: [{ name: "Jug1" }, { name: "Jug2" }] }
-    // No depender de la implementación de localStorage en este test: usar directamente el JSON
+test('Storage correctly saves and loads player state', () => {
+    const mockState = { contestants: [{ name: "Player1" }, { name: "Player2" }] }
+    // Do not depend on localStorage implementation in this test: use JSON directly
     const raw = JSON.stringify(mockState)
     const stored = JSON.parse(raw)
     expect(stored).not.toBeNull()
     expect(stored.contestants.length).toBe(2)
-    expect(stored.contestants[0].name).toBe("Jug1")
+    expect(stored.contestants[0].name).toBe("Player1")
 })
 
 function nextMessage(messages, index) {
@@ -131,7 +131,7 @@ function nextMessage(messages, index) {
     }
     return { msg: messages[index], nextIndex: index }
 }
-test('nextMessage navega entre mensajes correctamente', () => {
+test('nextMessage navigates between messages correctly', () => {
     const messages = ["A", "B", "C"]
     let res = nextMessage(messages, 0)
     expect(res.msg).toBe("B")
@@ -141,7 +141,7 @@ test('nextMessage navega entre mensajes correctamente', () => {
     expect(res.nextIndex).toBe(2)
 })
 
-test('Carga mensajes con animación simulada', async () => {
+test('Loads messages with simulated animation', async () => {
     function loadMessage(dialog, callback) {
         let i = 0
         function showNext() {
@@ -153,7 +153,7 @@ test('Carga mensajes con animación simulada', async () => {
         }
         showNext()
     }
-    const dialogs = ["hola", "adiós"]
+    const dialogs = ["hello", "goodbye"]
     let rendered = []
     await new Promise(resolve => {
         loadMessage(dialogs, d => { rendered.push(d); if (rendered.length === 2) resolve() })
