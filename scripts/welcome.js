@@ -59,9 +59,4 @@ function nextScreen() {
         window.location.href = "intro.html";
     }, 800);
 }
-module.exports = {
-  returnHome, 
-  normalStyle,
-  titleStyle,
-  nextMessage
-};
+module.exports = { checkMusicPreference, returnHome, nextScreen };
