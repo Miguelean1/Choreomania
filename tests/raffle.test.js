@@ -1,7 +1,15 @@
+// Polyfill TextEncoder/TextDecoder for jsdom/whatwg-url
+const { TextEncoder, TextDecoder } = require('util')
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
 const { JSDOM } = require('jsdom')
 global.document = new JSDOM('<!doctype html><html><body></body></html>').window.document
 global.window = document.defaultView
-global.RaffleSystem = require('./raffle.js') // Solo si exportas el módulo, si no, define la clase en el test
+// Cargar la implementación del raffle (usa window.RaffleSystem si el script lo define)
+// Mockear función de sonido usada por RaffleSystem para evitar ReferenceError
+global.playRaffleSound = jest.fn()
+require('../scripts/raffle.js')
+global.RaffleSystem = global.window.RaffleSystem
 
 function createMockBoxes(n) {
     const boxes = []

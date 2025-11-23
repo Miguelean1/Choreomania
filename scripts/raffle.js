@@ -68,6 +68,8 @@ class RaffleSystem {
         return new Promise((resolve) => {
             if (this.isRunning) {
                 console.warn("RaffleSystem: El sorteo ya está en ejecución.");
+                // Resolver para evitar dejar la promesa pendiente cuando ya está corriendo
+                resolve([])
                 return;
             }
 
@@ -75,6 +77,8 @@ class RaffleSystem {
                 console.error(
                     "RaffleSystem: No hay elementos cargados. Llama a init() primero."
                 );
+                // No hay elementos: resolver con arreglo vacío
+                resolve([])
                 return;
             }
 
