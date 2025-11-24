@@ -273,3 +273,16 @@ document.addEventListener(
     },
     false
 );
+
+if (typeof module !== "undefined") {
+    module.exports = {
+        returnHome,
+        playThunderOnce,
+        nextScreen,
+        titleStyle,
+        normalStyle,
+
+        setDialogbox: (val) => { dialogbox = val; },
+        resetThunder: () => { thunderPlayed = false; }
+    };
+}

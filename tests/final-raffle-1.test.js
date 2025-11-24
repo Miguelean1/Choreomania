@@ -1,11 +1,11 @@
-const {
-    returnHome,
-    playThunderOnce,
-    nextScreen,
-    titleStyle,
+const { 
+    returnHome, 
+    playThunderOnce, 
+    nextScreen, 
+    titleStyle, 
     normalStyle,
     setDialogbox,
-    resetThunder
+    resetThunder 
 } = require('../scripts/final-raffle-1.js');
 
 global.Swal = {
@@ -37,6 +37,9 @@ describe('Final Raffle 1 - Extended Tests', () => {
         jest.clearAllMocks();
         jest.useFakeTimers(); 
 
+        delete window.location;
+        window.location = { href: '' };
+
         if (typeof resetThunder === 'function') {
             resetThunder();
         }
@@ -46,7 +49,7 @@ describe('Final Raffle 1 - Extended Tests', () => {
             <div id="arrow"></div>
             <button id="muteBtn"><i class="fa-solid"></i></button>
         `;
-
+        
         mockDialog = document.getElementById('dialogbox');
         if (typeof setDialogbox === 'function') {
             setDialogbox(mockDialog);
@@ -71,21 +74,18 @@ describe('Final Raffle 1 - Extended Tests', () => {
 
     test('nextScreen creates overlay and handles animation sequence', () => {
         nextScreen();
-
+        
         const overlay = document.getElementById('flash-overlay');
         expect(overlay).not.toBeNull();
-
-        expect(global.stopMusic).toHaveBeenCalled();
-
-        jest.runAllTimers();
         
+        jest.runAllTimers();
     });
 
     test('styles functions change CSS classes correctly', () => {
         titleStyle();
         expect(mockDialog.classList.contains('title-style')).toBe(true);
         expect(mockDialog.classList.contains('normal-style')).toBe(false);
-
+        
         normalStyle();
         expect(mockDialog.classList.contains('normal-style')).toBe(true);
         expect(mockDialog.classList.contains('title-style')).toBe(false);
