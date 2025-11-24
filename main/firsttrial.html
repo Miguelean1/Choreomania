@@ -19,14 +19,14 @@
 
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation bar">
         <div class="controls">
             <div class="controls">
-                <button class="btn" id="muteBtn" onclick="muteMusic()">
-                    <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
+                <button class="btn" id="muteBtn" onclick="muteMusic()" aria-label="Mute or activate music">
+                    <i class="fa-solid fa-volume-xmark" style="color: #000000;" aria-hidden="true"></i>
                 </button>
-                <button class="btn" onclick="returnHome()">
-                    <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
+                <button class="btn" onclick="returnHome()" aria-label="Back to top">
+                    <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;" aria-hidden="true"></i></span>
                 </button>
             </div>
     </nav>
@@ -38,11 +38,11 @@
                 <div class="image-wrapper">
                     <div class="name-tag">THE BENEFACTOR</div>
                     <div class="image-container">
-                        <img src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1763388456/Group_92_iwc5u7.png">
+                        <img src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1763388456/Group_92_iwc5u7.png" alt="Image of Benefactor">
                     </div>
                 </div>
 
-                <div id="dialogbox" class="normal-box">
+                <div id="dialogbox" class="normal-box" aria-live="polite">
                     Hello everyone! This is the benefactor speaking. Welcome to the
                     ceremony of Ascension! || We see a bunch of eager youngsters!
                     I wish everyone good luck. || There isn't enough room for my
@@ -52,11 +52,10 @@
 
         </div>
         <div class="characters-section">
-            <div class="characters-grid" id="charactersGrid"></div>
+            <div class="characters-grid" id="charactersGrid" role="list" aria-label="Participants"></div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script src="../scripts/raffle.js"></script>
     <script src="../scripts/firsttrial.js"></script>
 

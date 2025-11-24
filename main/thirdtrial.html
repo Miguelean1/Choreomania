@@ -19,14 +19,14 @@
 
 <body>
 
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation bar">
         <div class="controls">
             <div class="controls">
-                <button class="btn" id="muteBtn" onclick="muteMusic()">
-                    <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
+                <button class="btn" id="muteBtn" onclick="muteMusic()" aria-label="Mute or activate music">
+                    <i class="fa-solid fa-volume-xmark" style="color: #000000;" aria-hidden="true"></i>
                 </button>
-                <button class="btn" onclick="returnHome()">
-                    <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
+                <button class="btn" onclick="returnHome()" aria-label="Back to top">
+                    <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;" aria-hidden="true"></i></span>
                 </button>
             </div>
     </nav>
@@ -37,18 +37,17 @@
                 <div class="image-wrapper">
                     <div class="name-tag">THE BENEFACTOR</div>
                     <div class="image-container">
-                        <img src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1761909656/GOOD_kidkeq.png">
+                        <img src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1761909656/GOOD_kidkeq.png" alt="Image of Benefacto">
                     </div>
                 </div>
-                <div id="dialogbox" class="normal-box">There's not much left now. The suffering will be worth it for
+                <div id="dialogbox" class="normal-box" aria-live="polite">There's not much left now. The suffering will be worth it for
                     the rest of humankind... || I mean, for all of humankind. And with that, our finalists are:</div>
             </div>
         </div>
 
 
         <div class="characters-section">
-            <div class="characters-grid" id="charactersGrid">
-                <!-- Personajes cargados dinámicamente desde localStorage -->
+            <div class="characters-grid" id="charactersGrid" role="list" aria-label="Finalists">
             </div>
         </div>
     </div>
