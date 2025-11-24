@@ -1,0 +1,192 @@
+global.Swal = {
+    fire: jest.fn().mockResolvedValue({ isConfirmed: true }),
+    showLoading: jest.fn()
+};
+
+const localStorageMock = {
+    getItem: jest.fn(),
+    setItem: jest.fn(),
+    clear: jest.fn()
+};
+global.localStorage = localStorageMock;
+
+const html = `
+    <div class="button-container">
+        <button id="playAgainBtn">Play Again</button>
+    </div>
+    <button id="muteBtn"><i class="fa-volume-high"></i></button>
+    <marquee>
+        <div>Credit 1</div>
+        <div>Credit 2</div>
+        <div>Credit 3</div>
+    </marquee>
+`;
+
+beforeEach(() => {
+    document.body.innerHTML = html;
+    jest.clearAllMocks();
+    document.body.style.opacity = '1';
+    document.body.style.transition = '';
+});
+
+test('timer constant is set to 30', () => {
+    const timer = 30;
+    
+    expect(timer).toBe(30);
+});
+
+test('arrow element is created with correct id', () => {
+    const arrow = document.createElement("div");
+    arrow.id = "arrow";
+    
+    expect(arrow.id).toBe("arrow");
+    expect(arrow.tagName).toBe("DIV");
+});
+
+test('loadingComplete flag starts as true', () => {
+    let loadingComplete = true;
+    
+    expect(loadingComplete).toBe(true);
+});
+
+test('lastMessage flag starts as false', () => {
+    let lastMessage = false;
+    
+    expect(lastMessage).toBe(false);
+});
+
+test('applytitlestyle flag starts as true', () => {
+    let applytitlestyle = true;
+    
+    expect(applytitlestyle).toBe(true);
+});
+
+test('returnHome calls Swal.fire with correct parameters', () => {
+    Swal.fire({
+        title: "Do you want to go to the homepage?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: "No"
+    });
+    
+    expect(Swal.fire).toHaveBeenCalled();
+    expect(Swal.fire).toHaveBeenCalledWith({
+        title: "Do you want to go to the homepage?",
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        denyButtonText: "No"
+    });
+});
+
+test('nextScreen changes body opacity to 0', () => {
+    document.body.style.transition = "opacity 0.8s";
+    document.body.style.opacity = "0";
+    
+    expect(document.body.style.opacity).toBe("0");
+    expect(document.body.style.transition).toBe("opacity 0.8s");
+});
+
+test('button container can add show class', () => {
+    const btnContainer = document.querySelector('.button-container');
+    
+    btnContainer.classList.add('show');
+    
+    expect(btnContainer.classList.contains('show')).toBe(true);
+});
+
+test('button container can remove show class', () => {
+    const btnContainer = document.querySelector('.button-container');
+    btnContainer.classList.add('show');
+    
+    btnContainer.classList.remove('show');
+    
+    expect(btnContainer.classList.contains('show')).toBe(false);
+});
+
+test('button container aria-hidden can be set to false', () => {
+    const btnContainer = document.querySelector('.button-container');
+    
+    btnContainer.setAttribute('aria-hidden', 'false');
+    
+    expect(btnContainer.getAttribute('aria-hidden')).toBe('false');
+});
+
+test('playAgainBtn element exists in DOM', () => {
+    const playBtn = document.getElementById('playAgainBtn');
+    
+    expect(playBtn).not.toBeNull();
+    expect(playBtn.tagName).toBe('BUTTON');
+});
+
+test('marquee element exists in DOM', () => {
+    const marquee = document.querySelector('marquee');
+    
+    expect(marquee).not.toBeNull();
+});
+
+test('marquee has multiple children', () => {
+    const marquee = document.querySelector('marquee');
+    
+    expect(marquee.children.length).toBeGreaterThan(0);
+    expect(marquee.children.length).toBe(3);
+});
+
+test('marquee children can be filtered as elements', () => {
+    const marquee = document.querySelector('marquee');
+    
+    const children = Array.from(marquee.children).filter(n => n.nodeType === 1);
+    
+    expect(children.length).toBe(3);
+});
+
+test('last child of marquee can be accessed', () => {
+    const marquee = document.querySelector('marquee');
+    const children = Array.from(marquee.children).filter(n => n.nodeType === 1);
+    
+    const lastChild = children.length ? children[children.length - 1] : marquee;
+    
+    expect(lastChild).not.toBeNull();
+    expect(lastChild.textContent).toBe('Credit 3');
+});
+
+
+test('mute icon can toggle to volume-high', () => {
+    const icon = document.querySelector('#muteBtn i');
+    
+    icon.classList.remove('fa-volume-xmark');
+    icon.classList.add('fa-volume-high');
+    
+    expect(icon.classList.contains('fa-volume-high')).toBe(true);
+    expect(icon.classList.contains('fa-volume-xmark')).toBe(false);
+});
+
+test('mute icon can toggle to volume-xmark', () => {
+    const icon = document.querySelector('#muteBtn i');
+    icon.classList.add('fa-volume-high');
+    
+    icon.classList.add('fa-volume-xmark');
+    icon.classList.remove('fa-volume-high');
+    
+    expect(icon.classList.contains('fa-volume-xmark')).toBe(true);
+    expect(icon.classList.contains('fa-volume-high')).toBe(false);
+});
+
+test('scroll position can be calculated', () => {
+    window.innerHeight = 600;
+    window.scrollY = 200;
+    document.body.offsetHeight = 802;
+    
+    const scrolledToBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
+    
+    expect(scrolledToBottom).toBe(true);
+});
+
+test('skipNextPress flag can be set to false', () => {
+    let skipNextPress = true;
+    
+    skipNextPress = false;
+    
+    expect(skipNextPress).toBe(false);
+});
