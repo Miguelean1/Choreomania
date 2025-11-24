@@ -19,17 +19,17 @@
 </head>
 
 <body>
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation bar">
         <div class="left-spacer"></div>
         <div class="counter-container">
-            <span id="counter" class="counter">0/16 REGISTERED</span>
+            <span id="counter" class="counter" role="status" aria-live="polite" aria-atomic="true">0/16 REGISTERED</span>
         </div>
         <div class="controls">
-            <button class="btn" id="muteBtn">
-                <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
+            <button class="btn" id="muteBtn" aria-label="Mute or activate music">
+                <i class="fa-solid fa-volume-xmark" style="color: #000000;" aria-hidden="true"></i>
             </button>
-            <button class="btn">
-                <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
+            <button class="btn" aria-label="Back to top">
+                <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;" aria-hidden="true"></i></span>
             </button>
         </div>
     </nav>
@@ -37,24 +37,24 @@
 
     <marquee></marquee>
 
-    <div class="terminal-content">
-        <div class="characters-grid" id="charactersGrid">
+    <div class="terminal-content" role="region" aria-label="List of registered participants">
+        <div class="characters-grid" id="charactersGrid" role="list" aria-live="polite">
 
         </div>
     </div>
 
     <div class="container_form">
-        <form id="form">
+        <form id="form" aria-label="Participant registration form">
             <div class="form-group">
                 <div class="tooltip-wrapper">
-                    <input type="text" id="name" placeholder="NAME..." required>
-                    <span class="tooltip-icon">?
-                        <span class="tooltip-text">Enter the names of the 16 participants one by one</span>
+                    <input type="text" id="name" placeholder="NAME..." required aria-label="Participant's name" aria-describedby="nameHelp">
+                    <span class="tooltip-icon" role="button" tabindex="0" aria-label="Help with the name field">?
+                        <span class="tooltip-text" id="nameHelp" role="tooltip">Enter the names of the 16 participants one by one</span>
                     </span>
                 </div>
-                <button type="button" class="add" id="addBtn"><i class="fa-solid fa-plus"
-                        style="color:#000000"></i></button>
-                <button type="button" class="begin">GO!</button>
+                <button type="button" class="add" id="addBtn" aria-label="Add participant to list"><i class="fa-solid fa-plus"
+                        style="color:#000000" aria-hidden="true"></i></button>
+                <button type="button" class="begin" aria-label="Start the game with the registered participants">GO!</button>
             </div>
         </form>
     </div>

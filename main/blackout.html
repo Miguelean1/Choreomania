@@ -18,16 +18,16 @@
 <body>
     <audio id="bg-audio">
         <source src="../assets/sounds/rocket-launch.mp3" type="audio/mpeg">
-        Tu navegador no soporta la reproducción de audio.
+        Your browser does not support audio playback.
     </audio>
 
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Main navigation bar">
         <div class="controls">
             <div class="controls">
-                <button class="btn" id="muteBtn" onclick="muteMusic()">
+                <button class="btn" id="muteBtn" onclick="muteMusic()" aria-label="Mute or activate music">
                     <i class="fa-solid fa-volume-xmark" style="color: #000000;"></i>
                 </button>
-                <button class="btn" onclick="returnHome()">
+                <button class="btn" onclick="returnHome()" aria-label="Back to top">
                     <span class="icon"><i class="fa-solid fa-arrow-rotate-left" style="color: #000000;"></i></span>
                 </button>
             </div>
@@ -36,7 +36,7 @@
     <div class="main-layout">
         <div class="top-section">
             <div class="card-container">
-                <div id="dialogbox" class="normal-style">..............| What's going on in here...?</div>
+                <div id="dialogbox" class="normal-style" aria-live="polite">..............| What's going on in here...?</div>
             </div>
         </div>
     </div>

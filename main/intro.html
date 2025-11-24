@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 
 <body>
 
-    <div class="backgrounds">
+    <div class="backgrounds" aria-hidden="true">
         <div class="background bg-0"></div>
         <div class="background bg-1"></div>
         <div class="background bg-2"></div>
@@ -24,33 +24,33 @@
     </div>
 
 
-    <div class="letterbox-top"></div>
-    <div class="letterbox-bottom"></div>
+    <div class="letterbox-top" aria-hidden="true"></div>
+    <div class="letterbox-bottom" aria-hidden="true"></div>
 
 
-    <nav class="navbar">
+    <nav class="navbar" role="navigation" aria-label="Navigation controls">
         <div class="controls">
-            <button class="btn" id="muteBtn" onclick="muteMusic()">
-                <i class="fa-solid fa-volume-xmark"></i>
+            <button class="btn" id="muteBtn" onclick="muteMusic()" aria-label="Mute or activate music">
+                <i class="fa-solid fa-volume-xmark" aria-hidden="true"></i>
             </button>
-            <button class="btn" onclick="returnHome()">
-                <i class="fa-solid fa-arrow-rotate-left"></i>
+            <button class="btn" onclick="returnHome()" aria-label="Back to top">
+                <i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i>
             </button>
-            <button class="btn" onclick="skipScene()">
-                <i class="fa-solid fa-arrow-right"></i>
+            <button class="btn" onclick="skipScene()" aria-label="Skip scene">
+                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
             </button>
         </div>
     </nav>
 
-    <div class="arrow" id="arrow"></div>
+    <div class="arrow" id="arrow" aria-hidden="true"></div>
 
-    <div class="text-container">
-        <div class="text-box" id="textBox"></div>
+    <div class="text-container" role="region" aria-label="Storytelling">
+        <div class="text-box" id="textBox" aria-live="polite"></div>
     </div>
 
 
     <div class="button-container" id="buttonContainer">
-        <button class="continue-btn" onclick="nextScreen()">Begin Trials</button>
+        <button class="continue-btn" onclick="nextScreen()" aria-label="Begin testing the game">Begin Trials</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
