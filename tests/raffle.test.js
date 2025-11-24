@@ -32,7 +32,7 @@ test('init loads elements correctly by selector', () => {
     expect(rs.playerBoxes.length).toBe(5)
 })
 
-test('init carga correctamente los elementos por ID', () => {
+test('init loads elements correctly by ID', () => {
     for (let i = 1; i <= 3; i++) {
         const el = document.createElement('div')
         el.id = 'playerBox' + i
