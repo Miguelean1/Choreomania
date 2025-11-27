@@ -202,8 +202,6 @@ function nextScreen() {
     }, 800);
 }
 
-// Manual advance handlers removed: progression is automatic only.
-
 window.addEventListener("load", () => {
     setTimeout(startIntro, 1000);
 
