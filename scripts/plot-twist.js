@@ -24,10 +24,10 @@ function playThunderOnce() {
         thunderAudio.loop = false;
         thunderAudio.preload = "auto";
         thunderAudio.play().catch((err) => {
-            console.warn("No se pudo reproducir thunder:", err);
+            console.warn("Thunder could not be reproduced:", err);
         });
     } catch (e) {
-        console.warn("Error creando audio de thunder:", e);
+        console.warn("Error creating thunder audio:", e);
     }
 }
 

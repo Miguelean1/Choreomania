@@ -46,7 +46,7 @@ class RaffleSystem {
         }
 
         if (this.playerBoxes.length === 0) {
-            console.warn("RaffleSystem: No se encontraron elementos para el sorteo.");
+            console.warn("RaffleSystem: No items were found for the raffle.");
         }
 
         return this;
@@ -67,14 +67,14 @@ class RaffleSystem {
     start(onComplete) {
         return new Promise((resolve) => {
             if (this.isRunning) {
-                console.warn("RaffleSystem: El sorteo ya está en ejecución.");
+                console.warn("RaffleSystem: The raffle is now underway.");
                 resolve([]);
                 return;
             }
 
             if (this.playerBoxes.length === 0) {
                 console.error(
-                    "RaffleSystem: No hay elementos cargados. Llama a init() primero."
+                    "RaffleSystem: No elements loaded. Call init() first."
                 );
                 resolve([]);
                 return;

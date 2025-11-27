@@ -147,7 +147,7 @@ function animateRaffle() {
         raffleSystem.init();
     }
     raffleSystem.start((selectedIndices) => {
-        console.log("Sorteo completado. Índices seleccionados:", selectedIndices);
+        console.log("Draw completed. Selected indices:", selectedIndices);
         raffleFinished = true;
         isRaffleStarted = false;
         try {
@@ -163,7 +163,7 @@ function animateRaffle() {
             state.contestants = winners;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (e) {
-            console.error("Error actualizando myRegistrationGameState:", e);
+            console.error("Error updating myRegistrationGameState:", e);
         }
         try {
             if (dialogbox) {
@@ -199,15 +199,15 @@ document.addEventListener(
                 const card = document.createElement("div");
                 card.classList.add("character-card");
                 card.innerHTML = `
-            <div class="character-image"
-                   style="--bg-color: ${player.color}; --bg-color-dark: ${player.color
-                    };"
-                   id="playerBox${index + 1}">
-                <img class="principal-img" src="${player.imagePath ||
-                    "https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png"
-                    }"
-                     alt="${player.name}">
-            </div>
+                <div class="character-image"
+                    style="--bg-color: ${player.color}; --bg-color-dark: ${player.color
+                        };"
+                    id="playerBox${index + 1}">
+                    <img class="principal-img" src="${player.imagePath ||
+                        "https://res.cloudinary.com/dhbjoltyy/image/upload/v1762157417/RIPPLE_0026_CHAR-_0000_Capa-15_nt6xrt.png"
+                        }"
+                        alt="${player.name}">
+                </div>
             <div class="character-name">${player.name}</div>
             `;
                 grid.appendChild(card);
