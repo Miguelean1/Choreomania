@@ -137,7 +137,7 @@ function animateRaffle() {
 
     raffleSystem.start((selectedIndices) => {
         console.log(
-            "Sorteo final completado. Índice del ganador:",
+            "Final draw completed. Winner index:",
             selectedIndices
         );
         raffleFinished = true;
@@ -156,7 +156,7 @@ function animateRaffle() {
             state.contestants = winners;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (e) {
-            console.error("Error actualizando myRegistrationGameState:", e);
+            console.error("Error updating myRegistrationGameState:", e);
         }
         try {
             if (dialogbox) {
@@ -188,7 +188,7 @@ document.addEventListener(
                         const card = document.createElement("div");
                         card.className = "character-card";
                         card.innerHTML = `
-                  <div class="character-image" style="--bg-color: ${player.color
+                        <div class="character-image" style="--bg-color: ${player.color
                             }; --bg-color-dark: ${player.color};" id="playerBox${index + 1
                             }">
                             <img class="principal-img" src="${player.imagePath
@@ -296,8 +296,8 @@ document.addEventListener(
     false
 );
 module.exports = {
-  returnHome, 
-  normalStyle,
-  titleStyle,
-  nextMessage
+    returnHome, 
+    normalStyle,
+    titleStyle,
+    nextMessage
 };

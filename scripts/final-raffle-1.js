@@ -20,7 +20,7 @@ function playThunderOnce() {
         thunderAudio.loop = false;
         thunderAudio.preload = "auto";
         thunderAudio.play().catch((err) => {
-            console.warn("No se pudo reproducir thunder:", err);
+            console.warn("Thunder could not be played:", err);
         });
     } catch (e) {
         console.warn("Error creando audio de thunder:", e);
@@ -206,7 +206,7 @@ document.addEventListener(
                         const card = document.createElement("div");
                         card.className = "character-card";
                         card.innerHTML = `
-                   <div class="character-image" style="--bg-color: ${player.color
+                        <div class="character-image" style="--bg-color: ${player.color
                             }; --bg-color-dark: ${player.color};" id="playerBox${index + 1
                             }">
                             <img class="principal-img" src="${player.imagePath
