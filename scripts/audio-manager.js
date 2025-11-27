@@ -26,10 +26,10 @@ function playAudio() {
     if (playPromise !== undefined) {
         playPromise
             .then(() => {
-                console.log("Audio reproduciéndose con éxito.");
+                console.log("Audio correct");
             })
             .catch((error) => {
-                console.warn('Autoplay bloqueado, pero la UI se mantiene en "ON".');
+                console.warn('Autoplay blocked, UI on');
             });
     }
 }
@@ -50,7 +50,7 @@ function pauseAudio() {
 }
 
 function muteMusic() {
-    console.log("Botón Mute pulsado.");
+    console.log("Mute button active");
     if (isMuted) {
         playAudio();
     } else {
@@ -70,10 +70,10 @@ function playRaffleSound() {
     try {
         const raffleAudio = new Audio("../assets/sounds/raffleSound.mp3");
         raffleAudio.play().catch((err) => {
-            console.warn("No se pudo reproducir raffle:", err);
+            console.warn("Unable to reproduce raffle", err);
         });
     } catch (e) {
-        console.warn("Error creando audio de raffle:", e);
+        console.warn("Error at creating raffle sound:", e);
     }
 }
 module.exports = {
