@@ -6,6 +6,16 @@
 
 ‘Choreomania’ is a group project developed for the Client Web Development class. We have tried to create a classic Wheel of Doom, with some sparks and techno! 
 
+In addition to usual specs on this kind of games, we have developed some exciting new features like:
+
+* A very surprising plot, a story you won´t forget!
+* A complete audio logic with in-game narrative.
+* Original raffle system with random picks, and persistence over time.
+* Desktop and mobile design.
+* A very big set of tests (ok, this one is not SO exciting, but is very interesting).
+
+
+
 ## Our dream team
 
  - Sammy Cabello (SCRUM master)
