@@ -137,7 +137,7 @@ function animateRaffle() {
     }
     raffleSystem.start((selectedIndices) => {
         console.log(
-            "Sorteo final completado. Índice del ganador:",
+            "Final draw completed. Winner index:",
             selectedIndices
         );
         raffleFinished = true;
@@ -155,7 +155,7 @@ function animateRaffle() {
             state.contestants = winners;
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (e) {
-            console.error("Error actualizando myRegistrationGameState:", e);
+            console.error("Error updating myRegistrationGameState:", e);
         }
         try {
             if (dialogbox) {
@@ -200,7 +200,7 @@ document.addEventListener(
                 }
             }
         } catch (e) {
-            console.error("Error cargando personajes:", e);
+            console.error("Error loading characters:", e);
         }
 
         dialogbox = document.getElementById("dialogbox");
