@@ -77,10 +77,10 @@ function playRaffleSound() {
     }
 }
 module.exports = {
-  initAudio,
-  playAudio,
-  pauseAudio,
-  muteMusic,
-  stopMusic,
-  playRaffleSound
+    initAudio,
+    playAudio,
+    pauseAudio,
+    muteMusic,
+    stopMusic,
+    playRaffleSound
 };

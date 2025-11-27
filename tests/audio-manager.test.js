@@ -15,15 +15,15 @@ const mockClassListRemove = jest.fn();
 const mockClassListAdd = jest.fn();
 
 const mockQuerySelector = jest.fn(selector => {
-  if (selector === '#muteBtn i') {
-    return {
-      classList: {
-        remove: mockClassListRemove,
-        add: mockClassListAdd
-      }
-    };
-  }
-  return null;
+    if (selector === '#muteBtn i') {
+        return {
+        classList: {
+            remove: mockClassListRemove,
+            add: mockClassListAdd
+        }
+        };
+    }
+    return null;
 });
 
 const mockConsoleLog = jest.fn();
@@ -80,7 +80,6 @@ describe('audio manager tests', () => {
         jest.resetModules();
         audioModule = require('../scripts/audio-manager.js');
             });
-   
     
     test('initAudio creates Audio object with correct config', () => {
         audioModule.initAudio('test.mp3');

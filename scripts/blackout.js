@@ -33,7 +33,7 @@ document.addEventListener(
                         bgAudioPlayed = true;
                     })
                     .catch((err) => {
-                        console.warn("Reproducción de audio bloqueada o fallida:", err);
+                        console.warn("Audio playback blocked or failed:", err);
                     });
             }
 
