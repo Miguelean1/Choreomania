@@ -39,17 +39,22 @@ In addition to the usual specs on this kind of games, we have developed some exc
 
 ## Our tools 
 
-* HTML5
+* HTML5 <img width="25" height="25" alt="html5" src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" />
   
-* CSS
+* CSS3 <img width="25" height="25" alt="CSS3" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" />
+  
  
-* JavaScript
+* JavaScript  <img width="25" height="25" alt="JavaScript" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" />
   
-* Github
   
-* Sweet Alert
+* Github  <img width="25" height="25" alt="Github" src="https://logos-world.net/wp-content/uploads/2020/11/GitHub-Logo.png" />
+  
+  
+* Sweet Alert 2 <img width="25" height="25" alt="Sweet Alert 2" src="https://rohit-chouhan.gallerycdn.vsassets.io/extensions/rohit-chouhan/sweetalert2-snippet/1.1.2/1625627316335/Microsoft.VisualStudio.Services.Icons.Default" />
+  
 
-* Jest
+* Jest <img width="25" height="25" alt="jest" src="https://icon.icepanel.io/Technology/svg/Jest.svg" />
+  
 
 
 ## Our methodology 🙌
