@@ -4,15 +4,17 @@
 
 ## Description
 
-‘Choreomania’ is a group project developed for the Client Web Development class. We have tried to create a classic Wheel of Doom, with some sparks and techno! 
+‘Choreomania’ is a group project developed for the Client Web Development class. We have tried to recreate a classic Wheel of Doom, but adding some sparks and techno! 
 
-In addition to usual specs on this kind of games, we have developed some exciting new features like:
+In addition to the usual specs on this kind of games, we have developed some exciting new features like:
 
 * A very surprising plot, a story you won´t forget!
 * A complete audio logic with in-game narrative.
 * Original raffle system with random picks, and persistence over time.
 * Desktop and mobile design.
-* A very big set of tests (ok, this one is not SO exciting, but is very interesting).
+* A very big set of tests (ok, this one is not SO exciting, but it IS very interesting).
+
+  Will you be the chosen one? or just another in the line?
 
 
 
@@ -34,10 +36,23 @@ In addition to usual specs on this kind of games, we have developed some excitin
 ## Our tools
 
 * HTML5
+  
 * CSS
+ 
 * JavaScript
+  
 * Github
+  
 * Sweet Alert
+
+* Jest
+
+
+## Our methodology
+
+We have worked with AGILE methodology. Organizing us so we could do solo and pair programming. We have also put special attention to sprints, trying to fulfill our Trello schedule.
+
+## Nexts steps
 
 ## Launch our game!
 
