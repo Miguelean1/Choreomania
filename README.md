@@ -14,21 +14,18 @@ In addition to the usual specs on this kind of games, we have developed some exc
 * Desktop and mobile design.
 * A very big set of tests (ok, this one is not SO exciting, but it IS very interesting).
 
-  Will you be the chosen one? or just another in the qeue?
-
-
 
 ## Our dream team 👯
 
-* Sammy Cabello (SCRUM master)
+* Sammy Cabello (SCRUM master) [:rocket:](https://github.com/sammytsukino)
   
-* Miguel Pernía (Product Owner)
+* Miguel Pernía (Product Owner) [:rocket:](https://github.com/Miguelean1)
   
-* Cesar Medina (front-end developer)
+* Cesar Medina (front-end developer) [:rocket:](https://github.com/CesarMed06)
   
-* Julia Naranjo (front-end developer)
+* Julia Naranjo (front-end developer) [:rocket:](https://github.com/Juls010)
   
-*  Alvaro Sánchez (front-end developer)
+*  Alvaro Sánchez (front-end developer) [:rocket:](https://github.com/alvaroosanchezz34)
    
 ## Some screnshots 🤓
 
@@ -54,14 +51,24 @@ In addition to the usual specs on this kind of games, we have developed some exc
   
 
 * Jest <img width="25" height="25" alt="jest" src="https://icon.icepanel.io/Technology/svg/Jest.svg" />
+
+* Figma  <img width="25" height="25" alt="figma" src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" />
   
 
 
 ## Our methodology 🙌
 
-We have worked with AGILE methodology. Organizing us so we could do solo and pair programming. We have also put special attention to sprints, trying to fulfill our Trello schedule.
+We have worked with AGILE methodology. Organizing us so we could do solo and pair programming. We have also put special attention to sprints, trying to fulfill our [Trello schedule](https://trello.com/b/2VTaF0sd/choreomania-the-last-ascent) .
 
 ## Nexts steps 🔭
+
+Every developer knows one universal truth: a project is never truly finished. No matter how small a game is, there’s always another feature to add,
+another bug to hunt down, or another crazy improvement waiting around the corner. So, besides more techno and more sparks, here are some ideas we have been thinking:
+
+* Introduce a global ranking system with previous winners.
+* Develop a skins system for players, so the customisation can be upgraded.
+* Optimise experience for more devices.
+* Add more languages, creating a "Language" setting.
 
 ## Launch our game! ⚡
 
