@@ -201,7 +201,7 @@ document.addEventListener(
                 }
             }
         } catch (e) {
-            console.error("Error cargando personajes:", e);
+            console.error("Error loading characters:", e);
         }
 
         dialogbox = document.getElementById("dialogbox");
