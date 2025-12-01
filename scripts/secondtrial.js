@@ -188,7 +188,7 @@ document.addEventListener(
         try {
             storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
         } catch (error) {
-            console.error("Error leyendo localStorage:", error);
+            console.error("Error reading localStorage:", error);
             storedData = null;
         }
         const players = storedData?.contestants ?? [];

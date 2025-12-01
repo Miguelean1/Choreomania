@@ -192,7 +192,7 @@ function animateRaffle() {
             localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         } catch (e) {
             console.error(
-                "Error actualizando myRegistrationGameState tras el sorteo:",
+                "Error updating myRegistrationGameState after the raffle:",
                 e
             );
         }
@@ -220,7 +220,7 @@ document.addEventListener(
         try {
             storedData = JSON.parse(localStorage.getItem(STORAGE_KEY));
         } catch (error) {
-            console.error("Error leyendo localStorage:", error);
+            console.error("Error reading localStorage:", error);
             storedData = null;
         }
         const players = storedData?.contestants ?? [];
