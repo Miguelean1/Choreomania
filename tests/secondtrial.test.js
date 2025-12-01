@@ -3,9 +3,9 @@ const localStorageMock = { getItem: jest.fn(), setItem: jest.fn(), clear: jest.f
 global.localStorage = localStorageMock
 
 const html = `
-  <div id="charactersGrid"></div>
-  <div id="dialogbox"></div>
-  <button id="muteBtn"><i class="fa-solid fa-volume-xmark"></i></button>
+    <div id="charactersGrid"></div>
+    <div id="dialogbox"></div>
+    <button id="muteBtn"><i class="fa-solid fa-volume-xmark"></i></button>
 `
 beforeEach(() => {
     document.body.innerHTML = html
@@ -19,7 +19,7 @@ test('Loads player cards on DOMContentLoaded', () => {
             { name: "Player2", color: "#00ff00", imagePath: "url2" }
         ]
     }
-    // Manually create cards to make the test independent
+
     const grid = document.getElementById("charactersGrid")
     mockState.contestants.forEach((player, i) => {
         const card = document.createElement('div')
@@ -36,7 +36,6 @@ test('Loads player cards on DOMContentLoaded', () => {
 })
 
 test('Handle case with no players', () => {
-    // Simulate message when no players exist
     const grid = document.getElementById("charactersGrid")
     grid.innerHTML = '<div class="no-players">No saved players</div>'
     expect(grid.innerHTML).toContain("No saved players")
@@ -117,7 +116,6 @@ test('Message separation with ||', () => {
 
 test('Storage correctly saves and loads player state', () => {
     const mockState = { contestants: [{ name: "Player1" }, { name: "Player2" }] }
-    // Do not depend on localStorage implementation in this test: use JSON directly
     const raw = JSON.stringify(mockState)
     const stored = JSON.parse(raw)
     expect(stored).not.toBeNull()
@@ -174,7 +172,6 @@ test('RaffleSystem simula sorteo correctamente', () => {
 })
 
 test('Redirige correctamente al acabar sorteo', () => {
-    // Simular la redirección sin invocar la navegación de jsdom
     const POST_RAFFLE_REDIRECT = '../main/thirdtrial.html'
     function finishRaffle() {
         return POST_RAFFLE_REDIRECT
