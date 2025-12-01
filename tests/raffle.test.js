@@ -1,4 +1,3 @@
-// Polyfill TextEncoder/TextDecoder for jsdom/whatwg-url
 const { TextEncoder, TextDecoder } = require('util')
 global.TextEncoder = TextEncoder
 global.TextDecoder = TextDecoder

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1764232423112" clover="3.2.0">
-  <project timestamp="1764232423112" name="All files">
+<coverage generated="1764615808968" clover="3.2.0">
+  <project timestamp="1764615808968" name="All files">
     <metrics statements="420" coveredstatements="284" conditionals="186" coveredconditionals="81" methods="84" coveredmethods="60" elements="690" coveredelements="425" complexity="0" loc="420" ncloc="420" packages="1" files="6" classes="6"/>
-    <file name="audio-manager.js" path="C:\Users\DAW2\Choreomania\scripts\audio-manager.js">
+    <file name="audio-manager.js" path="C:\Users\Taller\Desktop\Choreomania\scripts\audio-manager.js">
       <metrics statements="41" coveredstatements="38" conditionals="17" coveredconditionals="12" methods="9" coveredmethods="7"/>
       <line num="1" count="9" type="stmt"/>
       <line num="2" count="9" type="stmt"/>
@@ -46,7 +46,7 @@
       <line num="76" count="0" type="stmt"/>
       <line num="79" count="9" type="stmt"/>
     </file>
-    <file name="final-raffle-1.js" path="C:\Users\DAW2\Choreomania\scripts\final-raffle-1.js">
+    <file name="final-raffle-1.js" path="C:\Users\Taller\Desktop\Choreomania\scripts\final-raffle-1.js">
       <metrics statements="135" coveredstatements="49" conditionals="54" coveredconditionals="3" methods="24" coveredmethods="13"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
@@ -184,7 +184,7 @@
       <line num="285" count="4" type="stmt"/>
       <line num="286" count="4" type="stmt"/>
     </file>
-    <file name="form.js" path="C:\Users\DAW2\Choreomania\scripts\form.js">
+    <file name="form.js" path="C:\Users\Taller\Desktop\Choreomania\scripts\form.js">
       <metrics statements="102" coveredstatements="67" conditionals="56" coveredconditionals="23" methods="15" coveredmethods="6"/>
       <line num="1" count="1" type="stmt"/>
       <line num="4" count="19" type="stmt"/>
@@ -289,7 +289,7 @@
       <line num="204" count="1" type="cond" truecount="3" falsecount="1"/>
       <line num="205" count="1" type="stmt"/>
     </file>
-    <file name="gameState.js" path="C:\Users\DAW2\Choreomania\scripts\gameState.js">
+    <file name="gameState.js" path="C:\Users\Taller\Desktop\Choreomania\scripts\gameState.js">
       <metrics statements="55" coveredstatements="51" conditionals="26" coveredconditionals="19" methods="12" coveredmethods="12"/>
       <line num="1" count="1" type="stmt"/>
       <line num="2" count="1" type="stmt"/>
@@ -347,13 +347,13 @@
       <line num="138" count="1" type="cond" truecount="1" falsecount="1"/>
       <line num="139" count="1" type="stmt"/>
     </file>
-    <file name="raffle.js" path="C:\Users\DAW2\Choreomania\scripts\raffle.js">
+    <file name="raffle.js" path="C:\Users\Taller\Desktop\Choreomania\scripts\raffle.js">
       <metrics statements="69" coveredstatements="66" conditionals="25" coveredconditionals="20" methods="18" coveredmethods="18"/>
       <line num="3" count="12" type="stmt"/>
       <line num="24" count="12" type="stmt"/>
       <line num="25" count="12" type="stmt"/>
       <line num="26" count="12" type="stmt"/>
-      <line num="30" count="202" type="stmt"/>
+      <line num="30" count="147" type="stmt"/>
       <line num="34" count="8" type="stmt"/>
       <line num="36" count="8" type="stmt"/>
       <line num="37" count="8" type="cond" truecount="2" falsecount="0"/>
@@ -385,9 +385,9 @@
       <line num="85" count="4" type="stmt"/>
       <line num="87" count="17" type="stmt"/>
       <line num="89" count="4" type="stmt"/>
-      <line num="90" count="16" type="stmt"/>
-      <line num="92" count="89" type="stmt"/>
-      <line num="95" count="89" type="stmt"/>
+      <line num="90" count="7" type="stmt"/>
+      <line num="92" count="34" type="stmt"/>
+      <line num="95" count="34" type="stmt"/>
       <line num="99" count="4" type="stmt"/>
       <line num="100" count="4" type="stmt"/>
       <line num="101" count="4" type="stmt"/>
@@ -419,7 +419,7 @@
       <line num="159" count="1" type="cond" truecount="1" falsecount="1"/>
       <line num="160" count="1" type="stmt"/>
     </file>
-    <file name="welcome.js" path="C:\Users\DAW2\Choreomania\scripts\welcome.js">
+    <file name="welcome.js" path="C:\Users\Taller\Desktop\Choreomania\scripts\welcome.js">
       <metrics statements="18" coveredstatements="13" conditionals="8" coveredconditionals="4" methods="6" coveredmethods="4"/>
       <line num="2" count="2" type="stmt"/>
       <line num="4" count="2" type="cond" truecount="1" falsecount="1"/>
