@@ -11,7 +11,7 @@ Developed as a group project for Client Web Development, this game combines dyst
 ### Key Features 🕺🏽
 
 * **Inverted Survival Mechanics**: A "Wheel of Hope" where being chosen means salvation, not death
-* **Layered Narrative**: Cinematic intro with synchronized voice-over, plot twists, and a devastating final revelation
+* **Layered Narrative**: Cinematic intro with synchronized voice-over and unexpected turns
 * **Audio-Driven Experience**: Complete sound design with narration, ambient music, and raffle effects
 * **Smart Raffle Logic**: Random selection system with state persistence across rounds (16→8→4→2→1)
 * **Responsive Design**: Optimized for desktop and mobile with cinematic letterboxing
@@ -37,14 +37,15 @@ The game explores themes of control, false hope, and the price of survival in a 
 
 <img width="1184" height="854" alt="Welcome Screen" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608491/Frame_3_hibouh.png" />
 <img width="1184" height="854" alt="Form System" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608490/Frame_3_1_izionh.png" />
-<img width="1184" height="854" alt="Plot Twist Reveal" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608442/Frame_3_2_e0aib0.png" />
+<img width="1184" height="854" alt="Raffle System" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608954/Frame_3_3_figqgc.png" />
+<img width="1184" height="854" alt="Credits" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764609202/Frame_3_4_ouhzk6.png" />
 
 ## Tech Stack 🛠️
 
 * **HTML5** - Semantic structure with audio integration <img width="25" height="25" alt="html5" src="https://upload.wikimedia.org/wikipedia/commons/6/61/HTML5_logo_and_wordmark.svg" />
 * **CSS3** - Custom animations, letterboxing, retro-futuristic styling <img width="25" height="25" alt="CSS3" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" />
 * **Vanilla JavaScript** - Game logic, state management, audio control <img width="25" height="25" alt="JavaScript" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" />
-* **GitHub** - Version control and collaboration <img width="25" height="25" alt="Github" src="https://logos-world.net/wp-content/uploads/2020/11/GitHub-Logo.png" />
+* **GitHub** - Version control and collaboration <img width="25" height="25" alt="GitHub" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" />
 * **SweetAlert2** - Custom alerts and modals <img width="25" height="25" alt="Sweet Alert 2" src="https://rohit-chouhan.gallerycdn.vsassets.io/extensions/rohit-chouhan/sweetalert2-snippet/1.1.2/1625627316335/Microsoft.VisualStudio.Services.Icons.Default" />
 * **Jest** - Unit and integration testing <img width="25" height="25" alt="jest" src="https://icon.icepanel.io/Technology/svg/Jest.svg" />
 * **Figma** - UI/UX design and prototyping <img width="25" height="25" alt="figma" src="https://cdn-icons-png.flaticon.com/512/5968/5968705.png" />
