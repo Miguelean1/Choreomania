@@ -2,14 +2,17 @@
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
 ![Jest](https://img.shields.io/badge/Jest-C21325?logo=jest&logoColor=white)
-# Choreomania: The Last Ascent
+<div align="center">
+  <h1>Choreomania: The Last Ascent</h1> 
+</div>
+
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/bfa40459-5065-4638-af67-1c49eca864c5" alt="Logo Choreomania" width="350">
+  <img src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764671397/Group_175_lwle8i.png" alt="Logo Choreomania" width="350">
 </p>
 
 
-**Choreomania: The Last Ascent** is a narrative web experience that flips the classic "Wheel of Death" on its head. Instead of avoiding elimination, you're fighting for selection. Sixteen participants. Four brutal trials. One ticket to freedom aboard the *New Esperanza*.
+**Choreomania: The Last Ascent** is a narrative web experience that flips the classic "Wheel of Death" on its head. Instead of avoiding elimination, you're fighting for selection. Sixteen participants. Four trials. One ticket to freedom aboard the *New Esperanza*.
 
 Developed as a group project for Client Web Development, this game combines dystopian storytelling, retro-futuristic aesthetics, and a raffle system that makes hope feel like a cruel joke.
 
@@ -43,7 +46,11 @@ The game explores themes of control, false hope, and the price of survival in a 
 <img width="1184" height="854" alt="Welcome Screen" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608491/Frame_3_hibouh.png" />
 <img width="1184" height="854" alt="Form System" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608490/Frame_3_1_izionh.png" />
 <img width="1184" height="854" alt="Raffle System" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608954/Frame_3_3_figqgc.png" />
-<img width="1184" height="854" alt="Credits" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764609202/Frame_3_4_ouhzk6.png" />
+<img width="1184" height="854" alt="Credits" src="https://res.cloudinary.com/dsy30p7gf/image/upload/c_pad,w_1184/v1764609202/Frame_3_4_ouhzk6.png" />
+
+## Mobile version 📱
+
+<img width="1184" height="854" alt="Mobile version" src="https://res.cloudinary.com/dc4u0bzgh/image/upload/v1764680928/Group_201_biz4ns.png" />
 
 ## Tech Stack 🛠️
 
