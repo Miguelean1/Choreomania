@@ -1,7 +1,12 @@
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?logo=css3&logoColor=white)
+![Jest](https://img.shields.io/badge/Jest-C21325?logo=jest&logoColor=white)
 # Choreomania: The Last Ascent
 
-<img width="427" height="350" alt="LOGO 1(1)" src="https://github.com/user-attachments/assets/bfa40459-5065-4638-af67-1c49eca864c5" />
-
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/bfa40459-5065-4638-af67-1c49eca864c5" alt="Logo Choreomania" width="350">
+</p>
 
 
 **Choreomania: The Last Ascent** is a narrative web experience that flips the classic "Wheel of Death" on its head. Instead of avoiding elimination, you're fighting for selection. Sixteen participants. Four brutal trials. One ticket to freedom aboard the *New Esperanza*.
