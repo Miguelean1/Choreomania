@@ -50,7 +50,7 @@ The game explores themes of control, false hope, and the price of survival in a 
 
 ## Mobile version 📱
 
-<img width="1184" height="854" alt="Mobile version" src="https://res.cloudinary.com/dc4u0bzgh/image/upload/v1764680928/Group_201_biz4ns.png" />
+<img width="1184" height="854" alt="Mobile version" src="https://res.cloudinary.com/dc4u0bzgh/image/upload/v1764696402/GrupoCaptura_mwr26y.png" />
 
 ## Tech Stack 🛠️
 
