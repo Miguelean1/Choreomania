@@ -43,7 +43,7 @@ The game explores themes of control, false hope, and the price of survival in a 
 <img width="1184" height="854" alt="Welcome Screen" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608491/Frame_3_hibouh.png" />
 <img width="1184" height="854" alt="Form System" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608490/Frame_3_1_izionh.png" />
 <img width="1184" height="854" alt="Raffle System" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608954/Frame_3_3_figqgc.png" />
-<img width="1184" height="854" alt="Credits" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764609202/Frame_3_4_ouhzk6.png" />
+<img width="1184" height="854" alt="Credits" src="https://res.cloudinary.com/dsy30p7gf/image/upload/c_pad,w_1184/v1764609202/Frame_3_4_ouhzk6.png" />
 
 ## Tech Stack 🛠️
 
