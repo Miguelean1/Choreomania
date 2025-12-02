@@ -5,7 +5,7 @@
 # Choreomania: The Last Ascent
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/bfa40459-5065-4638-af67-1c49eca864c5" alt="Logo Choreomania" width="350">
+  <img src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764671397/Group_175_lwle8i.png" alt="Logo Choreomania" width="350">
 </p>
 
 
