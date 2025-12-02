@@ -9,7 +9,7 @@
 </p>
 
 
-**Choreomania: The Last Ascent** is a narrative web experience that flips the classic "Wheel of Death" on its head. Instead of avoiding elimination, you're fighting for selection. Sixteen participants. Four brutal trials. One ticket to freedom aboard the *New Esperanza*.
+**Choreomania: The Last Ascent** is a narrative web experience that flips the classic "Wheel of Death" on its head. Instead of avoiding elimination, you're fighting for selection. Sixteen participants. Four trials. One ticket to freedom aboard the *New Esperanza*.
 
 Developed as a group project for Client Web Development, this game combines dystopian storytelling, retro-futuristic aesthetics, and a raffle system that makes hope feel like a cruel joke.
 
@@ -44,6 +44,10 @@ The game explores themes of control, false hope, and the price of survival in a 
 <img width="1184" height="854" alt="Form System" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608490/Frame_3_1_izionh.png" />
 <img width="1184" height="854" alt="Raffle System" src="https://res.cloudinary.com/dsy30p7gf/image/upload/v1764608954/Frame_3_3_figqgc.png" />
 <img width="1184" height="854" alt="Credits" src="https://res.cloudinary.com/dsy30p7gf/image/upload/c_pad,w_1184/v1764609202/Frame_3_4_ouhzk6.png" />
+
+## Mobile version 📱
+
+<img width="1184" height="854" alt="Mobile version" src="https://res.cloudinary.com/dc4u0bzgh/image/upload/v1764680928/Group_201_biz4ns.png" />
 
 ## Tech Stack 🛠️
 
