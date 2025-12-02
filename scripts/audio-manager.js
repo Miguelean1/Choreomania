@@ -19,7 +19,7 @@ function playAudio() {
         icon.classList.add("fa-volume-high");
     }
     localStorage.setItem("musicEnabled", "true");
-    console.log('UI en "ON". Guardado: true');
+    console.log('UI en "ON". Saved: true');
 
     const playPromise = backgroundMusic.play();
 
